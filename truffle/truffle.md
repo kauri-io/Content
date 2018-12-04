@@ -10,7 +10,7 @@ Each tool has its own features and functionality summarized below, for full deta
 
 ## Ganache
 
-Available as a cross-platform GUI application or command line tool (`ganache-cli`), Ganache starts a local and personal Ethereum blockchain on your machine that is essential for other aspects of the Truffle Suite. Alongside this are tabs for details on settings, accounts, blocks, transactions, and logs.
+Available as a cross-platform GUI application or command line tool (`ganache-cli`), Ganache starts a local and personal Ethereum blockchain on your machine useful for testing, and other aspects of the Truffle Suite. Alongside this are tabs for details on settings, accounts, blocks, transactions, and logs.
 
 ![Ganache GUI](./ganache.png)
 
@@ -28,7 +28,7 @@ Truffle's `truffle compile` command adds to the solidity compilation process by 
 
 ### Migrations
 
-Unlike migrations from other web frameworks (such as Ruby on Rails), [Truffle migrations](https://truffleframework.com/docs/truffle/getting-started/running-migrations) are settings to help you switch between development and production environments.
+Unlike migrations from other web frameworks (such as Ruby on Rails), [Truffle migrations](https://truffleframework.com/docs/truffle/getting-started/running-migrations) are settings to help you deploy contracts between development and production networks.
 
 Migrations are _.js_ files inside the _migrations_ folder and run them with the `truffle migrate` command. Each migration file defines artifacts you need, contracts to deploy and the order the steps need to run in. You need an initial _contracts/Migrations.sol_ contract that defines an interface for future migrations and this is created when you create a Truffle project.
 
@@ -40,6 +40,10 @@ The Truffle suite provides a testing suite for your Dapps where you can write yo
 - In JavaScript for testing how a user interacts with your Dapp and the underlying smart contracts.
 
 Whichever language(s) you use, you place all your tests inside the _test_ folder and run them with the `truffle test` command. This command runs your tests and displays the success or failure results.
+
+### Debug
+
+Debugging is an essential part of any development process, and Truffle's `debug` command helps you investigate what happened in the execution that lead to a transaction. The command opens an interface in your terminal that is similar to other debuggers that lets you step through the code.
 
 ### Interacting with a contract
 
