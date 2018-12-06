@@ -1,0 +1,65 @@
+# Infura
+
+## What does Infura do?
+
+Creating and maintaining your own Ethereum and IPFS nodes and infrastructure is complex and costly. Infura lets you focus on developing functionality by providing a secure, reliable, and scalable infrastructure for your Dapps.
+
+You access your Infura-hosted infrastructure via TLS-enabled endpoints, and Ferryman, a custom reverse proxy for scaling requests and instances.
+
+## Getting Started with Infura
+
+The onboarding process for Infura walks you through creating an account and projects. You can assign each project to a different Ethereum network and the project overview gives you the keys and addresses your application needs. The project overview also has a section for whitelisting contracts, and a secret key value, but these are reserved for future functionality.
+
+You can get status information by issuing requests to your project endpoint, for example to return the latest block:
+
+```bash
+curl -X "POST" "https://rinkeby.infura.io/v3/<PROJECT_ID>" \
+     -H 'Content-Type: application/json' \
+     -d $'{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "eth_blockNumber",
+  "params": []
+}'
+```
+
+HTTP requests are useful, but to create a fully-fleshed Dapp, you can also use Web3.js.
+
+First import the web3 library, and create a provider to the Infura project:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous">
+</script>
+
+<script>
+if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+} else {
+    // Set the provider you want from
+    Web3.providers
+    web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/<PROJECT_ID>"));
+}
+</script>
+```
+
+Then call the method, outputting the value to the interface:
+
+```html
+<h2>Latest Block</h2>
+<script>
+  web3.eth.getBlockNumber(function (err, res) {
+    if (err) console.log(err)
+    document.write(res)
+  })
+</script>
+```
+
+## Migrating from V2 to V3
+
+If you previously used Infura, make sure your applications are using the new `https://rinkeby.infura.io/v3/*` endpoints, and if not, you need to re-register, and keep update your Dapps to keep using Infura. BLOG POST?
+
+## Statistics
+
+Once your Dapp has issued some requests to Infura, the _Stats_ pane shows a summary of method calls and information about the bandwidth used.
+
+![Infura stats dashboard](infura-stats.png)
