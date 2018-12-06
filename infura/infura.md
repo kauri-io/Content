@@ -8,9 +8,9 @@ You access your Infura-hosted infrastructure via TLS-enabled endpoints, and Ferr
 
 ## Getting Started with Infura
 
-The onboarding process for Infura walks you through creating an account and projects. You can assign each project to a different Ethereum network and the project overview gives you the keys and addresses your application needs. The project overview also has a section for whitelisting contracts, and a secret key value, but these are reserved for future functionality.
+The onboarding process for Infura walks you through creating an account and projects. You can assign each project to a different Ethereum network, and the project overview gives you the keys and addresses your application needs. The project overview also has a section for whitelisting contracts, and a secret key value, but these are reserved for future functionality.
 
-You can get status information by issuing requests to your project endpoint, for example to return the latest block:
+You can get status information by issuing requests to your project endpoint, for example, to return the latest block:
 
 ```bash
 curl -X "POST" "https://rinkeby.infura.io/v3/<PROJECT_ID>" \
@@ -54,12 +54,12 @@ Then call the method, outputting the value to the interface:
 </script>
 ```
 
-## Migrating from V2 to V3
-
-If you previously used Infura, make sure your applications are using the new `https://rinkeby.infura.io/v3/*` endpoints, and if not, you need to re-register, and keep update your Dapps to keep using Infura. BLOG POST?
-
 ## Statistics
 
 Once your Dapp has issued some requests to Infura, the _Stats_ pane shows a summary of method calls and information about the bandwidth used.
 
 ![Infura stats dashboard](infura-stats.png)
+
+## Migrating from V2 to V3
+
+If you used Infura before, make sure your applications are using the new `https://rinkeby.infura.io/v3/*` endpoints. If not, you need to re-register and update your Dapps to keep using Infura. BLOG POST?
