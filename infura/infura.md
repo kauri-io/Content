@@ -1,8 +1,8 @@
 # Infura
 
-## What does Infura do?
+## Why use Infura?
 
-Creating and maintaining your own Ethereum and IPFS nodes and infrastructure is complex and costly. Infura lets you focus on developing functionality by providing a secure, reliable, and scalable infrastructure for your Dapps.
+Creating and maintaining your own Ethereum and IPFS nodes and infrastructure is complex and costly. Infura lets you focus on developing functionality by providing a secure, reliable, and scalable infrastructure for your Dapps that you don't need to worry about.
 
 You access your Infura-hosted infrastructure via TLS-enabled endpoints, and Ferryman, a custom reverse proxy for scaling requests and instances.
 
