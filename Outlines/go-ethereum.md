@@ -38,11 +38,9 @@ Objective: Introduce the reader to developing Dapps for the Ethereum chain with 
 
 - Go application to deploy contract.
 - Go application that:
-
   - Prints out question.
   - Gets user's answer and sends it to contract.
   - Listens for a success state for a correct answer, or a fail state for a wrong answer.
-
 - Go application that reads and prints out the leaderboard (top 10).
 
 ## Quirks and Gotchas
@@ -50,4 +48,3 @@ Objective: Introduce the reader to developing Dapps for the Ethereum chain with 
 –	Must run with flag --ipcaddr 0.0.0.0 to your working environment to connect to Geth running in the docker container. Without this, Geth binds to "127.0.0.1" on the docker container, which makes it accessible only from inside the container.
 –	This forces Geth to bind to the docker container’s network interface, allowing access to Geth from outside the container.
 –	Note that this also allows access to Geth from any device on the network that can connect to the host on the port Geth is listening on.
-
