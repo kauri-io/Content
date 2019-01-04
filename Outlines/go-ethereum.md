@@ -27,9 +27,14 @@ Objective: Introduce the reader to developing Dapps for the Ethereum chain with 
 - "Answer" application takes input from user ("userAnswer") and compares it with the stored hash.
 - Users that give the correct answer are then listed on the contract leaderboard (a map of addresses and date of answer).
 
-## Generate Go bindings from .sol file.
+## Compile contract and generate Go bindings
 
-- `abigen --sol=simplequiz.sol --pkg=simplequiz --Type=SimpleQuiz --out=/simplequiz/simplequiz.go`
+- `abigen --sol=simplequiz.sol --pkg=simplequiz --out=/simplequiz/simplequiz.go`
+- OR two-step process:
+  1. `solc --abi --bin ./simplequiz/simplequiz.sol -o ./build`
+  2. `abigen --abi=./build/SimpleQuiz.abi --bin=./build/SimpleQuiz.bin --pkg=simplequiz --type=SimpleQuiz --out=./simplequiz/simplequiz.go`
+
+NOTE: Use the two-step process to compile Go bindings if running `abigen` from a Docker container, because `solc` is not included in the `ethereum/client-go:alltools-stable` image.
 
 ## Write applications to interact with contract.
 
