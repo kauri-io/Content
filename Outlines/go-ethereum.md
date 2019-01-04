@@ -7,32 +7,34 @@ Objective: Introduce the reader to developing Dapps for the Ethereum chain with 
 - Type-safe way to interact with contracts and the Ethereum chain.
 - Extensive Go library.
 - Compatible with Go test suites.
-- Direct interaction with contract ABI, no need to write contract migrations like with the Truffle suite.
-- No browser dependencies required. Interact directly with the Ethereum blockchain using Go instead of connecting using third party software like Metamask.
+- Direct interaction with contract ABI and blockchain.
 
 ## Set up an Ethereum light node
 
-- Difference between fast, full, and light. Link to node sizes chart in Etherscan.
-- Why run a fast node?
 - Keep guide simple, use light node.
-- Connect Geth node to the Rinkeby network. Publish RPC and Websocket endpoints for our Go application to connect to.
-- Sidebar: What is Rinkeby?
+- Make sure you've got [Geth](https://geth.ethereum.org/install/) installed.
+- Connect Geth node to the Rinkeby network: `geth --syncmode="light" --rinkeby --rpc --rpcapi="eth,web3,personal" --ws`
+  - Rinkeby: 
+    - PoA testnet to make sure your application works in an environment that is as close to live as possible. 
+    - Makes sure that you deal with gas price issues, and transaction failures. 
+    - Must always plan for transaction failures.
 - Get testnet Eth from Rinkeby faucet: <https://faucet.rinkeby.io/>
 
-## Write Ethereum contracts in Solidity
-
-- Ethereum contracts still have to be written in Solidity or other Ethereum-friendly contract languages.
-- Choose Solidity because it's accessible, widely supported, and has built-in support in Abigen
-- (build solidty contract code and abi directly into .go bindings file with --sol flag)
-
-## Make simple puzzle-solving contract
+## Make simple quiz contract
 
 - Constructor initializes contract with answer as input.
 - Answer is then stored as a keccak256 hash in our contract code.
 - "Answer" application takes input from user ("userAnswer") and compares it with the stored hash.
 - Users that give the correct answer are then listed on the contract leaderboard (a map of addresses and date of answer).
 
-## Generate Go bindings from .sol file.
+## Compile contract and generate Go bindings
+
+- `abigen --sol=simplequiz.sol --pkg=simplequiz --out=/simplequiz/simplequiz.go`
+- OR two-step process:
+  1. `solc --abi --bin ./simplequiz/simplequiz.sol -o ./build`
+  2. `abigen --abi=./build/SimpleQuiz.abi --bin=./build/SimpleQuiz.bin --pkg=simplequiz --type=SimpleQuiz --out=./simplequiz/simplequiz.go`
+
+NOTE: Use the two-step process to compile Go bindings if running `abigen` from a Docker container, because `solc` is not included in the `ethereum/client-go:alltools-stable` image.
 
 ## Write applications to interact with contract.
 
@@ -43,7 +45,7 @@ Objective: Introduce the reader to developing Dapps for the Ethereum chain with 
   - Listens for a success state for a correct answer, or a fail state for a wrong answer.
 - Go application that reads and prints out the leaderboard (top 10).
 
-## Quirks and Gotchas
+## Quirks and Gotchas when running Geth in docker
 
 –	Must run with flag --ipcaddr 0.0.0.0 to your working environment to connect to Geth running in the docker container. Without this, Geth binds to "127.0.0.1" on the docker container, which makes it accessible only from inside the container.
 –	This forces Geth to bind to the docker container’s network interface, allowing access to Geth from outside the container.
