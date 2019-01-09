@@ -1,26 +1,23 @@
-# Proposed title
+# Cute Kitties and Where to Find Them
 
-Cute kitties and where to find them
+We’re all, to varying degrees, familiar with currency exchanges. They come in various forms and are often the place people resort to for trading one currency to another when speculating or traveling to a new country.
 
-## Structure
+With the advent of CryptoAssets, the world witnessed an abundance of new exchanges for exchanging [fiat currencies](https://en.wikipedia.org/wiki/Fiat_money) to CryptoAssets or swapping one CryptoAsset to another. Some of these exchanges (i.e., Binance, Coinbase) are centralized, and others are decentralized (i.e., IDEX, Waves). While each approach has its limitation and fallibilities, one of the concerns in the world of CryptoAssets has been the vulnerability of the tokens as a result of centralization, vulnerabilities such as censorship and hacking. At the same time, decentralized exchanges have traditionally struggled with issues such as illiquidity and fees associated with having every new order or adjustment go through the blockchain (on-chain transactions), resulting in slower transactions and extra fees.
 
-1. A brief introduction on exchanges (crypto and fiat)
-2. A brief primer on collectibles (physical and digital)
-3. Why we need decentralized exchanges, their history, how they work, and where things are as we speak (0x)
-4. A brief introduction to the ERC process
-5. ERC-20 to ERC-721 and beyond
-6. Tying non-fungible tokens and decentralized exchanges together
-7. A vision for the future to be excited for (this is where I introduce ConsenSys Academy and further readings)
+Luckily, projects such as [0x](https://0x.org/) have been able to provide a solution for some of the limitations of decentralized exchanges by creating a standard protocol on the Ethereum blockchain. The protocol allows third parties–relayers–to build decentralized exchanges that host orders off-chain and only bring them on-chain when the order needs to be settled. As a result, it’s an ideal protocol for platforms that exchange digital collectibles and other CryptoItems to incorporate into their ecosystem.
 
-## Why you want to write this
+You might already be familiar with the game [CryptoKitties](https://www.cryptokitties.co/) where people can buy a unique digital cat with some Ether–the native currency of the Ethereum protocol. Each Kittie is a non-fungible token (NFT)–meaning that unlike say a dollar bill which is identical to any other dollar bill, it’s unique in shape, characteristics, and thus value. NFTs are a new form of digital collectible, valuable to collectors as a result of their uniqueness. Until recently, tokens on Ethereum were built based on [ERC-20](https://github.com/ethereum/eips/issues/20) standards which created fungibility, but a group of people decided that there was value in having unique tokens, which is where [ERC-721](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md) comes from.
 
-It covers two important topics that are important for vastly different reasons:
+I'd encouredge you to read more on the [Ethereum Improvement Proposals (EIPs) process](https://eips.ethereum.org/), but in short, if someone (or group of people) want to make modifications or additions to the Ethereum protocol, they submit an EIP. If an EIP is approved by the community, it’s incorporated into the platform and referred to as an ERC. One of these EIPs is ERC-721 which allows for the creation of NFTs–an authentic digital scarcity that is verifiable within the network, without needing any intermediaries.
 
-- Decentralized exchanges are crucial because centralized exchanges are the barrier to entry into the decentralized world.
-- Non-fungible tokens are one of the easiest ways we can infiltrate into society and change the perception of "oh, I don't think that Bitcoin stuff is going to work." No, blockchain isn't just about disrupting future markets and boring enterprise stuff, you can do cool and meaningful stuff with it, today.
+Ideally, those who want to buy, sell, or exchange NFTs should be able to do so without relying on a central exchange to perform their transactions on. On top of problems such as censorship and hacking caused by centralization, people might want to exchange NFTs tens of times a year, buying, selling, exchanging, and so forth; having intermediaries that take a cut each time a trade occurs wouldn’t be as fluid as a peer-to-peer asset trading experience. Another advantage offered by decentralization is that if a hostile state decides to impose its terms of service on exchanges that operate in its country, it’d be easy for them to impose that on a centralized exchange, but not on a decentralized exchange. By taking intermediaries out of the picture, we can solve both the vulnerability of centralization in addition to removing the rent-seeker in the middle.
 
-## Why someone should read this
+In practice, a digital game with various creatures can use the 0x protocol to create an exchange that allows their gamers to directly trade with one another, and even sell them on the exchange for Ether. The [Origin project has partnered with Dig Star](https://medium.com/originprotocol/origin-metaps-to-build-a-decentralized-marketplace-for-non-fungible-tokens-nfts-387e5d29c437)–a character mining game built on Ethereum to do something relatively similar. Anyone can download the mining game from the app store and exchange digital characters on the Origin exchange. In the game, there is a mineral called “Cp” which can only be mined by creatures that are traded on the exchange. In addition to being able to trade these characters, gamers can sell the minerals they mine with them for Ether on the same ecosystem.
 
-The audience I have in mind are those who are curious about the possibilities offered by the Ethereum ecosystem and have some background in tech – not necessarily as a developer, but possibly even as a technology enthusiast. Maybe they're trying to see what programming language to learn next and whether solidity would make sense.
+While ERC-721 allows for an entirely new class of assets to exist and give collectors the opportunity to collect digital items, it has some limitation as well, which is where CryptoItems with ERC-1155 come in, the topic for our next article.
 
-So, given the audience, they will read it because it tells them what they can do with the technology today, and something larger (e.g., decentralized exchange) to get inspired by and work towards.
+Outro: There are plenty of exciting developments taking place on the Ethereum ecosystem, and we’d be eager to see more people coming on board to help us build. Not sure where to start? [ConsenSys Academy](https://consensys.net/academy/) has courses and resources for people with a wide variety of backgrounds and interests. 
+
+Is there a specific topic you’d like me to cover next? Feel free to tweet at [DAppProletariat](https://twitter.com/DAppProletariat).
+
+
