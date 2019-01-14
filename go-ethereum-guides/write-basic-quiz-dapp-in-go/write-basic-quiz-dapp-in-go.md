@@ -1,0 +1,1069 @@
+# Write a Basic Quiz DApp in Go
+
+- [Why write DApps using Go?](#why-write-dapps-using-go)
+- [Structure of our application](#structure-of-our-application)
+- [Setting up your development environment](#setting-up-your-development-environment)
+    - [Create a project folder](#create-a-project-folder)
+    - [Manage dependencies](#manage-dependencies)
+    - [Install build tools](#install-build-tools)
+    - [Install the Go Ethereum SDK and solc](#install-the-go-ethereum-sdk-and-solc)
+    - [Set up Rinkeby testnet endpoint on Infura.io](#set-up-rinkeby-testnet-endpoint-on-infuraio)
+    - [Set up an Ethereum account](#set-up-an-ethereum-account)
+- [Writing and compiling the smart contract](#writing-and-compiling-the-smart-contract)
+- [Write Go Code](#write-go-code)
+    - [Connect to Rinkeby network and get account balance](#connect-to-rinkeby-network-and-get-account-balance)
+    - [Create session](#create-session)
+    - [Deploy and load contract](#deploy-and-load-contract)
+        - [Deploy a new contract](#deploy-a-new-contract)
+        - [Load an existing contract](#load-an-existing-contract)
+        - [Deploy only if contract doesn't exist](#deploy-only-if-contract-doesnt-exist)
+    - [Interact with the contract](#interact-with-the-contract)
+    - [Write a simple CLI](#write-a-simple-cli)
+- [Running your application](#running-your-application)
+- [Limitations](#limitations)
+
+Go Ethereum is the official Go implementation of the Ethereum protocol. 
+The [Go Ethereum GitHub repository](https://github.com/ethereum/go-ethereum) 
+holds source code for the Geth Ethereum client and other tools and libraries 
+for developing DApps (decentralized applications).
+
+This guide walks you through writing a basic riddle application in Go, using the Go Ethereum SDK and the Rinkeby testnet.
+
+## Why write DApps using Go?
+
+Writing a DApp typically involves two parts:
+
+1. Writing the contract code in Solidity or a similar language.
+2. Writing the code that interacts with the deployed smart contract.
+
+The Go Ethereum SDK allows you to write code
+for the second part in the Go programming language.
+
+Code written to interact with the smart contract usually performs tasks 
+like serving up a user interface that allows the user to 
+send calls and messages to a deployed contract. 
+These are tasks where we don't need the resilience or distributed capacity 
+of the blockchain, or are too expensive 
+(in terms of dollar and computational costs) 
+to deploy to the Ethereum mainnet.
+
+Go allows you to write that application code with the same safety 
+features that Solidity gives you, plus other perks like:
+
+- An extensive library of tools to interact with the Ethereum network.
+- Tools to transpile Solidity contract code to Go, allowing you to interact 
+directly with the contract ABI (Application Binary Interface) 
+in your Go application.
+- Allows you to write tests for your contract code and application using Go's 
+testing libraries and Go Ethereum's blockchain simulation library. This lets you to 
+write unit tests that you can run without connecting to any Ethereum network, 
+public or private.
+
+## Structure of our application
+
+In this guide, we'll be writing a DApp that:
+
+1. Publishes a question.
+2. Allows users to submit answers.
+3. Allows users to check if their answers are correct.
+4. If a user's answer is correct, record their address.
+
+To do that, we need to:
+
+1. Write a smart contract that stores a question, an answer,
+a list of users who answered the question correctly,
+and the methods to access them.
+2. Write a Go application that allows us to:
+    - Deploy a new contract.
+    - Load an existing contract.
+3. Write a Go application that allows the user to:
+    - Read the question.
+    - Send an answer to the smart contract.
+    - Check if the answer sent is correct.
+    - If the answer sent is correct, record the user's account address.
+
+## Setting up your development environment
+
+To get started developing DApps with Go, we'll need to do the following:
+
+1. Make sure that you have [Go](https://golang.org/) 1.11 and newer installed.
+2. [Create a project folder](#create-a-project-folder).
+3. [Manage dependencies](#manage-dependences).
+4. [Install build tools](#install-build-tools).
+5. [Install the Go Ethereum SDK and solc](#install-the-go-ethereum-sdk-and-solc).
+6. [Set up Rinkeby testnet endpoint on Infura.io](#set-up-rinkeby-testnet-endpoint-on-infuraio)
+7. [Set up an Ethereum account](#set-up-an-ethereum-account)
+
+### Create a project folder
+
+Create a folder to contain your project. You can do this anywhere, 
+but for this guide we'll assume that your project is located at 
+`/go/geth-dapp-demo`.
+
+### Manage dependencies
+
+We'll be using Go modules to manage our dependencies for this project.
+To get starting using Go modules for this project:
+
+1. Open the terminal and navigate to your project folder.
+2. In your project folder, run: 
+
+    ```
+    go mod init github.com/<username>/geth-dapp-demo
+    ```
+
+    where `geth-dapp-demo` is the name of your project.
+
+3. Edit the resulting `go.mod` file and modify it to look like the following:
+
+    ```
+    module github.com/<username>/geth-dapp-demo
+
+    require (
+      github.com/ethereum/go-ethereum v1.8.20
+      github.com/joho/godotenv v1.3.0
+    )
+    ```
+
+4. Save the file.
+
+When you build your Go application, Go will automatically fill your `go.mod` file with the other dependencies you need. We can let Go take care of those -- for now. With our `go.mod` file in place, Go makes sure that we're using `v1.8.20` of the Go Ethereum SDK whenever we run the `go run` or `go build` command.
+
+### Install build tools
+
+You'll need to have GCC installed to compile 
+any Go application that imports the Go Ethereum SDK.
+
+The following sections describe how to get the Go Ethereum SDK compiling on your developer machine:
+
+- [Linux and macOS](#linux-and-macos)
+- [Windows](#windows)
+
+#### Linux and macOS
+
+To compile the Go Ethereum SDK:
+
+- On Linux, make sure that you've installed the `build-essential` package.
+- On macOS, make sure that you've instealled the Xcode command line tools. 
+Install the Xcode command line tools by running in the terminal: 
+`xcode-select --install`
+
+Then, download the Go Ethereum SDK with the `go get` command:
+
+```bash
+go get -u -v github.com/ethereum/go-ethereum
+```
+
+If everything's working correctly, `go get` downloads the `go-ethereum` package
+without errors. Otherwise, you may get an error like this:
+
+```
+# github.com/ethereum/go-ethereum/crypto/secp256k1
+exec: "gcc": executable file not found in $PATH
+```
+
+#### Windows
+
+You'll need to have a 64-bit version of GCC installed on Windows 
+to be able to work with the Go Ethereum SDK. 
+The [Go Ethereum Wiki](https://github.com/ethereum/go-ethereum/wiki/Installation-instructions-for-Windows) 
+provides instructions for installing the tools you need 
+to get the Go Ethereum SDK working on Windows.
+
+Then, download the Go Ethereum SDK with the `go get` command:
+
+```powershell
+go get -u -v github.com/ethereum/go-ethereum
+```
+
+If everything's working correctly, `go get` downloads the `go-ethereum` package
+without errors. Otherwise, you may get an error like this:
+
+```
+# github.com/ethereum/go-ethereum/crypto/secp256k1
+exec: "gcc": executable file not found in %PATH%
+```
+
+
+Alternatively, you can run a Docker container to perform your Go build tasks:
+
+```bash
+# This starts a docker container and attaches your command line session to
+# the bash prompt.
+docker run -ti --rm --mount "type=bind,src=//c/my_project_directory,dst=/root" -e GO111MODULE=on golang:1.11
+```
+
+This signs you into a bash shell on the container. From there, you'll be able to work with your Go files in a Linux (Debian) environment.
+
+### Install the Go Ethereum SDK and solc
+
+We'll also need to install the `abigen` tool from the
+Go Ethereum SDK and the Solidity compiler (`solc`).
+These two tools allow us to compile our Solidity contracts
+and generate the Go bindings that we'll import into our Go code.
+
+- You can get `abigen` and other Go Ethereum SDK tools from the [Geth download page](https://geth.ethereum.org/downloads/). This guide uses the "Geth & Tools 1.8.20" release.
+  
+    Or you can compile all the tools by going to the terminal and running:
+
+    ```bash
+    cd $GOPATH/src/github.com/ethereum/go-ethereum
+    git checkout v1.8.20
+    make all
+    export PATH=$PATH:$GOPATH/src/github.com/ethereum/go-ethereum/build/bin
+    ```
+
+    **NOTE:** For Windows — instead of running `export ...`, 
+    edit your Account Environment Variables and add 
+    `%GOPATH%/src/github.com/ethereum/go-ethereum/build/bin` to your `PATH`.
+
+- You'll also need the Solidity compiler,
+which you can get from the [Solidity documentation](https://solidity.readthedocs.io/en/v0.5.2/installing-solidity.html).
+This guide uses the v0.5.2 release.
+
+### Set up Rinkeby testnet endpoint on Infura.io
+
+To keep this guide straightforward, we'll be using the Ethereum API gateways provided 
+by [Infura.io](https://infura.io) instead of running our own Ethereum node.
+If you want to run your own Geth node for development,
+check out this [Ethereum 101 guide](https://beta.kauri.io/article/67a81d8746ee4b49ba19447e8e2a983e/v2)
+instead.
+
+To start developing our DApp using an endpoint provided by Infura.io:
+
+1. Go to [Infura.io](https://infura.io) and sign up for an account.
+2. Once you've signed up, go to your Dashboard and click on **CREATE NEW PROJECT**.
+3. Enter a name for your project, 
+and click **CREATE** to set up a new project that we'll be using for our DApp.
+
+Your newly created project should look like this:
+
+![New project on Infura.io](./assets/infura-new-project.jpg)
+
+We'll come back to this later, when we've deployed our smart contract.
+
+For now, we need the URL of our project's Ethereum API gateway endpoint. 
+Select "RINKEBY" from the **ENDPOINT** dropdown menu, 
+and take note of the URL that appears underneath it. It should look like this: 
+
+```
+https://rinkeby.infura.io/v3/<PROJECT_ID>
+```
+
+**IMPORTANT!:** Make sure that the endpoint you're using in your Go code
+points to the Rinkeby testnet. If you use an endpoint pointing to the
+Ethereum mainnet, you'll be spending real Ether to test your application.
+
+Creata a file in your project folder named `.env`.
+**Do not** commit this file to Git 
+or any other version control system (VCS) you might be using.
+Edit the `.env` file and enter your project's Ethereum API gateway endpoint like so:
+
+```bash
+GATEWAY="https://rinkeby.infura.io/v3/<PROJECT_ID>"
+```
+
+Save the file. We'll be loading this into our Go application later.
+
+**NOTE:** Using a third-party provider to connect to the Ethereum network means 
+that you're trusting it with all transactions and any Ether that you send through it. 
+If you choose to not use a third-party provider, 
+you'll have to either run and host your own Ethereum API gateway,
+or rely on your users to connect to their own Ethereum nodes.
+
+### Set up an Ethereum account
+
+We'll need an Ethereum account to deploy our smart contract.
+If you don't have an existing Ethereum account, 
+you can create one using the Geth tool that comes with the
+Go Ethereum SDK.
+
+To create a new Ethereum account, run in the terminal:
+
+```bash
+geth --datadir . account new
+```
+
+and follow the on-screen instructions.
+
+This creates a keystore folder in the current directory. 
+In it, you'll find a keystore file for your new account.
+It should look like this:
+`UTC--<timestamp>--<ethereum_address>`.
+**Do not** commit your keystore to your VCS.
+
+We'll need this keystore file and the passphrase for it to
+deploy your smart contract. 
+Save the location of your keystore file
+and the passphrase you've set
+in the `.env` file we created earlier:
+
+```bash
+GATEWAY="..."
+KEYSTORE="$HOME/.ethereum/keystore/UTC--2018-12-30T12-29-11.490098600Z--<etherem_address>"
+KEYSTOREPASS="<keystore_passphrase>"
+```
+
+To deploy a contract and and make contract calls,
+we'll need our account to contain Rinkeby Ether.
+Get testnet Ether for your account by
+going to https://faucet.rinkeby.io and following the instructions there.
+
+## Writing and compiling the smart contract
+
+You're all set and ready to go! First, we'll write our smart contract:
+
+1. Create a new folder in your project directory and name it `quiz`.
+2. In it, create a file named `quiz.sol` and add the following code:
+
+    ```solidity
+    pragma solidity >=0.5.2 <0.6.0;
+
+    contract Quiz {
+        string public question; 
+        bytes32 internal _answer;
+        mapping (address => bool) internal _leaderBoard;
+
+        constructor(string memory _qn, bytes32 _ans) public {
+            question = _qn;
+            _answer = _ans;
+        }
+
+        function sendAnswer(bytes32 _ans) public returns (bool){
+            return _updateLeaderBoard(_answer == _ans);
+        }
+
+        function _updateLeaderBoard(bool ok) internal returns (bool){
+            _leaderBoard[msg.sender] = ok;
+            return true;
+        }
+
+        function checkBoard() public view returns (bool){
+            return _leaderBoard[msg.sender];
+        }
+    }
+    ```
+
+We'll cover what our smart contract code does briefly; 
+for more information about writing smart contracts in Solidity, see 
+[this guide](https://beta.kauri.io/article/124b7db1d0cf4f47b414f8b13c9d66e2/v5).
+
+In our contract above, we're:
+
+1. Setting the data types that we want to store on the contract.
+    - `string public question`: 
+    Stores the question that we want to ask the user. 
+    Setting this as `public` has Solidity automatically
+    generate a getter function for it when the contract compiles.
+    This allows us to read this variable's contents with a 
+    `contractInstance.question()` method.
+    Because getters don't invoke code execution on the EVM,
+    they don't cost gas to run.
+    - `bytes32 internal _answer`: Stores the answer to our question.
+    We've set an `internal` modifier, which means that
+    this variable can only be accessed from within this contract.
+    - `mapping (address=>bool) internal _leaderBoard`: 
+    Stores a hash map of user accounts and a boolean value 
+    that tells us whether a given account 
+    has answered the question correctly.
+    We've also set this state variable as `internal`
+    to prevent external callers from modifying its contents.
+2. The `constructor` is called when we deploy the contract.
+Here, we give it a question `_qn` and an answer `_ans`.
+    - We take `_qn` as a string because we mean for 
+    it to be easily readable by anyone interacting with the contract.
+    - Our answer `_ans` is set as a fixed slice of 32 bytes (`bytes32`)
+    because we want to store it as a `keccak256` hash. 
+    Hashing the value of `_ans` obscures it,
+    making it unreadable in the contract source or
+    the transaction logs.
+3. `sendAnswer()` allows us to send an answer to the contract.
+The answer sent to the contract must be a 32 byte
+keccak256 hash, which we compare to the value of 
+`_answer` stored on the contract.
+If the values match, we update our `leaderBoard` to show that
+the account that makes this function call has answered correctly.
+4. `_updateLeaderBoard()` takes a true/false value and sets
+the entry on the `_leaderBoard` mapping for our user's account to that value.
+It's an `internal` function, which prevents external callers
+from arbitarily modifying the `_leaderBoard` mapping.
+5. `checkBoard()` lets the user check the entry on the `_leaderBoard` mapping
+for their account, and whether they have been recorded as answering the question
+correctly. This function doesn't require EVM code execution as it's just
+returning the contents a state variable. It doesn't cost gas, and can be set 
+the `view` modifier.
+
+Now that we've got our Solidity contract fleshed out,
+we need to compile it to an ABI JSON specification and a contract binary.
+Then, we'll generate a Go binding file from those files, and import
+it into our Go DApp.
+
+We'll use `solc` and `abigen` to do this.
+
+First, compile your contract:
+
+1. Open the terminal.
+2. In your project directory, navigate to the "quiz" 
+    folder that contains your `quiz.sol` file.
+3. Run:
+
+    ```bash
+    solc --abi --bin quiz.sol -o build
+    ```
+
+This creates a "build" folder that contains the files `Quiz.abi` and `Quiz.bin`.
+
+Next, generate the Go binding file. In the "quiz" directory, run:
+
+```bash
+abigen --abi="build/Quiz.abi" --bin="build/Quiz.bin" --pkg=quiz --out="quiz.go"
+```
+
+This generates a Go file that contains bindings for your smart contract
+which we can import into our Go code.
+
+## Write Go Code
+
+### Connect to Rinkeby network and get account balance
+
+We'll start writing our Go DApp by initializing a connection to
+the Rinkeby network, using the Infura.io gateway endpoint that we 
+[set up earlier](#set-up-rinkeby-testnet-endpoint-on-infuraio).
+
+In your project directory,
+create a new `main.go` file and add the following code:
+
+```go
+package main
+
+import (
+    "context"
+    "log"
+    "fmt"
+
+    "github.com/ethereum/go-ethereum"
+    "github.com/joho/godotenv"
+)
+
+var myenv map[string]string
+
+const envLoc = ".env"
+
+func loadEnv() {
+	var err error
+	if myenv, err = godotenv.Read(envLoc); err != nil {
+		log.Printf("could not load env from %s: %v", envLoc, err)
+	}
+}
+
+func main(){
+    loadEnv()
+
+    ctx := context.Background()
+
+    client, err := ethclient.Dial(os.Getenv("GATEWAY"))
+    if err != nil {
+        log.Fatalf("could not connect to Ethereum gateway: %v\n", err)
+    }
+    defer client.Close()
+
+    accountAddress := common.HexToAddress("<enter_ethereum_address>")
+    balance, _ := client.BalanceAt(ctx, accountAddress, nil)
+    fmt.Printf("Balance: %d\n",balance)
+}
+```
+
+Replace `<enter_ethereum_address` with the address of the Ethereum account you've set up
+in [Set up an Ethereum account](#set-up-an-ethereum-account).
+
+Here, we're:
+
+- Loading data from our `.env` file into a map `myenv`
+using the `godotenv` package, which we've set as a
+requirement in our `go.mod` file.
+Our `.env` file should look like this now:
+
+    ```env
+    GATEWAY="https://rinkeby.infura.io/v3/<project_id>"
+    KEYSTORE="keystore/<keystore_filename>"
+    KEYSTOREPASS=""
+    ```
+    
+    - We can then access values set in our `.env` file with `myenv["KEYNAME"]`.
+    For example, access the `GATEWAY` value with `myenv["GATEWAY"]`.
+    - Notice that we've also written a function `loadEnv()` that we
+    can invoke at the beginning of every function scope. By placing
+    a `loadEnv()` call at the start of every function that
+    uses environment variables, we make sure
+    that we catch any updates to our `.env` file while our application
+    is running.
+
+- Setting up a connection to our Infura.io Rinkeby gateway by
+calling `ethclient.Dial("<gateway_endpoint>")`.
+Note that this works for both TCP (HTTP/S) 
+and IPC (`<datadir>/geth.ipc`) endpoints.
+- Getting the balance of our Ethereum account by calling
+`client.GetBalance(ctx, accountAddress, nil)`.
+We have to convert our Ethereum address from a hex string like
+`48fddc985ecc605127f1a1c098c817778187637c` to the `common.Address`
+type before passing it to `GetBalance()`.
+- Printing the result of `GetBalance()`.
+
+Test your application by running `go run main.go` in the terminal.
+If it prints the balance of your Ethereum account,
+your application has successfully loaded configuration from your `.env` file
+and sent a message call to the Rinkeby network 🎉.
+
+Now that we know that our `ethclient.Dial()` call works,
+we won't need the `GetBalance()` call. Remove it from `main()`.
+
+### Create session
+
+Sessions are wrappers that allow us to make contract calls without
+having to constantly pass around authorization credentials 
+and call parameters. A session wraps:
+
+- a contract instance,
+- a `bind.CallOpts` struct that contain options for making contract calls,
+- a `bind.TransactOpts` struct that contains authorization credentials
+and parameters for creating a valid Ethereum transaction.
+
+Creating a session allows us to make calls on a contract instance
+like this:
+
+```go
+auth, _ := bind.NewTransactor(keystorefile, keystorepass)
+session.TransactOpts = auth
+
+// This calls the contract method sendAnswer(), 
+// which returns the question that we've set
+// for our deployed contract.
+session.SendAnswer(answer)
+session.Question()
+```
+
+As opposed to having to pass in a `bind.CallOpts` or `bind.TransactOpts`
+struct each time we make a contract call or a transaction:
+
+```go
+auth, _ := bind.NewTransactor(keystorefile, keystorepass)
+contractInstance.SendAnswer(&bind.TransactOpts{
+        From: auth.From,
+        Nonce: nil,           // nil uses nonce of pending state
+        Signer: auth.Signer,
+        Value: big.NewInt(0),
+        GasPrice: nil,        // nil automatically suggests gas price
+        GasLimit: 0,          // 0 automatically estimates gas limit
+    },
+    answer,
+    )
+contractInstance.Question(&bind.CallOpts{
+    Pending: true,
+    From: auth.From,
+    Context: context.Background(),
+})
+contractInstance.CheckBoard(&bind.CallOpts{
+    Pending: true,
+    From: auth.From,
+    Context: context.Background(),
+})
+```
+
+Instead, we do it once when we create a new session:
+
+```go
+auth, _ := bind.NewTransactor(keystorefile, keystorepass)
+session := quiz.QuizSession{
+    Contract: contractInstance,
+    CallOpts: bind.CallOpts{
+        Pending: true,        // Acts on pending state if set to true
+        From: auth.From,
+        Context: context.Background(),
+    },
+    TransactOpts: bind.TransactOpts{
+        From: auth.From,
+        Nonce: nil,           // nil uses nonce of pending state
+        Signer: auth.Signer,
+        Value: big.NewInt(0),
+        GasPrice: nil,        // nil automatically suggests gas price
+        GasLimit: 0,          // 0 automatically estimates gas limit
+    },
+}
+
+session.SendAnswer(answer)
+session.Question()
+session.CheckBoard()
+```
+
+**NOTE:** `bind.NewTransactor()` returns a `bind.TransactOpts` struct with
+the `From` and `Signer` fields filled in with information from your keystore file,
+and the other fields filled in with safe defaults. You can use it as-is for
+your transactions; for example: `contractInstance.SendAnswer(auth, answer)` also
+works for our above example.
+
+Let's create a `NewSession()` function that creates a new usable session and returns it:
+
+```go
+func NewSession(ctx context.Context) (session quiz.QuizSession) {
+	loadEnv()
+	keystore, err := os.Open(myenv["KEYSTORE"])
+	if err != nil {
+		log.Printf(
+			"could not load keystore from location %s: %v\n",
+			myenv["KEYSTORE"],
+			err,
+		)
+	}
+	defer keystore.Close()
+
+	keystorepass := myenv["KEYSTOREPASS"]
+	auth, err := bind.NewTransactor(keystore, keystorepass)
+	if err != nil {
+		log.Printf("%s\n", err)
+	}
+
+	// Return session without contract instance
+	return quiz.QuizSession{
+		TransactOpts: *auth,
+		CallOpts: bind.CallOpts{
+			From:    auth.From,
+			Context: ctx,
+		},
+	}
+}
+```
+
+Here, we're:
+
+- Loading our environment variables from `.env`.
+- Reading from our keystore file.
+- Getting our keystore passphrase from the environment variable `KEYSTOREPASS`.
+- Creating a new transactor with a `bind.NewTransactor()` call.
+- Forming and returning a new `quiz.QuizSession` struct with our newly created transactor and a `CallOpts` struct with some defaults.
+
+We can then create a new session in `main()`:
+
+```go
+func main(){
+    // ...
+    session := NewSession(context.Background())
+}
+```
+
+Note that we didn't specify a value for the `Contract` field in the
+session that we're returning from `NewSession()`. We'll do that 
+on the returned `session` after we've obtained a contract instance
+which we when we deploy a new contract on the 
+blockchain or when we load an existing contract. 
+
+We'll cover that next. 
+
+### Deploy and load contract
+
+Now that we've created a new session, we need to assign it a
+contract instance.
+
+We get a contract instance by deploying a contract,
+or loading an existing contract from a contract address.
+
+We'll write two functions to perform these tasks:
+
+```go
+// NewContract deploys a contract if no existing contract exists
+func NewContract(session quiz.QuizSession, client *ethclient.Client, question string, answer string) (quiz.QuizSession) {
+    loadEnv()
+
+    // Hash answer before sending it over Ethereum network.
+    contractAddress, tx, instance, err := quiz.DeployQuiz(&session.TransactOpts, client, question, stringToKeccak256(answer))
+    if err != nil {
+        log.Fatalf("could not deploy contract: %v\n", err)
+    }
+    fmt.Printf("Contract deployed! Wait for tx %s to be confirmed.\n", tx.Hash().Hex())
+
+    session.Contract = instance
+    updateEnvFile("CONTRACTADDR", contractAddress.Hex())
+    return session
+}
+
+// LoadContract loads a contract if one exists
+func LoadContract(session quiz.QuizSession, client *ethclient.Client) quiz.QuizSession {
+    loadEnv()
+
+    addr := common.HexToAddress(myenv["CONTRACTADDR"])
+    instance, err := quiz.NewQuiz(addr, client)
+    if err != nil {
+        log.Fatalf("could not load contract: %v\n", err)
+        log.Println(ErrTransactionWait)
+    }
+    session.Contract = instance
+    return session
+}
+
+// Utility functions
+
+// stringToKeccak256 converts a string to a keccak256 hash of type [32]byte
+func stringToKeccak256(s string) [32]byte {
+    var output [32]byte
+    copy(output[:], crypto.Keccak256([]byte(s))[:])
+    return output
+}
+
+// updateEnvFile updates our env file with a key-value pair
+func updateEnvFile(k string, val string) {
+    myenv[k] = val
+    err := godotenv.Write(myenv, envLoc)
+    if err != nil {
+        log.Printf("failed to update %s: %v\n", envLoc, err)
+    }
+}
+```
+
+Both `NewContract()` and `LoadContract()` create a contract instance,
+which we then assign to the `Contract` in the session with 
+`session.Contract = instance`. We then return the session.
+
+#### Deploy a new contract
+
+Our `NewContract()` function takes as parameters:
+
+- `session quiz.QuizSession`: a session, 
+which we've initialized in [Create session](#create-session).
+- `client *ethclient.Client`: the client object,
+which we've initialized in `main()`.
+- `question string`: a string containing the
+question we want the user to answer.
+- `answer string`: the answer to the question, which we take as a string parameter.
+
+We have to find a way to pass strings to our contract as 
+the `question` and `answer` parameters,
+but we don't want to hardcode our answer
+or commit a file containing the answer to VCS.
+If we do, a user looking at the contract source
+or our DApp source code
+would be able to find
+the expected value for `answer` stored as plain text.
+
+We also don't want to send the value of `answer`
+to the contract as plain text, because the contents
+of all transactions broadcasted to the network
+are logged as part of the transaction's payload.
+Any values sent as plain text would appear as-is
+when viewing the transaction's payload.
+
+You can see an example of this at
+[`0x445d51fc29741b261f392936970b3c842e922dec841023ca40e248b9d3a2ba19`](https://rinkeby.etherscan.io/tx/0x445d51fc29741b261f392936970b3c842e922dec841023ca40e248b9d3a2ba19)
+on the Rinkeby network.
+
+![Answer value stored as plain text](./assets/plaintextanswer-etherscan.jpg)
+
+To get around this, we'll do two things:
+
+1. Store the value of `answer` in a configuration file.
+
+    - We're already loading values from a `.env` file, so we can use that
+         to store our `question` and `answer` values.
+    - Add a `QUESTION` and an `ANSWER` key-value pair. Your `.env` file should now look like this:
+
+        ```env
+        GATEWAY="..."
+        KEYSTORE="..."
+        KEYSTOREPASS="..."
+        QUESTION="this is a question"
+        ANSWER="this is the answer"
+        ```
+    
+    - After we've done that, we can load the `question` and `answer` values in our code
+    using `myenv["QUESTION"]` and `myenv["ANSWER"]` respectively.
+2. Encode the value of `answer` as a Keccak256 hash before sending it
+as part of the `session.DeployQuiz()` call.
+    - To do this, we've written a utility function `stringToKeccak256()`
+    that converts a given string to keccak256 hash of type `[32]byte`.
+
+We can now run `quiz.DeployQuiz()` and obtain a
+contract address `contractAddress`,
+a transaction object `tx`, and a
+contract instance `instance`.
+We assign the contract instance to `session.Contract` and
+return the now fully-formed session.
+
+We'll also print the address of the transaction,
+which the user can look up on [Etherscan](https://rinkeby.etherscan.io)
+to check the progress of the transaction.
+
+Finally, we need to save the address of the deployed contract. 
+We'll save it to our `.env` file by using the `godotenv.Write()` method.
+Here, we've written another utility function `updateEnvFile()` 
+to help us do this. `updateEnvFile()` does the following:
+
+1. Adds a key `CONTRACTADDR` to our `myenv` map, 
+and assigns the contract address hex to it.
+2. Calls `godotenv.Write(myenv, envLoc)` 
+to write the updated `myenv` map to our `.env` file.
+
+#### Load an existing contract
+
+Our `LoadContract()` function also takes a `session` and `client`
+instance as parameters. Then, it attempts to load an existing
+contract by looking for a `CONTRACTADDR` entry in our `.env` file.
+
+If a `CONTRACTADDR` doesn't exist in our `.env` file,
+we won't know where to locate our contract on the blockchain,
+so we exit the function.
+
+Otherwise, we call `quiz.NewQuiz()` to create a new contract instance
+and assign it to `session.Contract`.
+
+#### Deploy only if contract doesn't exist
+
+We only want to call `NewContract()` if we don't already have
+an existing contract on the blockchain. 
+
+To do this, we'll
+write `if` statements to make sure that `NewContract()` is only called
+when `CONTRACTADDR` is not set in our `.env` file, and run
+`LoadContract()` only if we can find a non-empty `CONTRACTADDR`
+value:
+
+```go
+func main() {
+    // ...
+    // Load or Deploy contract, and update session with contract instance
+	if myenv["CONTRACTADDR"] == "" {
+		session = NewContract(session, client, myenv["QUESTION"], myenv["ANSWER"])
+	}
+
+	// If we have an existing contract, load it; if we've deployed a new contract, attempt to load it.
+	if myenv["CONTRACTADDR"] != "" {
+		session = LoadContract(session, client)
+	}
+}
+```
+
+**NOTE:** Once you do this, your DApp will attempt to load a contract
+from the value of `CONTRACTADDR` in your `.env` file
+as long as that value is not an empty string (`""`).
+To force your DApp to deploy a new contract,
+remove the `CONTRACTADDR` entry in your `.env` file,
+or set it to an empty string (`""`).
+
+### Interact with the contract
+
+Now that we have a contract instance to work with,
+we can use it to make contract calls.
+
+If you open the `quiz.go` file that we generated with `abigen`,
+you'll see that any function or state variable that we've marked as
+`public` is made available in `quiz.go` as methods we can call
+on a contract instance.
+
+For example, because we have this line of code in `quiz.sol`:
+
+```solidity
+function sendAnswer(bytes32 _ans) public returns (bool)
+```
+
+Importing `quiz.go` in our Go DApp would allow us to call:
+
+```go
+contractInstance.SendAnswer(&bind.CallOpts, answer)
+```
+
+Remember that we want to do [the following things](#structure-of-our-application) with our Go DApp:
+
+- Read the question.
+- Send an answer to the smart contract.
+- Check if the answer sent is correct.
+- If the answer sent is correct, record the user’s account address.
+
+To perform these tasks, we'll add
+the following functions to the bottom of your `main.go` file:
+
+```go
+//// Contract interaction
+
+// ErrTransactionWait should be returned/printed when we encounter an error that may be a result of the transaction not being confirmed yet.
+const ErrTransactionWait = "if you've just started the application, wait a while for the network to confirm your transaction."
+
+// readQuestion prints out question stored in contract.
+func readQuestion(session quiz.QuizSession) {
+	qn, err := session.Question()
+	if err != nil {
+		log.Printf("could not read question from contract: %v\n", err)
+		log.Println(ErrTransactionWait)
+		return
+	}
+	fmt.Printf("Question: %s\n", qn)
+	return
+}
+
+// sendAnswer sends answer to contract as a keccak256 hash.
+func sendAnswer(session quiz.QuizSession, ans string) {
+	// Send answer
+	txSendAnswer, err := session.SendAnswer(stringToKeccak256(ans))
+	if err != nil {
+		log.Printf("could not send answer to contract: %v\n", err)
+		return
+	}
+	fmt.Printf("Answer sent! Please wait for tx %s to be confirmed.\n", txSendAnswer.Hash().Hex())
+	return
+}
+
+// checkCorrect makes a contract message call to check if
+// the current account owner has answered the question correctly.
+func checkCorrect(session quiz.QuizSession) {
+	win, err := session.CheckBoard()
+	if err != nil {
+		log.Printf("could not check leaderboard: %v\n", err)
+		log.Println(ErrTransactionWait)
+		return
+	}
+	fmt.Printf("Were you correct?: %v\n", win)
+	return
+}
+```
+
+Here, we're writing three helper functions to wrap our contract calls:
+
+- `readQuestion(session quiz.QuizSession)`
+reads the question we've stored on our deployed
+smart contract, and prints it out.
+- `sendAnswer(session quiz.QuizSession, ans string)`
+takes an answer as a string,
+encodes it as a keccak256 hash,
+and sends it to the smart contract.
+- `checkCorrect(session quiz.QuizSession)`
+checks if the current user is recorded on 
+our smart contract as having sent a correct answer.
+
+Now, we can call these functions in `main()` to interact with a deployed
+smart contract.
+
+### Write a simple CLI
+
+Next, we'll write a bare-bones command-line interface (CLI) to allow our user to:
+
+1. Read the question.
+2. Send an answer.
+3. Check if their answer was correct.
+
+To implement this, add the following to the bottom of your `main()` block:
+
+```go
+// Loop to implement simple CLI
+for {
+    fmt.Printf(
+        "Pick an option:\n" + "" +
+            "1. Show question.\n" +
+            "2. Send answer.\n" +
+            "3. Check if you answered correctly.\n" +
+            "4. Exit.\n",
+    )
+
+    // Reads a single UTF-8 character (rune)
+    // from STDIN and switches to case.
+    switch readStringStdin() {
+    case '1':
+        readQuestion(session)
+        break
+    case '2':
+        fmt.Println("Type in your answer")
+        sendAnswer(session, readStringStdin())
+        break
+    case '3':
+        checkCorrect(session)
+        break
+    case '4':
+        fmt.Println("Bye!")
+        return
+    default:
+        fmt.Println("Invalid option. Please try again.")
+        break
+    }
+}
+```
+
+Then, add the following helper function to the bottom of your `main.go` file:
+
+```go
+// readStringStdin reads a string from STDIN and strips any trailing \n characters from it.
+func readStringStdin() string {
+    reader := bufio.NewReader(os.Stdin)
+    inputVal, err := reader.ReadString('\n')
+    if err != nil {
+        log.Printf("invalid option: %v\n", err)
+        return ""
+    }
+
+    output := strings.TrimSuffix(inputVal, "\n") // Important!
+    return output
+}
+```
+
+When you run your Go DApp with `go run main.go` in the terminal,
+`readStringStdin()` calls
+`bufio.NewReader(io.Stdin)`, which pauses your program and
+waits for the user to enter a value on the command line.
+We then take that input, process it, and return it as a value
+that our Go application can use. 
+
+Our CLI is implemented using an infinite `for` loop
+that does the following:
+
+1. Prints out quick instructions for using the CLI.
+2. Enters a `switch` statement that reads from user input on the
+command line, and executes a given `case` for the appropriate `rune`
+it receives.
+3. When the user selects an option, the code for that `case` runs,
+and returns to the top of the `for` loop when `break` is called.
+
+## Running your application
+
+Congrats! You've finished your quiz DApp!
+
+Before testing your application, check that your `.env` file
+contains the values that your Go DApp needs to run.
+It should look something like this:
+
+```env
+GATEWAY="https://rinkeby.infura.io/v3/<project_id>"
+KEYSTORE="/keystore/UTC--2019-01-14T13-58-48.439126200Z--<ethereum_address>"
+KEYSTOREPASS=""
+QUESTION="this is a question"
+ANSWER="this is the answer"
+```
+
+To run your Go DApp, enter in the terminal:
+
+```bash
+go run main.go
+```
+
+Or build and run your Go DApp by running:
+
+```bash
+go build main.go
+./main
+```
+
+## Limitations
+
+Our DApp is a simple example of what we can do with smart contracts
+and a Go DApp. Because we've tried to keep the example straightforward,
+our DApp has a few limitations:
+
+- Our DApp doesn't know if a transaction is completed or not.
+That's why we need separate functions:
+one to send an answer to the blockchain,
+and another to check if the answer was correct.
+We can implement this by having a process listen
+to any events on the blockchain at our contract address,
+but this is outside the scope of this guide.
+- Our user can't just run the DApp and have it work.
+They need to specify a keystore file, and make sure that
+they have a deployed contract ready to interact with.
+We can correct this by adding to our CLI options that allow
+the user to enter values that configure these parameters.
+- Our DApp assumes that the user who runs it is the same person who
+(1) deploys the contract, and (2) answers the question.
+Ideally, the DApp that deploys the contract and the DApp that
+interacts with the contract should be separate.
