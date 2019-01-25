@@ -174,7 +174,7 @@ Our answer `_ans` is set as a fixed slice of 32 bytes (`bytes32`) because we wan
 
 `_updateLeaderBoard()` takes a true/false value and sets the entry on the `_leaderBoard` mapping for our user's account to that value. It's an `internal` function, which prevents external callers from arbitrarily modifying the `_leaderBoard` mapping.
 
-`checkBoard()` lets the user check the entry on the `_leaderBoard` mapping for their account, and whether their correct answer was recorded. This function doesn't require EVM code execution as it's just returning the contents a state variable. It doesn't cost gas and is set with the `view` modifier.
+`checkBoard()` checks if the contract recorded that the user answered correctly. The current user's Ethereum account is set by our `KEYSTORE` environment variable in [Set up an Ethereum account](#set-up-an-ethereum-account)
 
 Now that we've got our Solidity contract fleshed out, we need to compile it to an ABI JSON specification and a contract binary. Then, we'll generate a Go binding file from those files, and import it into our Go DApp.
 
@@ -200,7 +200,7 @@ This command generates a Go file that contains bindings for the smart contract w
 
 We'll start writing our Go DApp by initializing a connection to the Rinkeby network, using the Infura.io gateway endpoint that we [set up earlier](#set-up-rinkeby-testnet-endpoint-on-infuraio).
 
-In the project directory, create a new `main.go` file and add the following code:
+In the project root directory, create a new `main.go` file and add the following code:
 
 ```go
 package main
@@ -333,7 +333,7 @@ session.CheckBoard()
 
 **NOTE:** `bind.NewTransactor()` returns a `bind.TransactOpts` struct with the `From` and `Signer` fields filled in with information from the keystore file, and the other fields filled in with safe defaults. We can use it as-is for transactions. For example `contractInstance.SendAnswer(auth, answer)` also works for our above example.
 
-Let's create a `NewSession()` function that creates a new usable session and returns it:
+Let's create a `NewSession()` function that creates a new usable session and returns it, add this to the bottom of your `main.go` file:
 
 ```go
 func NewSession(ctx context.Context) (session quiz.QuizSession) {
