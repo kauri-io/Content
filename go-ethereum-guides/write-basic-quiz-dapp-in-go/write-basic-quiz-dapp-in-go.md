@@ -256,7 +256,22 @@ Next we set up a connection to our Infura.io Rinkeby gateway by calling `ethclie
 
 Test the application by running `go run main.go` in the terminal. If it prints the balance of the Ethereum account, the application has successfully loaded configuration from the `.env` file and sent a message call to the Rinkeby network.
 
-Now that we know that our `ethclient.Dial()` call works, we won't need the `GetBalance()` call. Remove it from `main()`.
+Now that we know that our `ethclient.Dial()` call works, we won't need the `GetBalance()` call. Remove it from `main()`, so that your main() block looks like this:
+
+```go
+func main(){
+    loadEnv()
+
+    ctx := context.Background()
+
+    client, err := ethclient.Dial(os.Getenv("GATEWAY"))
+    if err != nil {
+        log.Fatalf("could not connect to Ethereum gateway: %v\n", err)
+    }
+    defer client.Close()
+
+}
+```
 
 ### Create session
 
@@ -496,7 +511,7 @@ If a `CONTRACTADDR` doesn't exist in the `.env` file, we won't know where to loc
 
 Otherwise, call `quiz.NewQuiz()` to create a new contract instance and assign it to `session.Contract`.
 
-#### Deploy only if the contract doesn't exist
+#### Deploy if the contract doesn't exist
 
 We only want to call `NewContract()` if we don't already have an existing contract on the blockchain.
 
