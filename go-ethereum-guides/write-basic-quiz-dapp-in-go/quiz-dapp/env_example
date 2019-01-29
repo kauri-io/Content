@@ -1,0 +1,6 @@
+# Rename this file to .env and update its values
+GATEWAY="https://rinkeby.infura.io/v3/<project_id>"
+KEYSTORE="keystore/UTC--2019-01-11T19-49-52.732927400Z--<addr>"
+KEYSTOREPASS=""
+QUESTION=""
+ANSWER=""

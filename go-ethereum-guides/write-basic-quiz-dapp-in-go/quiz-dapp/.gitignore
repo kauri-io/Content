@@ -1,0 +1,11 @@
+.idea
+build
+.ash_history
+.cache/
+.gitconfig
+.ssh
+.viminfo
+vendor
+keystore
+.env
+.env2
