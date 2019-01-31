@@ -69,4 +69,4 @@ Documentation:
 
 <https://openzeppelin.org/>
 
-To see examples of
+[Click here for examples of how to use the functions](https://github.com/OpenZeppelin/openzeppelin-solidity/tree/2c34cfbe0ea5b2969ca5a13710694f44c1be3e6a/contracts/mocks)
