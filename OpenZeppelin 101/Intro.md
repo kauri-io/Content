@@ -8,7 +8,7 @@ OpenZeppelin is a library of reusable smart contracts for the Ethereum blockchai
 
 The difference between both applications is that OpenZeppelin is a framework of contracts to use In your code, while ZeppelinOS is a platform of utilities to securely manage your smart contracts. In this tutorial series we will only be focusing on OpenZeppelin.
 
-#### Types of contracts
+#### Types of Contracts
 
  Depending on your project, OpenZeppelin has many different kinds of contracts to meet your needs. Contracts are divided into the following categories:
 
@@ -24,7 +24,7 @@ The difference between both applications is that OpenZeppelin is a framework of 
     10. Tokens:                 Creating tokens and protecting them.
     11. Utilities:              Other contracts that could assist you.
 
-The idea behind the contract database is to make it easier for you write your own. Contracts from OpenZeppelin should not be modified but instead inherited or combined with your own contracts for the best functionality. Its purpose is to serve as a base for you to get started with. We will dive into the contracts and their uses later on the series.
+The idea behind the contract database is to make it easier for you write your own. Contracts from OpenZeppelin should not be modified but instead inherited or combined with your own contracts for the best functionality. Its purpose is to serve as a base for you to get started with. We will dive into the contracts and their uses later on in the series.
 
 #### How To Download
 
@@ -61,12 +61,12 @@ Note: OpenZeppelin must be installed every time you make a new project. It is no
 
 #### Conclusion
 
-OpenZeppelin allows the user to write amazing contracts using a wide variety of baseline contracts to choose from. As well, Every contract follows secure industry standards. As a developer or independent user, you're going to save time and effort while using OpenZeppelin. In the rest of the tutorial series we're going to be talking about the different types of contracts and their uses.
+OpenZeppelin allows the user to write amazing contracts using a wide variety of baseline contracts to choose from. As well, every contract follows secure industry standards. As a developer or independent user, you're going to save time and effort while using OpenZeppelin. Throughout the rest of the tutorial series we're going to be talking about the different types of contracts and their uses.
 
-Documentation:
+Documentation & Helpful Links:
 
 <https://github.com/OpenZeppelin/openzeppelin-solidity>
 
 <https://openzeppelin.org/>
 
-[Click here for examples of how to use the functions](https://github.com/OpenZeppelin/openzeppelin-solidity/tree/2c34cfbe0ea5b2969ca5a13710694f44c1be3e6a/contracts/mocks)
+[Click here for examples of functions inherited from OpenZeppelin contracts.](https://github.com/OpenZeppelin/openzeppelin-solidity/tree/2c34cfbe0ea5b2969ca5a13710694f44c1be3e6a/contracts/mocks)

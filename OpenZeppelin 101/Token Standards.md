@@ -41,7 +41,7 @@ OpenZeppelin provides numerous different contracts to assist with creating a con
 ```solidity
 pragma solidity ^ 0.5 .2;
 
-import "openzeppelin-solidity/contracts/token/ERC20/"ERC20-option-you-choose".sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20-option-you-choose.sol";
 
 contract ERC20Contract is ERC20-option-you-choose {
   // the rest of your code
@@ -53,7 +53,7 @@ contract ERC20Contract is ERC20-option-you-choose {
 
 OpenZeppelin also provides contracts for creating and interacting with an ERC721 token.
 
--   IERC721: interfaces for the token.
+-   IERC721: Interfaces for the token.
 
 -   ERC721: Basic implementation of the token.
 
@@ -66,7 +66,7 @@ OpenZeppelin also provides contracts for creating and interacting with an ERC721
 ```solidity
 pragma solidity ^ 0.5 .2;
 
-import "openzeppelin-solidity/contracts/token/ERC721/"ERC721-option-you-choose".sol";
+import "openzeppelin-solidity/contracts/token/ERC721/ERC721-option-you-choose.sol";
 
 contract ERC721Contract is ERC721-option-you-choose {
   // the rest of your code
@@ -75,7 +75,7 @@ contract ERC721Contract is ERC721-option-you-choose {
 
 #### Conclusion:
 
-  To use any of these contracts just simply `import openzeppelin-solidity/contracts/token/"which standard"` according to which standard you choose and then implement the components necessary into your functions as well as into the constructor that you create.
+  To use any of these contracts just simply `import "openzeppelin-solidity/contracts/token/chosen standard"` according to which standard you choose and then implement the components necessary into your functions as well as into the constructor that you create.
 
 
   Note: You can have multiple token properties inherited to your contract. Although they must all be for the same standard of token.
