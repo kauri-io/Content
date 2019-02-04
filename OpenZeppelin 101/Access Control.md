@@ -20,7 +20,7 @@ Simply `import "openzeppelin-solidity/contracts/ownership/Ownable.sol";` at the 
 
 When creating your contract you must state that your contract is `Ownable` and add `onlyOwner` to any function that you only want the administrator to have access to.
 
-``` solidity
+```solidity
 pragma solidity ^ 0.5 .2;
 
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
@@ -43,7 +43,7 @@ Another way to have access control in your contract is to use the `contracts/acc
 
 To implement this into your contract you simply `import "openzeppelin-solidity/contracts/access/Roles.sol";`, create your different roles `Role private "your_Role"`, and then add a require statement in each function stating who's allowed to use it. There are many different ways at implementing roles, this is just a basic example.
 
-``` solidity
+```solidity
 pragma solidity ^ 0.5 .2;
 
 import "openzeppelin-solidity/contracts/access/Roles.sol";

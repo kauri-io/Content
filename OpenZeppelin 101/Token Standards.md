@@ -1,4 +1,4 @@
-# Standards
+# Token Standards
 
 #### What is a Token?
 
@@ -48,7 +48,6 @@ contract ERC20Contract is ERC20-option-you-choose {
 }
 ```
 
-
 #### OpenZeppelin & ERC721
 
 OpenZeppelin also provides contracts for creating and interacting with an ERC721 token.
@@ -77,25 +76,26 @@ contract ERC721Contract is ERC721-option-you-choose {
 
   To use any of these contracts just simply `import "openzeppelin-solidity/contracts/token/chosen standard"` according to which standard you choose and then implement the components necessary into your functions as well as into the constructor that you create.
 
-
   Note: You can have multiple token properties inherited to your contract. Although they must all be for the same standard of token.
-  ```solidity
-  pragma solidity ^ 0.5 .2;
 
-  import "openzeppelin-solidity/contracts/token/ERC721/ERC721Mintable.sol";
-  import "openzeppelin-solidity/contracts/token/ERC721/ERC721Burnable.sol";
+```solidity
+pragma solidity ^ 0.5 .2;
 
-  contract ERC721Contract is ERC721Mintable , ERC20Burnable {
-    // the rest of your code
-  }
-  ```
+import "openzeppelin-solidity/contracts/token/ERC721/ERC721Mintable.sol";
+import "openzeppelin-solidity/contracts/token/ERC721/ERC721Burnable.sol";
+
+contract ERC721Contract is ERC721Mintable , ERC20Burnable {
+  // the rest of your code
+}
+```
+
   It's important to understand token standards as well as how to create token smart contracts. With the use of OpenZeppelin it is easy to follow the standards and create more detailed tokens and contracts.
 
   Documentation:
 
-  <https://openzeppelin.org/api/docs/learn-about-tokens.html>
-
   <https://beta.kauri.io/article/b282e90cb260459fb8a8cc6e24ae34fa/v1/ethereum-101-part-v-tokenization>
+
+  <https://openzeppelin.org/api/docs/learn-about-tokens.html>
 
   <https://openzeppelin.org/api/docs/token_ERC20_ERC20.html>
 
