@@ -1,16 +1,20 @@
 # Introductory To OpenZeppelin
 
-#### What Is OpenZeppelin?
+## What Is OpenZeppelin?
 
-OpenZeppelin is a library of reusable smart contracts for the Ethereum blockchain. It focuses on secure and simple open source code. The contracts are continuously tested and community reviewed and they follow the best industry standards and security practices.
+OpenZeppelin is a library of reusable smart contracts for the Ethereum blockchain that focus on secure and simple open source code. The contracts are continuously tested and community reviewed and they follow the best industry standards and security practices.
 
-#### OpenZeppelin vs ZeppelinOS
+<!-- TODO: Why would I want to use? -->
 
-The difference between both applications is that OpenZeppelin is a framework of contracts to use In your code, while ZeppelinOS is a platform of utilities to securely manage your smart contracts. In this tutorial series we will only be focusing on OpenZeppelin.
+## OpenZeppelin vs ZeppelinOS
 
-#### Types of Contracts
+<!-- TODO: Polish -->
 
- Depending on your project, OpenZeppelin has many different kinds of contracts to meet your needs. Contracts are divided into the following categories:
+The difference between both applications is that OpenZeppelin is a framework of contracts to use in your code, while ZeppelinOS is a platform of utilities to securely manage your smart contracts. In this tutorial series we will only focus on OpenZeppelin.
+
+## Types of Contracts
+
+Depending on your project, OpenZeppelin has different kinds of contracts to meet your needs. OpenZeppelin divides contracts into the following categories:
 
     1.  Access:                 Roles and privileges.
     2.  Crowdsale:              Creating a smart contract for use in a crowdsale.
@@ -24,44 +28,32 @@ The difference between both applications is that OpenZeppelin is a framework of 
     10. Tokens:                 Creating tokens and protecting them.
     11. Utilities:              Other contracts that could assist you.
 
-The idea behind the contract database is to make it easier for you write your own. Contracts from OpenZeppelin should not be modified but instead inherited or combined with your own contracts for the best functionality. Its purpose is to serve as a base for you to get started with. We will dive into the contracts and their uses later on in the series.
+You shouldn't change OpenZeppelin contracts, but instead inherited or combined with your own contracts for the best functionality. Its purpose is to serve as a base for you to get started with. We will dive into the contracts and their uses later on in the series.
 
-#### How To Download
+## How To Download
 
-To begin, you will need to have Node.js and Truffle installed on your machine. As well to work with OpenZeppelin you should be familiar with Solidity: the programming language for smart contracts. The [Solidity In Depth Manual](https://solidity.readthedocs.io/en/v0.5.1/solidity-in-depth.html) is a good read to brush up on the language.
+To begin, you need to have [Node.js](https://nodejs.org/en/download/) and [Truffle](#) installed on your machine. To work with OpenZeppelin you should be familiar with Solidity: the programming language for smart contracts. The [Solidity In Depth Documentation](https://solidity.readthedocs.io/en/v0.5.1/solidity-in-depth.html) is a good read to brush up on the language.
 
-To download [Node.js](https://nodejs.org/en/download/) click on the hyperlink and follow the instructions in regards to your operating system.
+In a directory of your choice make a new project folder and initialize Truffle in it.
 
-To install Truffle simply open your command terminal of choice and type in the following.
+    mkdir myproject
+    cd myproject
+    truffle init
 
-Note: You must have Node.js  installed before you can download Truffle.
+We are now going to install the OpenZeppelin library into our project root directory. We use the `--save-exact` option to ensure that all dependencies are configured with an exact version since breaking changes (change in software that potentially make other components fail) might occur when versions are updated.
 
-    $ npm install -g truffle
+    npm init -y
+    npm install --save-exact openzeppelin-solidity
 
-In a directory of your choice you are going to make a new project folder and initialize it with Truffle.
+OpenZeppelin is now fully installed. All the library's contracts are stored in the `node_modules/openzeppelin-solidity/contracts` folder path within your project.
 
-    $ mkdir myproject
-    $ cd myproject
-    $ truffle init
+To use the contracts, import them by adding an import statement at the beginning of your contract:
 
-We are now going to install the OpenZeppelin library into our projects root directory. We use the --save-exact option to ensure that all dependencies are configured with an exact version since breaking changes(change in software that will potentially make other components fail) might occur when versions are updated.
+    import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
-    $ npm init -y
-    $ npm install --save-exact openzeppelin-solidity
+## Conclusion
 
-OpenZeppelin is now fully installed. All of the library's contracts will be stored in the following folder path within your project.
-
-        node_modules/openzeppelin-solidity/contracts
-
-To use the contracts all you have to do is import them by adding an import statement at the beginning of your contract:
-
-        import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
-
-Note: OpenZeppelin must be installed every time you make a new project. It is not accessible from project to project.
-
-#### Conclusion
-
-OpenZeppelin allows the user to write amazing contracts using a wide variety of baseline contracts to choose from. As well, every contract follows secure industry standards. As a developer or independent user, you're going to save time and effort while using OpenZeppelin. Throughout the rest of the tutorial series we're going to be talking about the different types of contracts and their uses.
+OpenZeppelin allows you to write standard, safer and securer contracts using a wide variety of baseline contracts to choose from. As a developer or independent user, you save time and effort while using OpenZeppelin. Throughout the rest of the tutorial series we're going to be talking about the different types of contracts and their uses.
 
 Documentation & Helpful Links:
 
