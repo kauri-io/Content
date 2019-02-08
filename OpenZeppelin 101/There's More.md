@@ -27,7 +27,8 @@ contract ECDSAMock {
     }
 }
 ```
-Documentation: https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/ECDSAMock.sol
+
+Documentation: <https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/ECDSAMock.sol>
 
 #### Drafts
 
@@ -55,7 +56,7 @@ Another standard we're going to introduce is ERC165 which is used to help with r
 
 -   ERC165Checked: This is a contract to simplify the process of checking if a contract supports the interface you want to use.
 
-``` solidity
+```solidity
 pragma solidity ^0.5.2;
 
 import "openzeppelin-solidity/contracts/introspection/ERC165.sol";
@@ -66,7 +67,8 @@ contract ERC165Mock is ERC165 {
     }
 }
 ```
-Documentation: https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/ERC165Mock.sol
+
+Documentation: <https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/ERC165Mock.sol>
 
 Note: When we refer to interface we are talking about what the contracts "ABI (Application Binary Interface: The interface by which the application program gains access to the operating system ad other services.") can represent.
 
@@ -82,7 +84,7 @@ There are two math contracts:
 
 -   SafeMath.sol : SafeMath provides unsigned math operations to protect your contract from overflow errors.
 
-``` solidity
+```solidity
 pragma solidity ^0.5.2;
 
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
@@ -110,7 +112,7 @@ contract SafeMathMock {
 }
 ```
 
-Documentation: https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/SafeMathMock.sol
+Documentation: <https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/SafeMathMock.sol>
 
 #### Payment
 
@@ -122,7 +124,7 @@ Payment is another neat feature of OpenZepplin which allows you to set different
 
 -   ConditionalEscrow.sol : An escrow contract that only allows a withdrawal if a condition is met.
 
--   Escrow.sol : Holds Ethers until the payee of the contract withdraws them. Thus It governs the release of funds involved in a transaction.
+-   Escrow.sol : Holds ether until the payee of the contract withdraws them. Thus It governs the release of funds involved in a transaction.
 
 -   RefundEscrow.sol : Escrow that holds funds for a beneficiary, which was deposited from multiple parties.
 
@@ -143,7 +145,8 @@ contract PullPaymentMock is PullPayment {
     }
 }
 ```
-Documentation: https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/PullPaymentMock.sol
+
+Documentation: <https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/PullPaymentMock.sol>
 
 #### Utilities
 
@@ -167,17 +170,16 @@ contract AddressImpl {
 }
 ```
 
-Documentation: https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/AddressImpl.sol
+Documentation: <https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/AddressImpl.sol>
 
 #### Conclusion
 
 OpenZeppelin provides the user with a multitude of contracts to suite every scenario. These utilities are an easy way at implementing broad features.
 
-
 Documentation:
 
-https://openzeppelin.org/api/docs/learn-about-utilities.html
+<https://openzeppelin.org/api/docs/learn-about-utilities.html>
 
 For more examples of how to use the functions check out the link below:
 
-https://github.com/OpenZeppelin/openzeppelin-solidity/tree/master/contracts/mocks
+<https://github.com/OpenZeppelin/openzeppelin-solidity/tree/master/contracts/mocks>

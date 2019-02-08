@@ -1,4 +1,4 @@
-# Standards
+# Token Standards
 
 ## What is a Token?
 
