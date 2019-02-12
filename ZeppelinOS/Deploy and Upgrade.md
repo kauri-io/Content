@@ -2,9 +2,11 @@
 
 In this tutorial we are going to install ZeppelinOS, deploy a simple contract and then update it!
 
-#### Prerequisites
+## Prerequisites
 
--   If you don't already, install [Node.js](https://nodejs.org/en/) onto your machine following the online instructions.
+-   If you haven't already, install [Node.js](https://nodejs.org/en/) onto your machine following the online instructions.
+
+-   An understanding of [Solidity](https://solidity.readthedocs.io/en/v0.5.1/solidity-in-depth.html) the programming language for smart contracts.
 
 -   We also need to install [Truffle](https://truffleframework.com/truffle). Truffle is a development framework for Ethereum to test and deploy smart contracts.
 
@@ -12,13 +14,13 @@ In this tutorial we are going to install ZeppelinOS, deploy a simple contract an
 
 Note: We are globally installing Truffle. Thus you do not need to install it more than once.
 
--   We need ganache a personal blockchain installed to test and run our smart contracts.
+-   We need Ganache a personal blockchain installed to test and run our smart contracts.
 
 `$ npm install -g ganache-cli`
 
 Note: We globally installed ganache which means we do not need to install it more than once.
 
-#### Installing
+## Installing
 
 After installing Node.js we are now ready to install ZeppelinOS. Using our terminal we are going to do the following:
 
@@ -26,7 +28,7 @@ Note: For windows users I recommend Powershell over Command Prompt.
 
 `$ npm install -g zos`
 
-That's it! ZeppelinOS is now installed.We globally installed it onto our system so this is the only time we ever have to install it (unlike OpenZeppelin which you have to download every time you want to use it).
+That's it! ZeppelinOS is now installed. We globally installed it onto our system so this is the only time we ever have to install it (unlike OpenZeppelin which you have to download every time you want to use it).
 
 Note: `zos --help` will give you a full list of all ZeppelinOS commands should you require them.
 
@@ -46,7 +48,7 @@ To initialize as a ZeppelinOS project execute the following:
 
 `$ zos init first-project`
 
-This command initialized Truffle by creating a configuration file as well as two empty files for us to work with our contract. The zos command also created a zos.json file which is going to contain more information about the project in relation to ZeppelinOS.
+This command initialized Truffle by creating a configuration file as well as two empty files called contracts and migrations for us to work with. The zos command also created a zos.json file which is going to contain more information about the project in relation to ZeppelinOS.
 
 The last step is to download the ZeppelinOS project library.
 
@@ -172,22 +174,22 @@ Before we do that though, to make sure there are no errors later on we're going 
 
 To begin we are going to create an instance of our contract:
 
-`$ zos create FirstContract --init initialize --args 2019,18,Juliette`
+`$ zos create FirstContract --init initialize --args 2019,19,Juliette`
 
-We are reinitializing our contract through the initialize function and we need to pass arguments to it. Thus we are initializing our contract to have year be 18 and name be Juliette.
+We are reinitializing our contract through the initialize function and we need to pass arguments to it. Thus we are initializing our contract to have year be 2019, age be 19, and name be Juliette.
 
 After creating our instance we want to test it using our Truffle console.
 
 `$ npx truffle console --network local`
 
-Once the Truffle console is up we are going to follow the following commands:
+Once the Truffle console is up we are going to do the following:
 
-`$ firstContract = await FirstContract.at('your address')`
+`$ firstContract = await FirstContract.at('your-address')`
 `undefined`
 
 Note: Our command is what is next to the $ and our output is the next line. We have 4 commands we are going to perform in our console.
 
-The address you're going to use will be directly underneath the 'Instance created at &lt;a different address; you don't want this one>' sentence that was executed from the zos create command.
+The address you're going to use will be directly _underneath_ the 'Instance created at <an-address>  sentence that was executed from the zos create command.
 
 `$ firstContract.year()`
 `<BN: 7e3>`
@@ -196,9 +198,9 @@ The address you're going to use will be directly underneath the 'Instance create
 `Juliette`
 
 `$ firstContract.age()`
-`<BN: 12>`
+`<BN: 13>`
 
-Note: 7e3 is hexadecimal for 2019 and 12 is hexadecimal for 18.Integer numbers will always be displayed as hexadecimal. To confirm if your math is right you can always convert it yourself from hexadecimal to decimal.
+Note: 7e3 is hexadecimal for 2019 and 13 is hexadecimal for 19.Integer numbers will always be displayed as hexadecimal. To confirm if your math is right you can always convert it yourself from hexadecimal to decimal.
 
 Our tests performed the way we wanted to, thus we can now go and update the contract.
 Type `.exit` to leave the Truffle console.
@@ -230,12 +232,23 @@ contract FirstContract is Initializable {
 }
 ```
 
-Note: ZeppelinOS allows you to add functions, variables, etc when you update but in order to preserve functionality, if you are to declare any new variables they must be below all your existing ones.
+Note: ZeppelinOS allows you to add functions, variables, etc when you update but in order to preserve functionality, if you are to declare any new variables they must be below all your existing ones. Like so,
+``` solidity
+contract MyContract1.0 {
+  uint256 public a;
+  uint256 public b;
+}
+
+contract MyContract1.1 {
+  uint256 public c;
+  uint256 public d;
+}
+```
 
 Once you are happy with your changes simply push your contract and then update it.
-`$ zos push`
+`$ zos push --network local`
 
-`$ zos update FirstContract`
+`$ zos update FirstContract --network local`
 
 Now that we have successfully updated our contract lets start the Truffle console again to test to make sure it works.
 
@@ -243,7 +256,7 @@ Now that we have successfully updated our contract lets start the Truffle consol
 
 Now type in the following commands:
 
-`$ firstContract = await FirstContract.at('your address')`
+`$ firstContract = await FirstContract.at('your-address')`
 `undefined`
 
 Note: Our command is what is next to the $ and our output is the next line. We have 4 commands we are going to perform in our console.
@@ -257,10 +270,11 @@ The address you're going to use is the same one we used before.
 `Juliette`
 
 `$ firstContract.age()`
-`<BN: 12>`
+`<BN: 13>`
 
 `$ firstContract.increaseYear()`
-You should got a lot of output here. Something like follows:
+
+You should got a lot of output here. Something like the following:
 
     { tx:
        'address',
@@ -289,12 +303,12 @@ You should got a lot of output here. Something like follows:
       logs: [] }
 
 `$ firstContract.age()`
-`<BN: 16>`
+`<BN: 17>`
 
 `$ firstContract.year()`
 `<BN: 7e7>`
 
-Note: 16 is hexadecimal for 22 and 7e7 is hexadecimal for 2023. Integer numbers will always be displayed as hexadecimal. To confirm if your math is right you can always convert it yourself from hexadecimal to decimal.
+Note: 17 is hexadecimal for 23 and 7e7 is hexadecimal for 2023. Integer numbers will always be displayed as hexadecimal. To confirm if your math is right you can always convert it yourself from hexadecimal to decimal.
 
 That's it! We successfully deployed and updated our contract on our local test network!
 

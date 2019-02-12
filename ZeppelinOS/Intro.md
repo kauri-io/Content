@@ -1,6 +1,6 @@
 # Introductory To ZeppelinOS
 
-#### What is It?
+## What is It?
 
 ZeppelinOS  is a development platform of utilities to help manage and operate smart contract projects in Ethereum. Its counterpart _OpenZeppelin_ is a library of reusable and secure smart contracts. In this tutorial series we are going to be primarily focusing on ZeppelinOS.
 
@@ -26,7 +26,7 @@ I'll put a couple definitions down to make this document easier to understand:
 
 -   dApp: Decentralised application.
 
-#### Features
+## Features
 
 Right now ZeppelinOS has some great features to get you started:
 
@@ -38,13 +38,13 @@ Right now ZeppelinOS has some great features to get you started:
 
 -   Vouching: To support the creators of EVM packages as well as ensure authenticity, you can vouch with ZEP tokens to confirm the quality of a package. Thus you can earn ZEP by auditing and developing packages.
 
-#### Future Features
+## Future Features
 
 ZeppelinOS has more features rolling out in the new year to make development and maintenance even easier. According to the [roadmap](https://blog.zeppelinos.org/zeppelinos-development-roadmap-pt-one/) we can expect to see the following:
 
 -   **Kernel Standard Libraries**: This is an on-chain set of upgradeable libraries that you can inherit into your smart contracts. This stage of the project is available and running to users in the form of [OpenZeppelin](https://openzeppelin.org/).
 
-     Although as per the [whitepaper](https://zeppelinos.org/zeppelin_os_whitepaper.pdf) it sounds like ZeppelinOS will be getting it's own version of a kernel seperate from OpenZeppelin.
+Although as per the [whitepaper](https://zeppelinos.org/zeppelin_os_whitepaper.pdf) it sounds like ZeppelinOS will be getting it's own version of a kernel separate from OpenZeppelin.
 
 -   **Development Tools**: We will have a set of tools for making development and maintenance easier. Some examples will include:
 
@@ -66,7 +66,7 @@ ZeppelinOS has more features rolling out in the new year to make development and
 
     -   Interface: An interface designed to help you perform security analysis, manage upgrades, and read data about contracts once they are deployed. The interface will have all the necessary off-chain tools to make the process as easy as possible.
 
-#### Conclusion
+## Conclusion
 
 We are expecting to see ZeppelinOS roll out some new features in the up coming future but in the meantime we have plenty to get us started. The ZeppelinOS framework is designed to make creating contracts as easy as possible. They've solved a major issue in providing the ability to upgrade an already deployed contract. Once the rest of the features are launched, creating smart contracts will have never been easier.
 

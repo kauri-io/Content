@@ -2,17 +2,27 @@
 
 The next feature of ZeppelinOS is the ability to link to EVM packages that are already deployed. In this tutorial we're going to learn how to link to these packages and publish our own!
 
-#### Linking
+## Prerequisites
+
+-   If you haven't already, install [Node.js](https://nodejs.org/en/) onto your machine following the online instructions.
+
+-   An understanding of [Solidity](https://solidity.readthedocs.io/en/v0.5.1/solidity-in-depth.html) the programming language for smart contracts.
+
+-   We also need to install [Truffle](https://truffleframework.com/truffle). Truffle is a development framework for Ethereum to test and deploy smart contracts.
+
+`$ npm install -g truffle`
+
+Note: We are globally installing Truffle. Thus you do not need to install it more than once.
+
+## Linking
 
 Linking to an EVM package is useful when there is already a package existing for your needs because you aren't wasting your time and space on the network deploying another package that already exists. Keep in mind that packages can be updated once deployed.
 
-To link to a package simply create your project.
-
 In the directory of your choice, create your project and then change to that directory:
 
-`$ mkdir math-project`
+`$ mkdir token-project`
 
-`$ cd math-project`
+`$ cd token-project`
 
 Now we're going to create our project.json file to store the relevant data for the project. You will be prompted with properties to fill in; you can fill them out if you wish or just press enter to leave them as the default.
 
@@ -20,7 +30,7 @@ Now we're going to create our project.json file to store the relevant data for t
 
 To initialize as a ZeppelinOS project execute the following:
 
-`$ zos init math-project`
+`$ zos init token-project`
 
 This command initialized Truffle by creating a configuration file as well as two empty files for us to work with our contract. The zos command also created a zos.json file which is going to contain more information about the project in relation to ZeppelinOS.
 
@@ -30,24 +40,20 @@ Note: This library has to be installed with every project. It cannot be used pro
 
 `$ npm install zos-lib`
 
-Open your project In a text editor of your choice (I'm using Atom) and create a new file called `MathContract.sol` under the contracts folder.
+Open your project In a text editor of your choice (I'm using Atom) and create a new file called `MyToken.sol` under the contracts folder.
 
 ``` solidity
 pragma solidity ^0.5.0;
 
-import "openzeppelin-eth/contracts/math/SafeMath.sol";
+import "openzeppelin-eth/contracts/token/ERC20/ERC20.sol";
+import "openzeppelin-eth/contracts/token/ERC20/ERC20Detailed.sol";
 
-contract MathContract {
-  using SafeMath for uint256;
+contract MyToken {
+    ERC20Detailed private _token;
 
-  uint256 multiply;
-  uint256 adding;
-
-function operations (uint256 _x, uint256 _y) external {
-    multiply.mul(_x);
-    adding.add(_y);
-  }
-
+    function initialize(ERC20Detailed token) external  {
+      _token = token;
+    }
 }
 ```
 openzeppelin-eth is an EVM package that is already deployed. It contains the same contracts that OpenZeppelin does. The only difference between the two is that openzeppelin-eth is deployed.
@@ -56,11 +62,13 @@ Now we are going to link our contract to the package:
 
 `$ zos link openzeppelin-eth`
 
+Right now the openzeppelin-eth EVM package has StandaloneERC20, StandaloneERC721, TokenVesting, and PaymentSplitter contracts pre-deployed. This means that these are the only contracts you can link to in the EVM package.
+
 We are now linked and we are going to compile and then add the contract to our project:
 
 `$ truffle compile`
 
-`$ zos add MathContract`
+`$ zos add MyToken`
 
 Now in a separate terminal run ganache.
 
@@ -76,28 +84,25 @@ Now we are going to push our contract to the local network.
 
 `$ zos push --deploy-dependencies --network local`
 
-It's time to create an instance of our contract as well as the package we linked to.
+It's time to create an instance of our contract as well as the package we linked to. We are going to use the StandaloneERC20 contract yo create an instance of the ERC721  token from the EVM package.
 
-`$ zos create MathContract`
+`$ zos create MyToken`
 
-//fill in the rest here :( it doesn't work
+`$ zos create openzeppelin-eth/StandaloneERC20 --init initialize --args JToken,JTKN,18,100,Juliette,[],[] --network local`
 
+The arguments are as follows: name, symbol, decimal, initial supply, initial holder, minters address, and pausers address. We just left the last two empty and put "Owner" instead of an address for who owns the token. You should see some output describing what you've initialized.
 
+The last step is to use truffle console to connect the two contracts together; MyToken and StandalineERC20. Open your zos.dev-<network-id>.json file and scroll down to where you see token-project/MyToken and openzeppelin-eth/StandalineERC20. The addresses below will be the ones you see here.
 
+`$ truffle console --network local`
 
+`$ myToken = await Mytoken.at('<MyToken-address>')`
+`undefined`
 
+`$ myToken.initialize('<MyToken-address>')`
+After this command there should be a lot of output detailing the transaction.
 
-
-
-
-
-
-
-
-
-
-
-
+That's it! You've linked to an EVM package and deployed it on your local blockchain with the arguments we submitted above and successfully joined our StandaloneERC20 token contract with our MyToken contract.
 
 #### Publishing
 
@@ -105,7 +110,7 @@ We've seen how to deploy, upgrade, and link our smart contracts. Now it's time t
 
 Note: If you follow the steps in this section of the tutorial you will publish your package to the network. If you don't want to do that, use this section as a reference.
 
-Create your project and initalize it:
+Create your project and initialize it:
 `$ mkdir project-name`
 `$ cd project-name`
 `$ npm init`
@@ -154,7 +159,7 @@ Next we're going to edit the `package.json` file. Add the following to the botto
    ]
 }
 ```
-If you have a zos.dev ....json file you can remove it now because it was specific for your local test network.
+If you have a zos.dev-"network id".json file you can remove it now because it was specific for your local test network.
 
 When you're ready:
 
@@ -173,7 +178,7 @@ That's it! It's very easy to publish an EVM package and it's even easier to link
 
 #### Vouching
 
-Vouching is useful to ensure the authenticity of a package. Anyone can create an EVM package but not all packages are useful or written very well. Vouching provides a way for the user to measure the quality of code of the package. The ZEP token is an ERC20 token that is going to be used in ZeppelinOS to vouch. Right now vouching is in it's early beta stages and is controlled by the following [contract](https://github.com/zeppelinos/zos/blob/v2.0.0/packages/vouching/contracts/Vouching.sol). This is the next feature we will see very soon.
+Vouching is useful to ensure the authenticity of a package. Anyone can create an EVM package but not all packages are useful or are written very well. Vouching provides a way for the user to measure the quality of code of the package. The ZEP token is an ERC20 token that is going to be used in ZeppelinOS to vouch. Right now vouching is in it's early beta stages and is controlled by the following [contract](https://github.com/zeppelinos/zos/blob/v2.0.0/packages/vouching/contracts/Vouching.sol). This is the next feature we will see very soon.
 
 Documentation:
 

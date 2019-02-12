@@ -10,9 +10,9 @@ Note: The wallet must be installed in every project as well as in your project d
 
 Next you can go to [Infura](https://infura.io/) to get access to a network node. You will need to [register](https://infura.io/register) for an account.
 
-Once you are signed in create a new project and from the Endpoint drop down select mainnet or one of the test nets depending on where you want to deploy. Write down the project ID because we will need it in a couple steps.
+Once you are signed in, create a new project and from the Endpoint drop down and select mainnet or one of the test nets depending on where you want to deploy. Write down the project ID because we will need it in a couple steps.
 
-If you don't already have a mnemonic for the account you want to use, you can use an [online generator](https://iancoleman.io/bip39/). Simply at the top of the page select the amount of words to be 12 and click the generate button next to it. Copy this mnemonic down for safe keeping.
+If you don't already have a mnemonic for the account that you want to use, you can create one with an [online generator](https://iancoleman.io/bip39/). At the top of the page select the amount of words to be 12 and click the generate button. Copy this mnemonic down for safe keeping.
 
 Scroll down to the bottom of the page where it says Derived Addresses and copy the first address listed. This is your Ethereum deployment account.
 
@@ -29,7 +29,7 @@ module.exports = {
   networks: {
     mainnet: {
       provider: function() {
-        return new HDWalletProvider(mnemonic, "https://mainnet.infura.io<your-project-id-here")
+        return new HDWalletProvider(mnemonic, "https://mainnet.infura.io<your-project-id-here>")
       },
       network_id: 1
     }
@@ -38,9 +38,10 @@ module.exports = {
 ```
 
 You can now push to the mainnet.
+
 `$ zos push --network mainnet`
 
-That's it!! Your contract is now published to the mainnet. If we were to use this with our other tutorials we simply would switch our commands from local to mainnet. As well we wouldn't use ganache since it was our local development platform.
+That's it!! Your contract is now published to the mainnet. In our Deploying & Upgrading tutorial we would still follow all the same steps because it is good practice to test your contracts, but after we are finished testing we would use the above command to push it to the mainnet. We would then change the update command to `$ zos update FirstContract --network mainnet`.
 
 Documentation:
 
