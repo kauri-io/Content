@@ -44,27 +44,27 @@ ZeppelinOS has more features rolling out in the new year to make development and
 
   - **Kernel Standard Libraries**: This is an on-chain set of upgradeable libraries that you can inherit into your smart contracts. This stage of the project is active and available to users in the form of [OpenZeppelin](https://openzeppelin.org/).
 
-  Although as per the [whitepaper](https://zeppelinos.org/zeppelin_os_whitepaper.pdf), it sounds as though ZeppelinOS will be receiving its own separate version of a kernel sometime in the near future.
+    Although as per the [whitepaper](https://zeppelinos.org/zeppelin_os_whitepaper.pdf), it sounds as though ZeppelinOS will be receiving its own separate version of a kernel sometime in the near future.
 
   - **Development Tools**: A set of tools that will make development and maintenance hassle-free. Some examples include:
 
-  - Attack Management system: To deal with emergency attacks. This will allow the user to perform actions such as pause, revert to the previous states, or fork the contract.
+    - Attack Management system: To deal with emergency attacks. This will allow the user to perform actions such as pause, revert to the previous states, or fork the contract.
 
-  - Upgrade Management: Allow upgrade-ability of your smart contract to implement things such as the progressive deployment of features, security patch maintenance, and updating in general.
+    - Upgrade Management: Allow upgrade-ability of your smart contract to implement things such as the progressive deployment of features, security patch maintenance, and updating in general.
 
   - **Interaction**: Various utilities to enhance inter-contract communications and networking.
 
-  - Scheduling: Will allow you to interfere with the execution time of your contract. An example would be enabling your contract to perform asynchronous execution on a function so that anyone can pay the gas cost rather than one specific person.
+    - Scheduling: Will allow you to interfere with the execution time of your contract. An example would be enabling your contract to perform asynchronous execution on a function so that anyone can pay the gas cost rather than one specific person.
 
-  - Marketplace: A hub where users can browse and sell services. Hence it is a market place for contracts. Submissions to the marketplace will be reviewed to ensure high quality and best security practices.
+    - Marketplace: A hub where users can browse and sell services. Hence it is a market place for contracts. Submissions to the marketplace will be reviewed to ensure high quality and best security practices.
 
-  - Blockchain Information Provider: This feature will allow you to have access to information such as current ETH price, gas price, transaction pool size, average mining block times, and more.
+    - Blockchain Information Provider: This feature will allow you to have access to information such as current ETH price, gas price, transaction pool size, average mining block times, and more.
 
   - **Off-chain Tools**: Off-chain tools aim to simplify the development process. Assisting with debugging, testing, deploying and monitoring of smart contract dApps.
 
-  - Analytic Dashboard: Help you to track the health of your dApp smart contracts.
+    - Analytic Dashboard: Help you to track the health of your dApp smart contracts.
 
-  - Interface: An interface designed to perform security analysis, manage upgrades, and interpret data about contracts once they are deployed.
+    - Interface: An interface designed to perform security analysis, manage upgrades, and interpret data about contracts once they are deployed.
 
 ## Conclusion
 
