@@ -52,7 +52,7 @@ Now that you have your mnemonic, project ID, and account we can make some change
   }
 };
   ```
-You'll also need to create a **secerts.json** within your project folder. You're going to add your mnemonic and Infura and Project ID to it.
+You'll also need to create a **secrets.json** within your project folder. You're going to add your mnemonic and Infura and Project ID to it.
 
   ```Solidity
   {
