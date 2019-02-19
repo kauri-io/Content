@@ -2,21 +2,15 @@
 
 ## What is a Crowdsale?
 
-In Blockchain, crowdsales are fundraisers to help assist in the development of a project or start-up. The tokens sold during the crowdsale are used to participate in the project once it is eventually launched. The tokens are only usable with this project. In some cases, these tokens gain market value later on depending on how successful the company is.
+In Blockchain, crowdsales are fundraisers to assist in the development of a project or start-up. Tokens sold during the crowdsale are used to participate in the project once it's launched. The tokens are usable only within this project.
 
 ## OpenZeppelin & Crowdsales
 
-OpenZeppelin created four categories of contracts based on the most important properties of a crowdsales.
+OpenZeppelin created four categories of contracts to assist in the creation of a crowdsale contract based on the most important properties of a crowdsale.
 
 ### Price & Rate Configuration
 
-The price point and rate at which tokens are bought and sold is a major factor when creating a token for a crowdsale.
-
-The **IncreasingPriceCrowdsale.sol** contract allows you to linearly in time increase the price of tokens.
-
-<!-- TODO: Clarify -->
-
-Something important to understand is the rate of a crowdsale. Currency math is always done in the smallest denomination. To read the amount, the currency is converted to the correct decimal place. The smallest currency is Wei. **This is for currency**
+Before creating a crowdsale it's important to understand the rate. Currency math is always done in the smallest denomination. To read the amount, the currency is converted to the correct decimal place. The smallest currency is Wei.
 
     1 Eth = 10^18 Wei
 
@@ -24,19 +18,46 @@ Something important to understand is the rate of a crowdsale. Currency math is a
 
     1 TKN = 10^(decimals) TKNbits
 
-You should keep these conversions in mind when writing and working with currencies and tokens in your contract. **Remember calculations are always in Wei and TKNbits.**
+These conversions should be kept in mind when writing and working with math in contracts because it's possible to accidently distribute more or less tokens/ether than you thought. **Remember that calculations are always in Wei and TKNbits.**
+
+
+In the price category we have one contract, **IncreasingPriceCrowdsale.sol** This allows you over a set period of time to have the price of your tokens increase.
+  ```solidity
+  pragma solidity ^0.5.2;
+
+  import "../crowdsale/price/IncreasingPriceCrowdsale.sol";
+  import "../math/SafeMath.sol";
+
+  contract IncreasingPriceCrowdsaleImpl is IncreasingPriceCrowdsale {
+      constructor (
+          uint256 openingTime,
+          uint256 closingTime,
+          address payable wallet,
+          IERC20 token,
+          uint256 initialRate,
+          uint256 finalRate
+      )
+          public
+          Crowdsale(initialRate, wallet, token)
+          TimedCrowdsale(openingTime, closingTime)
+          IncreasingPriceCrowdsale(initialRate, finalRate)
+      {
+          // solhint-disable-previous-line no-empty-blocks
+      }
+  }
+  ```
+Documentation: <https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/mocks/IncreasingPriceCrowdsaleImpl.sol>
+
 
 ### Emission
 
-Emission refers to how the token reaches the user. The straight forward method is to immediately transfer the token to the buyer. Although, there are other options to help control the number of tokens that are sold, the price point, etc.
+Emission refers to the process of how the token reaches the buyer. The default method is to immediately transfer the token to the buyer. Other methods are available which can help to control other aspects of the crowdsale such as price point and the number of tokens that are sold.
 
 -   Default: The crowdsale contract owns the tokens and transfers them to the buyers when they purchase them.
 
--   **MintedCrowdsale.sol**: The crowdsale contract mints tokens when a purchase is made. This is a way to ensure that excess tokens are not created.
+-   **MintedCrowdsale.sol**: The crowdsale contract mints tokens when purchased. This is a way to ensure that excess tokens are not created as well as control how many tokens are in circulation.
 
-    <!-- TODO: Clarify below -->
-
--   **AllowanceCrowdsale.sol**: This contract allows for another wallet to grant the crowdsale contract tokens to be sold. With this method, you need to ensure that you approve the allowance using the ERC20 **approve()** function.
+-   **AllowanceCrowdsale.sol**: Another wallet grants the crowdsale contract tokens to sell. With this method, you need to ensure that you approve the allowance using the ERC20 **approve()** function otherwise your contract will never receive the tokens.
 
     ```solidity
     pragma solidity ^ 0.5.2;
@@ -50,13 +71,13 @@ Emission refers to how the token reaches the user. The straight forward method i
 
 ### Validation
 
-Validation ensures that the specified requirements meet the customers' needs. OpenZeppelin has implemented the following contracts:
+Validation contains contracts that add more customization to your crowdsale. They limit access to token purchases.
 
--   **CappedCrowdsale.sol**: Adds a cap to the crowdsale. If the cap is exceeded, token purchases will not be valid. This can help to keep the value of the token in control.
+-   **CappedCrowdsale.sol**: Adds a cap or maximum amount of tokens to sell for the duration of the crowdsale. If the cap is exceeded, token purchases will not be valid. This helps to keep the value of the token in control.
 
--   **IndividuallyCappedCrowdsale.sol**: Caps individuals purchases to ensure that not one person owns all the tokens.
+-   **IndividuallyCappedCrowdsale.sol**: Caps an individuals purchases to ensure that not one person owns all the tokens. This maintains the value of the token.
 
--   **WhitelistedCrowdsale.sol**: Only people who are on the whitelist can buy tokens.
+-   **WhitelistedCrowdsale.sol**: Only people on the whitelist can buy tokens and thus you can sell to a more selective group of buyers.
 
 -   **TimedCrowdsale.sol**: Your crowdsale has an opening and closing time.
 
@@ -72,13 +93,13 @@ Validation ensures that the specified requirements meet the customers' needs. Op
 
 ### Distribution
 
-The most important part of the crowdsale is how the tokens are released. There are different options for this process.
+The most important part of the crowdsale is when the tokens are released to the buyer.
 
 -   Default: Release the tokens immediately when the buyers purchase them.
 
--   **PostDeliveryCrowdsale.sol**: Tokens are distributed after the crowdsale is over. Buyers are given the option of using the **withdrawToken()** function to obtain the tokens purchased.
+-   **PostDeliveryCrowdsale.sol**: Tokens are distributed after the crowdsale is over. Buyers use the **withdrawToken()** function to obtain the tokens.
 
--   **RefundableCrowdsale.sol**: If the minimum goal of the crowdsale is not reached, users can access the **claimRefund()** function to get their Ether back.
+-   **RefundableCrowdsale.sol**: If the minimum goal of the crowdsale is not reached, users use the  **claimRefund()** function to get their Ether back.
 
     ```solidity
     pragma solidity ^ 0.5 .2;
@@ -92,7 +113,9 @@ The most important part of the crowdsale is how the tokens are released. There a
 
 ## Conclusion
 
-Note: If more than one crowdsale feature is used, they must be separated by commas and each be imported.
+Crowdsales don't have to be complex to write and using OpenZeppelin can help incorporate features that give you, the owner, more control.
+
+Note: You can use more than one crowdsale feature. They each have to have an import statement as well as separated by a comma.
 
 ```solidity
 pragma solidity ^ 0.5 .2;
