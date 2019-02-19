@@ -18,7 +18,7 @@ The next feature of ZeppelinOS is the ability to link to EVM packages that are a
 
   `$ npm install -g ganache-cli`
 
-  Note: We globally installed ganache which means we do not need to install it more than once.
+  Note: We are globally installing ganache which means we do not need to install it more than once.
 
 ## Linking
 
@@ -26,19 +26,19 @@ Linking to an EVM package is a useful way of using dependencies and not creating
 
 In the directory of your choice, create your project and then change to that directory:
 
-  `$ mkdir token-project`
+  `$ mkdir first-project`
 
-  `$ cd token-project`
+  `$ cd first-project`
 
-Now we're going to create our **project.json** file to store the relevant data for the project. You will be prompted to fill in properties; you can fill them in if you wish or press enter to leave them as the default.
+Now we're going to create our **project.json** file to store the relevant data for the project. You will see a dialogue of properties to fill in. Fill them in if you wish or press enter to leave as the default.
 
   `$ npm init`
 
 To initialize as a ZeppelinOS project execute the following:
 
-  `$ zos init token-project`
+  `$ zos init first-project`
 
-This command initialized Truffle. It created a configuration file as well as two empty ones. A **zos.json**  file was also created which will contain more information about the project.
+This command initializes Truffle. It creates a configuration file as well as two empty files called contracts and migrations. The zos command initializes a **zos.json** file which contains more information about the project in relation to ZeppelinOS.
 
 The last step is to download the ZeppelinOS project library.
 
@@ -63,7 +63,7 @@ Open your project in a text editor of your choice (I'm using Atom) and create a 
   }
   ```
 
-**openzeppelin-eth** is an EVM package that is already deployed and It contains the same contracts that OpenZeppelin does. The only difference between the two is that OpenZeppelin is not deployed to the network.
+**openzeppelin-eth** is an EVM package that is already deployed and It contains the same contracts that OpenZeppelin does. The difference between the two is that OpenZeppelin is not deployed to the network.
 
 Now we are going to link our contract to the package:
 
@@ -85,7 +85,7 @@ Open up your original terminal and start a new session. For the address, you can
 
   `$ zos session --network local --from ganache-address-here --expires 3600`
 
-Note: If you get a message at any point saying "A network name must be provided to execute the requested action" it means that our session expired. Simply run the **zos session** command from above and try again from where you left off.
+Note: If you get a message at any point saying "A network name must be provided to execute the requested action" it means that our session expired. Run the **zos session** command from above and try again from where you left off.
 
 Now we are going to push our contract to the local network.
 
@@ -97,7 +97,7 @@ It's time to create an instance of our contract and the package we linked to. We
 
   `$ zos create openzeppelin-eth/StandaloneERC20 --init initialize --args JToken,JTKN,18,100,Juliette,[],[] --network local`
 
-The arguments are as follows: name, symbol, decimal, initial supply, initial holder, minters address, and pausers address. We left the last two empty and put "Juliette" instead of an address for who owns the token. You should see some output describing what you've initialized.
+The arguments are as follows: name, symbol, decimal, initial supply, initial holder, minters address, and pausers address. We left the last two empty and put "Juliette" instead of an address for who owns the token. You should see output describing what you've initialized.
 
 The last step is to use the truffle console to connect **MyToken** and **StandalineERC20** together. Open your **zos.dev-<network-id>.json** file and scroll down to where you see **token-project/MyToken** and **openzeppelin-eth/StandalineERC20**. The addresses listed in those sections will be the ones you use in the following commands.
 
@@ -128,7 +128,7 @@ Within the contracts folder, you are going to create your contract/package. Once
 
   `$ zos add contract-name-here`
 
-Then you can push your contract to the network. You have to use a real network, not your local network for it to be deployed and available for others to use.
+Then you can push your contract to the network. You have to use a real network, not your local network for it to deploy and be available for others to use.
 
   `$ zos push --network network-here`
 
@@ -177,7 +177,7 @@ When you're ready:
 
   `$ npm login`
 
-You'll be prompted to fill in your credentials to create an account such as username, password and email address.
+You'll see a prompt to fill in your credentials to create an account such as username, password and email address.
 Once you have an account. The last step is to publish your package to npm.
 
   `$ npm publish`
@@ -186,11 +186,11 @@ If any developers ever want to link to your package all they have to do is:
 
   `$ zos link your-project-name`
 
-That's it! It's very easy to publish an EVM package and it's even easier to link to one!
+That's it! It's easy to publish an EVM package and it's even easier to link to one!
 
 ## Vouching
 
-Vouching is useful to ensure the authenticity of a package. Anyone can create an EVM package but not all packages are useful or reliable. Vouching provides a way for the user to measure the quality of code. The ZEP token is an ERC20 token that is going to be used in ZeppelinOS to vouch. Right now vouching is in its early beta stages and is controlled by the following [contract](https://github.com/zeppelinos/zos/blob/v2.0.0/packages/vouching/contracts/Vouching.sol). This is the next feature we will see released.
+Vouching is useful to ensure the authenticity of a package. Anyone can create an EVM package but not all packages are useful or reliable. Vouching provides a way for the user to measure the quality of code. Right now vouching is in its beta stage and is controlled by the following [contract](https://github.com/zeppelinos/zos/blob/v2.0.0/packages/vouching/contracts/Vouching.sol). The ZEP token is an ERC20 token that will be used to vouch in this process. This is the next feature we will see released.
 
 Documentation:
 

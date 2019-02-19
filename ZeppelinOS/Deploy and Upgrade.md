@@ -18,7 +18,7 @@ In this tutorial, we are going to install ZeppelinOS, deploy a simple contract a
 
   `$ npm install -g ganache-cli`
 
-  Note: We globally installed ganache which means we do not need to install it more than once.
+  Note: We are globally installing ganache which means we do not need to install it more than once.
 
 ## Installing
 
@@ -28,7 +28,7 @@ Note: For Windows users, I recommend Powershell over Command Prompt.
 
   `$ npm install -g zos`
 
-That's it! ZeppelinOS is now installed. We globally installed it onto our system so this is the only time we ever have to install it (unlike OpenZeppelin which you have to install every time you want to use it).
+That's it! ZeppelinOS is installed.
 
 Note: `zos --help` will give you a full list of all ZeppelinOS commands should you require them.
 
@@ -40,7 +40,7 @@ In the directory of your choice, create your project and then change to that dir
 
   `$ cd first-project`
 
-Now we're going to create our **project.json** file to store the relevant data for the project. You will be prompted with properties to fill in. You can fill them in if you wish or press enter to leave them as the default.
+Now we're going to create our **project.json** file to store the relevant data for the project. You will see a dialogue of properties to fill in. Fill them in if you wish or press enter to leave as the default.
 
   `$ npm init`
 
@@ -48,7 +48,7 @@ To initialize as a ZeppelinOS project execute the following:
 
   `$ zos init first-project`
 
-This command initialized Truffle. It created a configuration file as well as two empty files called contracts and migrations. The zos command  created a **zos.json** file which is going to contain more information about the project in relation to ZeppelinOS.
+This command initializes Truffle. It creates a configuration file as well as two empty files called contracts and migrations. The zos command initializes a **zos.json** file which contains more information about the project in relation to ZeppelinOS.
 
 The last step is to download the ZeppelinOS project library.
 
@@ -58,7 +58,7 @@ Note: This library has to be installed with every project. It cannot be used pro
 
 ## Creating a Contract
 
-After successfully installing and initializing our project we are now ready to create our smart contract.
+After installing and initializing our project we are now ready to create our smart contract.
 
 Open your project folder in an editor of your choice(I use atom) and notice that your file structure should look as follows:
 
@@ -92,22 +92,23 @@ Click on your contract folder and create a new file called **FirstContract.sol.*
 
   }
   ```
+This is a basic contract that initializes 3 variables: year, age and name. We will update it later to make it more useful.
 
-In ZeppelinOS we use an initialize function instead of a standard constructor because this allows for the contract to be upgradeable. **Initializable.sol** is the contract we imported from the zos library, which makes it possible for us to have this initialize function.
+In ZeppelinOS we use an initialize function instead of a standard constructor because this allows for the contract to be upgradeable. **Initializable.sol** is a contract we've imported from the zos library. It makes it possible to have the initialize function.
 
-Now that we have created our contract we can compile and add information to the **zos.json** file through the following command:
+After creating our contract, we're ready to compile and add information to our **zos.json** file:
 
   `$ zos add FirstContract`
 
 ## Deploying
 
-We have installed and created our contract. Now we can test it with ganache our personal blockchain.
+It's time to deploy our contract onto our test network using ganache our personal blockchain.
 
 To start ganache, open a separate terminal window and type the following command:
 
   `$ ganache-cli --port 9545 --deterministic`
 
-You should see something similar to this:
+You should see something similar:
   ```
   Available Accounts
   ==================
@@ -150,23 +151,23 @@ You should see something similar to this:
 
   Listening on 127.0.0.1:9545
   ```
-We are provided with a mnemonic that is associated with our test account as well as some details about our development blockchain. Now that the blockchain is running in the background we need to test our contract by starting a new session. Open up your other terminal.
+We see a mnemonic that is associated with our test account as well as details about our development blockchain. Now we're going to start a new session and test our contract. Open up your other terminal.
 
   `$ zos session --network local --from 0x1df62f291b2e969fb0849d99d9ce41e2f137006e --expires 3600`
 
-We've began a session with the local network and we're using a default sender address as well as an expiry to indicate how long the session will run for.
+We've began a session with the local network. We're using a default sender address and we specify an expiry time for how long the session will run for.
 
-Finally we can deploy our contract.
+Our contract is ready to deploy.
 
   `$ zos push`
 
-Note: If you get a message at any point saying "A network name must be provided to execute the requested action" it means that our session expired. Simply run the **zos session** command from above and try again from where you left off.
+Note: If you get a message at any point saying "A network name must be provided to execute the requested action" it means that our session expired. Run the **zos session** command from above and try again from where you left off.
 
-That's it! Our contract was successfully deployed to the local network from the default address. If you look at your ganache terminal you will see details about the deployment. As well, in our project folder a new file was created. It should be called **zos.dev-"network id".json** It contains all the information about your project on this network.
+That's it! Our contract is successfully deployed to the local network from the default address. If you look at your ganache terminal you will see details about the deployment. In our project folder there is a new file called **zos.dev-"network id".json** It contains all the information about your project on this network.
 
 ## Upgrading
 
-The contract we created is now deployed to our local network and we want to upgrade it. Normally this would be impossible but with  ZeppelinOS we have the ability to do this.
+The contract we created is now deployed to our local network and we want to upgrade it. Normally this would be impossible but with ZeppelinOS we have the ability to do this.
 
 Before we upgrade, to make sure there are no errors later on, we're going to compile our contract.
 
@@ -200,7 +201,7 @@ The address you're going to use will be directly _underneath_ the 'Instance crea
   `$ firstContract.age()`
   `<BN: 13>`
 
-Note: 7e3 is hexadecimal for 2019 and 13 is hexadecimal for 19.Integer numbers will always be displayed as hexadecimal. To confirm if your math is right you can always convert it yourself from hexadecimal to decimal.
+Note: 7e3 is hexadecimal for 2019 and 13 is hexadecimal for 19. Integer numbers will always display as hexadecimal. To confirm if your math is right you can always convert it yourself from hexadecimal to decimal.
 
 Our tests performed the way we wanted to, thus we can now go and update the contract.
 Type *.exit* to leave the Truffle console.
@@ -231,8 +232,9 @@ Update your contract to look like the following:
   }
   }
   ```
+Updating our contract, we added a new function that will increase year and age by 4. The user is able to determine how old they will be In 4 years.
 
-Note: ZeppelinOS allows you to add functions, variables, etc when you update but in order to preserve functionality, if you are to declare any new variables they must be below all your existing ones. Like such,
+Note: ZeppelinOS allows you to add functions, variables, etc when you update. To preserve functionality, all new variables must be below your existing ones.
   ``` solidity
   contract MyContract1.0 {
   uint256 public a;
@@ -250,7 +252,7 @@ Once you are happy with your changes, push your contract and then update it.
 
   `$ zos update FirstContract --network local`
 
-Now that we have successfully updated our contract lets start the Truffle console again to test to make sure it works.
+Now that we have updated our contract lets start the Truffle console again to test to make sure it works.
 
   `$ npx truffle console --network local`
 
@@ -309,9 +311,9 @@ You should got a lot of output here. Something like the following:
   `$ firstContract.year()`
   `<BN: 7e7>`
 
-Note: 17 is hexadecimal for 23 and 7e7 is hexadecimal for 2023. Integer numbers will always be displayed as hexadecimal. To confirm if your math is right you can always convert it yourself from hexadecimal to decimal.
+Note: 17 is hexadecimal for 23 and 7e7 is hexadecimal for 2023. Integer numbers will always display as hexadecimal. To confirm if your math is right you can always convert it yourself from hexadecimal to decimal.
 
-That's it! We successfully deployed and updated our contract on our local test network!
+That's it! We deployed and updated our contract on our local test network!
 
 Documentation:
 

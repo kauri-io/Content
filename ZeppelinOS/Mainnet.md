@@ -14,7 +14,7 @@ Once you are signed in, create a new project and from the Endpoint drop down: se
 
 Now we have a node and a wallet but we need an account to join the two together. Install [Metamask](https://metamask.io/). Metamask will allow you to create an account where you can store funds, run dApps, and sign transactions. Upon creation of your account you will be given a mnemonic aka secret phrase associated with your account. We are going to use this mnemonic later on.  
 
-Now that you have your mnemonic, project ID, and account we can make some changes to our configuration file. Under the **truffle-config.js** file add the following:
+Now that you have your mnemonic, project ID, and account we can make changes to our configuration file. Under the **truffle-config.js** file add the following:
 
   ```solidity
   const HDWalletProvider = require('truffle-hdwallet-provider');
