@@ -2,80 +2,72 @@
 
 ## What is It?
 
-InterPlanetary File System, also known as IPFS, is a peer to peer media protocol that means to make the web faster, safer, and open sourced. We're in need of a system where we can store information in a way that it's easy to remember. It needs fast performance and resilient access to data. Able to access large amounts of data efficiently at a low cost. IPFS although in it's early stages can do all of these things.
+InterPlanetary File System, also known as IPFS, is a peer to peer media protocol that means to make the web faster, safer, and open sourced. Right now we're in need of a system that has fast performance, continuous access to content, efficient data transfer, easy naming conventions, and low cost. Although IPFS is in its early stages, it can do all of these things.
 
 ## What We're Using Right Now
 
-In the current implementation of the web, we are using a server called hypertext transfer protocol, also known as http. Our computers send an http request to a server hosting a website and then that server sends our computer a response back with the information we requested.
+In the current implementation of the web, we are using a service called hypertext transfer protocol, also known as http. When we search for content on the web, our computer sends an http request to the server hosting the content. In return the server sends a response with the information we requested.
 
-There are many problems with this method:
-- Most applications are hosted by only one server. Therefore if anything happens to it, you won't be able to access the content anymore.
-- It's inefficient because it downloads from one server. If there are a lot of people trying to access the same site, it will dramatically slow down the server and download speed.
-- The servers we are accessing information from are usually far away and for this reason, it's more expensive.
-- There is a lot of wasted space on duplicated content.
-- We are reliant on site administrators to keep a website active and updated and on hosting companies to keep our data safe. We depend on other servers to keep content accessible to us.
+There are problems with this method:
+
+-   Most applications on the web are hosted by one server. If anything happens to the server, we are not able to access the content anymore.
+-   Downloading from a single server is inefficient. If lots of people try to access the same site, browsing and downloading will be incredibly slow.
+-   The servers we access information from are usually far away. The further the distance the more expensive it is to access the content.
+-   Duplicated content creates wasted space.
+-   We depend on others to keep content accessible and secure. Site administrators are depended on to keep website active and updated and hosting companies on keeping our data safe.
 
 ## How it works
 
-IPFS is a decentralized way of storing and sharing files. Everything is kept track of through an address that's associated with its contents. It works using a structure called a merkledag which is a combination of a merkle tree and directed acyclic graphs. This is simply a cryptographically authenticated structure of data that uses different cryptographic hashes to address content. It allows for data to be linked together.
+IPFS is a decentralized way of storing and sharing files. Objects are kept track of through an address that's associated with the contents of the object. It works using a structure called a merkledag which is a combination of a merkle tree and directed acyclic graphs. Merkledag is a cryptographically authenticated structure of data that uses different cryptographic hashes to address content. It allows for data to link together.
 
 ### Peer2Peer
-IPFS works in a peer to peer system. Peer to peer is a network in which other computer systems or 'peers', share files directly between each other. Peers connected together are referred to as a swarm. Every computer using IPFS is a node on the network and every person who accesses content will have it stored on their node for a short period of time. Your node is then a host for anyone around you to access that content. Multiple modes can have the same content stored and thus you no longer have to depend on a single server for your content. It's a swarm of nodes that exchange data.
+
+IPFS runs using a peer to peer system. Peer to peer is a network in which other computer systems or 'peers', share files directly between each other. Peers connected together are called a swarm. Every computer using IPFS is called a node. When you access content on the network, your system first looks at nodes near you to see if they have what you're looking for. If it doesn't find it, it will search farther away. When your node finds the content, it will store it for a short period of time. Essentially you become a host for nodes close to you. Multiple modes can host the same content and thus you no longer have to depend on a single server. It's a swarm of nodes that exchange data.
 
 To reiterate:  
-- You connect to the swarm.
-- Request a file.
-- Your computer looks for the closest peer around you for a copy.
-- if they don't have it you'll look to go to the original source.
-- You download the file and become a host for it.
-- You only host files you use (the files you're interested in).
-- everyone is a host and a client at the same time
+
+-   You connect to the swarm.
+-   Request a file.
+-   Your computer looks for the closest peer for a copy.
+-   If they don't have it, it will look farther away (the original server).
+-   You download the file and host it.
+-   With this method you only host files you're interested in.
+-   Everyone is a host and a client at the same time
 
 ### Content Addressable
 
-Every file is given a unique identifier called a cryptographic hash. The hash is what is used to search for content on all the nodes. Instead of describing what the file is, it describes what the file contains. If the content of the file changes then the hash will change as well. This allows it to be tamper proof because you will know it's altered based on its hash. This is possible through the InterPlanetary naming system, also known as IPFN. This is a secure method because there is no possible way to tell what the content is through the hash.
+Every file is given a unique identifier called a cryptographic hash. The hash is used to search for content on the network. Instead of describing what the file is, it describes what the file contains. If the content of the file changes then the hash will change. This is a tamper proof system because you will know if it's been altered based on the hash. The InterPlanetary naming system, also known as IPFN is responsible for this feature. IPFN is a secure method because there is no way possible to determine what the content is through the hash.
 
-
-## Benefits
-
-Now that we understand what IPFS and how it works we'll explain why it matters.
+## Why it Matters
 
 ### Replication and Distribution
 
-There are no duplicates on the network because the hash for a file is based on the contents. If the contents of the two files are the same, they will have the same hash. This frees up unnecessary space. As well content will always be accessible even when its content changes because the hash does not point to its location, it points to its contents.
+Duplicates don't exist on the network because the hash for a file is based on the contents. If the contents of the files are the same, the hashes will also be the same. Getting rid of duplicates frees up unnecessary space.
 
 ### Access and Censorship
 
-Content will always be accessible because it's available from multiple sources. For this reason, content is difficult to censor. Authorities can't censor media because it's too hard to block every outlet. As well it's harder to attack the system because they would have to target every peer that has the content they want. There are no weak links or failing points in the system since there will always be another node.
+Content will always be accessible because it's available from multiple sources. For this reason, content is difficult to censor. Attacks would have to be directed at all nodes containing the content. Weak links or failing points in the system don't exist because there will always be another node. As well, since the hash points to the content and not its location, content will always be accessible because there is no such thing as a broken link.
 
 #### Speed
 
-Everyone serves each other content and thus you don't necessarily have to search far away servers for the content you want to access. It allows it to be a quick system regardless of how close you are to the original host. If a file is too large (bigger than 256 kb) it's broken down into smaller pieces and joined together when it reaches the user.
+Everyone serves each other content and thus you don't necessarily have to access far away servers. This allows it to be a quick system regardless of how close you are to the original host. If a file is too large (bigger than 256 kb) it's broken down into smaller pieces and joined together when it reaches the user. Smaller pieces of information travel faster.
 
 ## Downfalls
 
-IPFS is a system that only works if people are actively participating in it. But if people are participating content will be available forever if people want it to be there. As well, personal information is not secure on this sort of system.
-
-
-## how to ties to the blockchain
-
-Blockchain and IPFS are in its early stages but both focus on decentralization which is essentially eliminating the middle man. Right now IPFS is being used to store hashes to the files on blockchain for multiple different applications. Together they fall into the same level of technology of there being an internet with no servers. Both based on Web3.0 technology they are a perfect match.
-
-
+IPFS is a system that only works if people are actively participating in it. Although, if people are participating, content will be available forever but only if people want it to be there. As well, personal information is not secure on this system. Personal information would be challenging to keep designated to one node because of the way information is shared in IPFS.
 
 ## Conclusion
 
-
-IPFS is a system that allows the web to be more reliable and robust than what we have right now. It saves us money by not having to rely on servers that are far away. The content we want is always available to us because we have the option of pinning it forever. If a server goes down, it's not an issue because we can access the information from somewhere else. It's fast, reliable, and space efficient so what are we waiting for?
+IPFS is a system that allows the web to be more reliable and robust than what we have right now. It saves us money by not having to rely on servers that are far away. The content we want is always available to us because we have the option of pinning it forever. If a server goes down, it's not an issue because we can access the information from somewhere else. IPFS and Blockchain are both headed in the same direction; towards a decentralized system. It's fast, reliable, and space efficient so what are we waiting for?
 
 Documentation:
 
-https://docs.ipfs.io/introduction/usage/
+<https://docs.ipfs.io/introduction/usage/>
 
-https://www.sitepoint.com/http-vs-ipfs-is-peer-to-peer-sharing-the-future-of-the-web/
+<https://www.sitepoint.com/http-vs-ipfs-is-peer-to-peer-sharing-the-future-of-the-web/>
 
-https://medium.com/@ConsenSys/an-introduction-to-ipfs-9bba4860abd0
+<https://medium.com/@ConsenSys/an-introduction-to-ipfs-9bba4860abd0>
 
 For background information on Web3.0 check out the following link:
 
-https://blockchainhub.net/web3-decentralized-web/
+<https://blockchainhub.net/web3-decentralized-web/>
