@@ -14,7 +14,7 @@ There are problems with this method:
 -   Downloading from a single server is inefficient. If lots of people try to access the same site, browsing and downloading will be incredibly slow.
 -   The servers we access information from are usually far away. The further the distance the more expensive it is to access the content.
 -   Duplicated content creates wasted space.
--   We depend on others to keep content accessible and secure. Site administrators are depended on to keep website active and updated and hosting companies on keeping our data safe.
+-   We depend on others to keep content accessible and secure. Site administrators are depended on to keep websites active and updated and hosting companies on keeping our data safe.
 
 ## How it works
 
@@ -48,7 +48,7 @@ Duplicates don't exist on the network because the hash for a file is based on th
 
 Content will always be accessible because it's available from multiple sources. For this reason, content is difficult to censor. Attacks would have to be directed at all nodes containing the content. Weak links or failing points in the system don't exist because there will always be another node. As well, since the hash points to the content and not its location, content will always be accessible because there is no such thing as a broken link.
 
-#### Speed
+### Speed
 
 Everyone serves each other content and thus you don't necessarily have to access far away servers. This allows it to be a quick system regardless of how close you are to the original host. If a file is too large (bigger than 256 kb) it's broken down into smaller pieces and joined together when it reaches the user. Smaller pieces of information travel faster.
 

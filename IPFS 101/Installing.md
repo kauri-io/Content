@@ -8,13 +8,13 @@ Familiar with the command line and IPFS concepts.
 
 ## Downloading
 
-There are 3 different ways to install IPFS: from a prebuilt package, from ipfs-update, and building from source. We are going to be installing from the prebuilt package method. To use the other methods [follow the link.](https://docs.ipfs.io/introduction/install/)
+There are 3 ways to install IPFS: from a prebuilt package, from ipfs-update, and building from source. We are going to be installing from the prebuilt package. To try the other methods, [follow the link.](https://docs.ipfs.io/introduction/install/)
 
-We are going to install the **go-ipfs** prebuilt package from the [downloads page.](https://dist.ipfs.io/#go-ipfs) Depending on your platform, choose the appropriate download.
+We are going to install the **go-ipfs** prebuilt package from the [following link.](https://dist.ipfs.io/#go-ipfs) Depending on your platform, choose the appropriate download.
 
-Once you finish downloading, unzip the package in the location of where you want to store the IPFS tool.
+Unzip the package in the location of where you want to store the IPFS tool.
 
-The last step is to add the IPFS binary to your `PATH`. You are going to need the path to where you saved the IPFS.exe file. Copy the location and then depending on your platform, follow the instructions to add it to your `PATH`.
+The last step is to add the IPFS binary to your `PATH`. You are going to need the location of where you saved the IPFS.exe file. Copy the location and depending on your platform, follow the instructions to add it to your `PATH`.
 
 [Windows](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
 
@@ -26,7 +26,7 @@ Note: For Windows users, I recommend Powershell over Command Prompt.
 
   `$ ipfs help`
 
-If IPFS was added to your path successfully, you will see the help text output.
+If IPFS was added to your path successfully, you will see the contents of help.
 
 That's It! You now have the IPFS installation on your machine.
 
@@ -69,7 +69,7 @@ The init command outputs your peer identity key. This key is similar to an accou
      ./readme          <-- this file
      ./security-notes
 
-You can try the other files suggested by simply replacing **readme** from the above command with any of the ones listed ie) **about**,**help**, etc.
+You can try the other files suggested by replacing **readme** in the last command.
 
 It's important to know where your IPFS repository is located because this is where all of your content is going to be stored. The following command will tell you its location as well as its contents.
 
@@ -77,7 +77,7 @@ It's important to know where your IPFS repository is located because this is whe
 
 ## Basic Commands
 
-The quick start guide gives a list of all the commands to get started in IPFS.
+Note: The quick start guide from the readme file, gives a list of all commands to assist with getting started.
 
 ### Creating & Adding a File to IPFS
 
@@ -86,11 +86,11 @@ Navigate to a directory where you would like to create a file and then do the fo
   `$ mkdir hello-ipfs`
   `$ cd hello-ipfs`
 
-We just created a folder and changed to its directory. Now lets create a file inside this folder.
+We created a folder and changed to its directory. Now lets create a file inside this folder.
 
     `$ echo "hello world 1" > helloworld.txt`
 
-The text file **helloworld.txt** contains a line of text that says **"hello world 1"**. Next, add the file to IPFS.
+The text file **helloworld.txt** contains **"hello world 1"**. Next, add the file to IPFS.
 
     `$ ipfs add hellowworld.txt`
 
@@ -98,7 +98,7 @@ You will see the following output:
 
     `added QmYBmnUzkvvLxPksYUBGHy2sqbvwskLQw5gK6whxHGcsa8 helloworld.txt`
 
-  The combination of letters and numbers is the hash associated with this text file. The hash is created based on the contents of the file. If you change the contents of the file, the hash will change. Save this hash to access this file later on.
+The combination of letters and numbers is the hash that's associated with this text file. The hash is created based on the contents of the file. If you change the contents of the file, the hash will change. Save this hash to access the file later on.
 
 ### Reading content
 
@@ -106,12 +106,12 @@ Without using IPFS you can read the contents of the **helloworld.txt** file by:
 
   `$ cat mytextfiletxt`
 
-We added this file to IPFS which makes it possible to read it from there as well. Using the hash generated from the file we created earlier, enter the following:
+We can read it through IPFS as well. Using the hash generated earlier, enter the following:
 
   `$ ipfs cat QmYBmnUzkvvLxPksYUBGHy2sqbvwskLQw5gK6whxHGcsa8`
   `hello world 1`
 
-It returns the content of the file for us to read.
+It returns the content of the file.
 
 ### Changing the Content
 
@@ -123,7 +123,7 @@ Now we're going to see what happens if we change the text inside our **helloworl
   `$ cat helloworld.txt`
   `hello world 2`
 
-As you can see, we changed the text to say **"hello world 2"** and when we added it to IPFS, we were given a new hash. By using the cat command, we see that our **helloworld.txt** file was updated with the nee text.
+As you can see, we changed the text to say **"hello world 2"** and when we added it to IPFS, we were given a new hash. By using the cat command, we see that our **helloworld.txt** file was updated with the new text.
 
 It's also possible to still read the "hello world 1" phrase that we had earlier.
 
@@ -132,7 +132,7 @@ It's also possible to still read the "hello world 1" phrase that we had earlier.
   `$ cat helloworld.txt`
   `hello world 2`
 
-Using the first hash we are given, we can read what the hash represents. By reading **"helloworld.txt"** we see that the content still hasn't changed.
+Using the first hash we are given, **"hello world 1"** is outputted. We read the contents of the hash rather than the contents of the file. Reading the file **"helloworld.txt"** we see that the contents haven't changed.
 
 We can revert back to the **"hello world 1"** text if we wish.
 
@@ -142,21 +142,21 @@ We can revert back to the **"hello world 1"** text if we wish.
 
 ### Pinning
 
-As we talked about earlier, content on your node only stays there for a short period of time. Pinning allows you to tell IPFS what you want to keep around for an extend period of time.
+As we talked about earlier, content on your node stays there for a short period of time. Pinning allows you to tell IPFS what you want to keep around for an extend period of time.
 
 Using the file we created earlier, we're going to pin it.
 
   `$ ipfs pin add QmYBmnUzkvvLxPksYUBGHy2sqbvwskLQw5gK6whxHGcsa8`
 
-Once pinned, it will stay on your node and not be collected with the garbage command. Lets see what happens when we try to garbage collect it.
+Once pinned, it will stay on our node. Lets see what happens when we try to garbage collect it.
 
   `$ ipfs repo gc`
   `$ ipfs cat QmYBmnUzkvvLxPksYUBGHy2sqbvwskLQw5gK6whxHGcsa8`
   `hello world 1`
 
-Your file stayed on your node even after we garbage collected everything.
+The file couldn't be collected because it was pinned to our node.
 
-Note: `$ ipfs repo gc` allows you to clean your node of all the files you were hosting.
+Note: `$ ipfs repo gc` allows you to clean your node of all files you're hosting.
 
 ### To Remove a Pin
 
@@ -164,7 +164,7 @@ Note: `$ ipfs repo gc` allows you to clean your node of all the files you were h
 `$ ipfs repo gc`
 `$ ipfs cat QmYBmnUzkvvLxPksYUBGHy2sqbvwskLQw5gK6whxHGcsa8`
 
-The first command removes the pin and when we garbage collect, it is no longer on our node. The file will still be available in local directory stored on our computer but we are no longer hosting it on the node.
+The first command removes the pin. When we garbage collect, it's removed from our node. The file will still be available in our local directory stored on our computer but we are no longer hosting it on the node.
 
 ### Connecting to the Web
 
@@ -174,13 +174,13 @@ So far we've been working with IPFS locally. Now we're ready to try things onlin
 
 Daemon allows you to interact with the IPFS network through localhost on your browser. Switch back to your other terminal; We're going to take a look at our peers.
 
-Note: If you ever get an error message saying "API not found" while using IPFS, run the daemon command and continue where you left off. **To ensure that IPFS runs correctly it is suggested to run the daemon command every time you use IPFS; even locally.**
+Note: If you ever get an error message saying "API not found", run the daemon command and continue where you left off. **To ensure that IPFS runs correctly it is suggested to run the daemon command every time you use IPFS; even locally.**
 
 `$ ipfs swarm peers`
 
-You will see a bunch of addresses flash across your terminal. What we just did was open the swarm component that allows us to listen and maintain connections with other peers on the network. The **peers** command allows us to see every peer that has an open connection.
+You will see a bunch of addresses flash across your terminal. What we did was open the swarm component that allows us to listen and maintain connections with other peers on the network. The **peers** command allows us to see every peer that has an open connection.
 
-We've successfully connected to the IPFS network and from here we can get content from other nodes if we know the content hash.
+We've successfully connected to the IPFS network and from here we can get content from other nodes if we know the hash of the content.
 
 If we know the hash of a file and want to save it on our computer we can do the following:
 
@@ -198,7 +198,7 @@ Now that we've connected our node to the network we can use the IPFS Web Console
 
 <http://localhost:5001/webui>
 
-In the console, you will be able to check the status of your node, upload files to IPFS, explore files, see your peers, and adjust settings for your node. The web console is the ultimate tool for managing your IPFS node.
+In the console, you will be able to: check the status of your node, upload files to IPFS, explore files, see your peers, and adjust settings for your node. The web console is the ultimate tool for managing your IPFS node.
 
 ### Command Summary
 
@@ -208,9 +208,9 @@ We've gone over the basics of working with IPFS. Here is a summary of all the co
 
 -   **ipfs cat hash-of-file** : Shows the contents of the file.
 
--   **ipfs pin add hash-of-file** : Pin files to local IPFS storage.
+-   **ipfs pin add hash-of-file** : Pin file to local IPFS storage.
 
--   **ipfs pin rm hash-of-file** : Removes pin to local IPFS storage.
+-   **ipfs pin rm hash-of-file** : Removes pinned file from local IPFS storage.
 
 -   **ipfs repo gc** : Removes files from IPFS storage.
 
@@ -226,7 +226,7 @@ We've gone over the basics of working with IPFS. Here is a summary of all the co
 
 -   **ipfs help** : Provides you with help information.
 
-  Note: If you type in any command in the following format: **ipfs base-command** , the terminal will display the usage of that command. Ex) ipfs swarm, will tell you all the possibilities of the swarm command.
+  Note: If you try any command in the following format: **ipfs base-command** , the terminal will display the usage of that command. Ex) ipfs swarm, will tell you the usuage of the swarm command.
 
 There are many other commands; these are basic ones to get started. To read about the rest [follow the link.](http://127.0.0.1:8080/ipns/docs.ipfs.io/reference/api/cli/#ipfs)
 
@@ -248,6 +248,6 @@ Documentation:
 
 <https://docs.ipfs.io/introduction/usage/>
 
-For more advanced tutorials once you get the hang of the basics try out the following:
+For more advanced tutorials try out the following:
 
 <https://flyingzumwalt.gitbooks.io/decentralized-web-primer/content/>
