@@ -101,7 +101,7 @@ Maximum amount of gas to be used while executing this transaction.
 
 - If this transaction is transferring Ether, amount in Wei that will be transferred to the recipient account.
 - If this transaction is sending a message to a contract, amount of Wei [payable](https://medium.com/@rsripathi781/6-payable-functions-in-solidity-smartcontract-ethereum-d2535e346dc1) by the smart contract receiving the message.
-- If this transaction is creating a contract, this is the amount of Wei that will be added to the balance of the created contract.\_
+- If this transaction is creating a contract, this is the amount of Wei that will be added to the balance of the created contract.
 
 ### v, r, s
 
@@ -119,9 +119,9 @@ Input data of the message call (e.g., imagine you are trying to execute a setter
 
 The EVM-code utilized for [initialization of the contract](https://medium.com/@hayeah/diving-into-the-ethereum-vm-part-5-the-smart-contract-creation-process-cb7b6133b855).
 
-Don't try to grasp all of this at once... Some fields like the data field or the init field require you to have a deeper understanding of the internals of Ethereum to really understand what they mean and how to use them.
+Don't try to grasp all of this at once. Some fields like the data field or the init field require you to have a deeper understanding of the internals of Ethereum to really understand what they mean and how to use them.
 
-Not surprisingly, all transactions in a block are stored in a trie. And the root hash of this trie is stored in the...block header! Let's take a look into the anatomy of an Ethereum block.
+Not surprisingly, all transactions in a block are stored in a trie. And the root hash of this trie is stored in the block header! Let's take a look into the anatomy of an Ethereum block.
 
 ## Block
 
@@ -167,7 +167,7 @@ Difficulty level of this block. This is a measure of how hard it was to mine thi
 
 ### number
 
-_Number of ancestor blocks. This represents the height of the chain (how many blocks are in the chain). The genesis block has number zero._
+Number of ancestor blocks. This represents the height of the chain (how many blocks are in the chain). The genesis block has number zero.
 
 ### gasLimit
 
@@ -175,7 +175,7 @@ Each transaction consumes gas. The gas limit specifies the maximum gas that can 
 
 ### gasUsed
 
-_Sum of the gas cost of each transaction in the block._
+Sum of the gas cost of each transaction in the block.
 
 ### timestamp
 
@@ -183,7 +183,7 @@ Unix timestamp when the block was created. Note that due to the decentralized na
 
 ### extraData
 
-_Arbitrary byte array that can contain anything. When a miner is creating the block, it can choose to add anything in this field._
+Arbitrary byte array that can contain anything. When a miner is creating the block, it can choose to add anything in this field.
 
 ### mixHash
 
@@ -193,7 +193,7 @@ Hash used to verify that a block has been mined properly (if you want to really 
 
 Same as the mixHash, this value is used to verify that a block has been mined properly.
 
-Phew... This is a long list... Take your time to read it! Again, the point here is not to memorize each one of the fields and what they represent (you can always Google it later). What I intended was to describe each field in a simple way (at least simpler than the Yellow Paper) to help you to understand what they mean. Think of it as an Ethereum objects for dummies! ðŸ™‚
+Phew... This is a long list... Take your time to read it! Again, the point here is not to memorize each one of the fields and what they represent (you can always Google it later). What I intended was to describe each field in a simple way (at least simpler than the Yellow Paper) to help you to understand what they mean. Think of it as an Ethereum objects for dummies!™
 
 ## Conclusion
 
