@@ -4,7 +4,7 @@
 
 xDai is a blockchain based on Ethereum that uses Dai as its currency. It features 5-second block speed, a gas price fixed at 1 GWei, free capacity for blocks, and a fixed platform usage price. Using a proof of autonomy consensus, it's a fast and cost-efficient chain.  
 
-Fun Fact: The Burner Wallet featured at EthDenver 2019 ran on the xDai network! To learn more about its success follow the [link](https://medium.com/gitcoin/burner-wallet-at-ethdenver-was-faa3851ea833).
+Fun Fact: The Burner Wallet featured at EthDenver 2019 ran on the xDai network! The wallet allows the user to easily exchange currencies through a QR code scanner. To learn more about its success follow the [link.](https://medium.com/gitcoin/burner-wallet-at-ethdenver-was-faa3851ea833)
 
 ## What is Dai?
 
@@ -32,13 +32,22 @@ xDai tokens are not mintable; They're created by moving Dai over the xDai bridge
 
 -   xDai Token Bridge : <https://dai-bridge.poa.network/>
 
+-   Burner Wallet : <https://xdai.io/>
+
+-   Nifty Wallet Guide : <https://forum.poa.network/t/nifty-wallet-guide/1789>
+
 Using the [POA - Part 1 - Develop and deploy a smart contract](https://kauri.io/article/549b50d2318741dbba209110bb9e350e/v12/poa-part-1-develop-and-deploy-a-smart-contract) tutorial, there are minimal steps to change to allow us to deploy to xDai.
 
 **Note: xDai is a real network, not a test network! Any contract you deploy will cost real xDai/Dai. The following steps show you how to deploy to the xDai network using the steps from the tutorial mentioned.**
 
-![metamask](Images/metamask.png)
+Right now xDai is not available on the Metamask wallet. Instead download the [Nifty Wallet](https://chrome.google.com/webstore/detail/nifty-wallet/jbdaocneiiinmjbjlgalhcelgbejmnid/related?hl=en) extension for your browser.
 
-Change your RPC endpoint to <https://dai.poa.network>.
+![nifty](Images/nifty.png)
+
+If you already have a Metamask account, copy your seed phrase and click **import existing DEN** button. Enter your seed phrase and create a password. Once logged in, select the xDai Chain from the list of provided networks.
+
+Note: Later in the tutorial you will need this seed phrase again to create a mnemonic variable.
+
 
 ![bridge](Images/bridge.png)
 
