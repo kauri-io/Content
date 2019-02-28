@@ -32,7 +32,7 @@ The status page allows the users to check information in regards to how their no
 
 ![files](Images/files.png)
 
-You can upload files to your node directly in the browsers as well as explore files on other nodes if you know the content hash.
+You can upload files to your node directly in the browsers as well as explore files on other nodes if you know the hash of the content. 
 
 ![explore](Images/explore.png)
 
