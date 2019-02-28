@@ -267,7 +267,68 @@ If you're interested in an excellent tutorial about building a linked
 list in Solidity, I highly recommend Austin Thomas Griffith's "[Linked Lists inSolidity](https://medium.com/coinmonks/linked-lists-in-solidity-cfd967af389b)",
 which I used as a starting point for the following code:
 
-<script src="https://gist.github.com/crazyrabbitLTC/813f1ea59a2ef5fad55f1fbe0c00c480.js"></script>
+```solidity
+pragma solidity >=0.4.24 &lt;0.6.0;
+
+import "zos-lib/contracts/Initializable.sol";
+
+contract LinkedList is Initializable{
+
+    event EntryAdded(bytes32 head, string data, bytes32 next);
+
+    //Struct will be our Node
+    struct Node {
+        bytes32 next;
+        string data;
+    }
+
+
+    //Mappping will hold nodes
+    mapping (bytes32 => Node) public nodes;
+
+    //Length of LinkedList (initialize with constructor/initalizer)
+    uint public length;
+
+    //Head of list;
+    bytes32 public head;
+
+    //Name of LinkedList (the purpose for the list)
+    string public listName;
+
+    function initialize(string memory _listName) initializer public {
+        require(bytes(_listName).length >= 0);
+        length = 0;
+        listName = _listName;
+    }
+
+    function addNode(string memory _data) public returns (bool){
+        Node memory node = Node(head, _data);
+        bytes32 id = keccak256(abi.encodePacked(node.data, length, now));
+        nodes[id] = node;
+        head = id;
+        length = length+1;
+
+        emit EntryAdded(head, node.data, node.next);
+    }
+
+    //popNode
+    function popHead() public returns (bool) {
+        require(length > 0, "error...head is empty");
+        //hold this to delete it
+        bytes32 newHead = nodes[head].next;
+        //delete it
+        delete nodes[head];
+        head = newHead;
+        length = length-1;
+    }
+
+    //Contract interface
+    function getNodeExternal(bytes32 _node) external view returns (bytes32, string memory){
+        return (nodes[_node].next, nodes[_node].data);
+    }
+
+}
+```
 
 On line 3, we're importing:
 

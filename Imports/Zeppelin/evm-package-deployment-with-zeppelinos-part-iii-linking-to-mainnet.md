@@ -55,7 +55,29 @@ As you will not be able to publish your NPM package under that name, be
 sure to reference the module name according to the name you gave your
 NPM package.
 
-<script src="https://gist.github.com/crazyrabbitLTC/a23fbc1610cbb2408d9316eb278466b2.js"></script>
+```solidity
+pragma solidity >=0.4.24 <>0.6.0;
+import "zos-linkedlist/contracts/LinkedList.sol";
+//The NPM package name will have it's own folder under modules
+
+contract QuickContract {
+    LinkedList private _linkedlist;
+
+    function setLinkedList(LinkedList linkedlist) external {
+        _linkedlist = linkedlist;
+    }
+
+    function getHead() public view returns (bytes32) {
+        bytes32 _node = _linkedlist.head();
+        return _node;
+    }
+
+    function addNode(string memory _data) public {
+        _linkedlist.addNode(_data);
+    }
+}
+
+```
 
 This is a fairly simple contract designed to test the basic functions of
 the _LinkedList.sol_ contract. Note that the first function
