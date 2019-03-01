@@ -34,7 +34,7 @@ recommend .Net core.
 
 ### Create your app
 
-Create a project using the .Net CLI (below) or create a project in Visual Studio.
+Create a project using the .Net CLI or create a project in Visual Studio.
 
 ```shell
 dotnet new console -o NethereumSample
@@ -55,14 +55,7 @@ etc).
 
 Open the _Program.cs_ file in the IDE or editor.
 
-### Code to retrieve account balance
-
-Below is the full sample code for _Program.cs_. See below for a fuller explanation of
-each step.
-
-```
-<!-- TODO: GET -->
-```
+## Code First Steps
 
 First, the code adds required namespaces for Nethereum:
 
@@ -70,7 +63,7 @@ First, the code adds required namespaces for Nethereum:
 using Nethereum.Web3;
 ```
 
-Next create an instance of Web3, with the infura url for
+Next it creates an instance of Web3, with the infura url for
 mainnet.
 
 ```csharp
@@ -81,6 +74,5 @@ And then you can use the Ethereum API via Nethereum to interact with accounts an
 
 ## Next Steps
 
-[Read the Nethereum Getting Started guide](https://nethereum.readthedocs.io/en/latest/getting-started/)
-
-[The Nethereum documentation](https://nethereum.readthedocs.io/en/latest/)
+- [Read the Nethereum Getting Started guide](https://nethereum.readthedocs.io/en/latest/getting-started/)
+- [The full Nethereum documentation](https://nethereum.readthedocs.io/en/latest/)

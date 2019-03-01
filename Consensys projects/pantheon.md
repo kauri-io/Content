@@ -20,12 +20,12 @@ Pantheon provides:
 - A command line interface
 - JSON-RPC API for running, maintaining, debugging, and monitoring node operations in an Ethereum network.
 
-## Install Binaries
+## Installation
 
 ### Install on macOS Using Homebrew
 
 ```shell
-brew tap pegasyseng/pantheon\
+brew tap pegasyseng/pantheon
 brew install pantheon
 ```
 
@@ -46,10 +46,9 @@ bin/pantheon --help
 
 ## Build from source
 
-Pantheon requires Java 8+ to compile; earlier versions are not
+Pantheon requires Java 8+ to compile, earlier versions are not
 supported. Pantheon is currently supported only on 64-bit versions of
-Windows, and requires a 64-bit version of JDK/JRE. We recommend that you
-also remove any 32-bit JDK/JRE installations.
+Windows, and requires a 64-bit version of JDK/JRE. It's recommended to remove any 32-bit JDK/JRE installations.
 
 Clone the repo:
 
@@ -57,13 +56,13 @@ Clone the repo:
 git clone --recursive https://github.com/PegaSysEng/pantheon.git
 ```
 
-In the _pantheon_ directory build Pantheon with the Gradle wrapper `gradlew`, omitting tests as:
+In the _pantheon_ directory build Pantheon with the Gradle wrapper `gradlew`, omitting tests:
 
 ```shell
 ./gradlew build -x test
 ```
 
-To run gradlew, you must have the `JAVA_HOME` system variable set to the Java installation directory.
+To run `gradlew`, you must have the `JAVA_HOME` system variable set to the Java installation directory.
 
 Go to the distribution directory:
 
@@ -85,7 +84,7 @@ cd pantheon-{version}/
 bin/pantheon --help
 ```
 
-## Installation on VM
+## Installation on a VM
 
 You can run Pantheon on a virtual machine (VM) on a cloud service such
 as AWS or Azure, or locally using a VM manager such as
@@ -95,21 +94,19 @@ If you set up your own VM locally using a VM manager such as
 [VirtualBox](https://www.virtualbox.org/), there are a few
 considerations:
 
-- Make sure that Intel Virtualization Technology (VTx) and Virtualization Technology for Directed I/O (VT-d) are enabled in BIOS settings.
+- Make sure that you enable Intel Virtualization Technology (VTx) and Virtualization Technology for Directed I/O (VT-d) in the BIOS settings.
 - On Windows, you might need to disable Hyper-V in the Windows Feature list.
 
 It is recommended that you create a VM with the following attributes:
 
-- Memory Size: Set to 4096
+- Memory size set to 4096
 - Create a virtual hard disk with at least 10 GB
 - Virtual hard disk file type: VDI (if you need to share it with other apps, use VHD)
-- (Optional) You can create a shared directory in order to copy block files or genesis files from the host computer to the VM. For details on how to create a shared directory, see "Share Folders" in [Install Ubuntu on Oracle VirtualBox](https://linus.nci.nih.gov/bdge/installUbuntu.html).
-
-[Click here to continue the build from source tutorial.](https://docs.pantheon.pegasys.tech/en/latest/Installation/Build-From-Source/)
-
-[Click here to visit the knowledge base to learn more about Pantheon](https://docs.pantheon.pegasys.tech/en/stable/)
+- (Optional) You can create a shared directory to copy block files or genesis files from the host computer to the VM. For details on how to create a shared directory, see "Share Folders" in [Install Ubuntu on Oracle VirtualBox](https://linus.nci.nih.gov/bdge/installUbuntu.html).
 
 ## Next Steps
 
-Continue with the [Private Network Quickstart](https://docs.pantheon.pegasys.tech/en/latest/Tutorials/Private-Network-Quickstart/) or [Starting
-Pantheon](https://docs.pantheon.pegasys.tech/en/latest/Getting-Started/Starting-Pantheon/).
+- [The build from source tutorial](https://docs.pantheon.pegasys.tech/en/latest/Installation/Build-From-Source/)
+- [The Private Network Quickstart](https://docs.pantheon.pegasys.tech/en/latest/Tutorials/Private-Network-Quickstart/)
+- [Starting Pantheon](https://docs.pantheon.pegasys.tech/en/latest/Getting-Started/Starting-Pantheon/)
+- [The Pantheon knowledge base](https://docs.pantheon.pegasys.tech/en/stable/)
