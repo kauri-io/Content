@@ -1,5 +1,5 @@
 # Proposed title
-Simple Token-Curated Registry
+Incentivizing high-quality curation with a Token-Curated Registry
 
 ## Structure
 1. What is a Token-Curated Registry
