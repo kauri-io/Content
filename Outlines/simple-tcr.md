@@ -2,7 +2,7 @@
 Simple Token-Curated Registry
 
 ## Structure
-1. What is Token-Curated Registry
+1. What is a Token-Curated Registry
 2. Examples of TCRs
 3. Creating a TCR
 	1. Smart contract
