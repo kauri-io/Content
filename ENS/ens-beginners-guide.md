@@ -77,6 +77,7 @@ Edit the file in your favorite editor - don't worry too much about the code here
  - Allows the file to be executed by Node.js
  - Allows us to use Javascript async/await syntax
  - Gets the ENS name from the command's parameters
+ - Checks that you have set the Infura URL environment variable
 
 ```js
 #!/usr/bin/env node
@@ -88,6 +89,11 @@ Edit the file in your favorite editor - don't worry too much about the code here
     // bail if no name provided
     if(!name){
         console.error('No name provided for lookup\nUsage: enslookup <name>')
+        return;
+    }
+    // bail if no infura url provided as environment variable
+    if(!process.env.INFURA_URL){
+        console.error(`Missing INFURA_URL environment variable`);
         return;
     }
     console.log(`Name:\t\t${name}`);
@@ -189,7 +195,7 @@ Public Key:
 ```
 *Note on Windows you will have to run `node enslookup`*
 
-The full code for the enslookup example can be found on [github]().
+The full code for the enslookup example can be found on [github](https://github.com/darrenlangley/enslookup).
 
 ## Future of ENS
 
