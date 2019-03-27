@@ -58,7 +58,7 @@ TODO: infura url
 
 Create a new file called `enslookup` (notice there is no file extension).
 
-Make the file executable:
+If you are on a Linux or macOS, make the file executable:
 ```bash
 chmod +x enslookup
 ```
