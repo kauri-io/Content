@@ -23,6 +23,20 @@ To demonstrate how to lookup ENS names we will write a simple Node.js command-li
 
 First you will need to install Node.js and npm by following the install instructions on the [Node.js website](https://nodejs.org/ "Node.js").
 
+If you are not running a full mainnet Ethereum node, you will need to setup an Infura endpoint for connecting. This is easy to do - just sign up on the [infura.io](https://infura.io) website. Create a new project and copy the mainnet URL. It will be something like this: `mainnet.infura.io/v3/<your project id>`.
+
+Now set your Infura URL with `https://` at the beginning as an environment variable. This will only set it for the current session so if you close your terminal window you will need to do it again.
+
+On Linux or macOS:
+```shell
+export INFURA_URL=https://mainnet.infura.io/v3/<your project id>
+```
+
+On Windows:
+```bash
+set INFURA_URL=https://mainnet.infura.io/v3/<your project id>
+```
+
 Create a new project directory called `enslookup` and change directory into it.
 
 ```bash
@@ -49,10 +63,6 @@ Then install the package by executing:
 ```bash
 npm install
 ```
-
-### Environment Variable
-
-TODO: infura url
 
 ### Enslookup
 
@@ -164,7 +174,9 @@ if(await web3.eth.ens.supportsInterface(name, ensInterface.contentHash)){
 }
 ```
 
-Running the `enslookup` command on `ethereum.eth`:
+Before you run the `enslookup` command make sure you have set your Infura URL environment, as described above.
+
+When running the `enslookup` command on `ethereum.eth`:
 
 ```bash
 ./enslookup ethereum.eth
