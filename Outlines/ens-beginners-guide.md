@@ -4,7 +4,7 @@ User experience is a key challenge when developing a dapp. Ethereum has complexi
 
 The Ethereum Name Service (ENS) is an incredibly useful tool for dapp developers. ENS is like DNS, in that it maps a memorable shortcut to an address. Using ENS we can map the friendly name `ethereum.eth` to the rather unfriendly `0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359`. Subsequently, the friendly name can be used in-place of the address, making it easier to remember, and reducing the chance of errors. 
 
-An ENS name has a root name `ethereum.eth` which can contain sub-names like `wallet.ethereum.eth`. The root name is owned by a party who successfully bid for it in a [Vickrey auction](https://medium.com/the-ethereum-name-service/a-beginners-guide-to-buying-an-ens-domain-3ccac2bdc770 "Vickrey auction").
+An ENS name has a root name `ethereum.eth` which can contain sub-names like `wallet.ethereum.eth`. The root name is owned by whoever successfully bid for it in a [Vickrey auction](https://medium.com/the-ethereum-name-service/a-beginners-guide-to-buying-an-ens-domain-3ccac2bdc770 "Vickrey auction").
 
 In fact, ENS doesn't just map to addresses. ENS is highly extensible and supports many types of mappings. The same friendly name can be mapped to multiple endpoints at the same time. 
 
@@ -93,7 +93,7 @@ Next, we will setup Web3.js to connect to Ethereum:
 // load web3 library
 const Web3 = require('web3');
 
-// connect to an Infura endpoint to connect to Ethereum
+// connect to an Infura endpoint to connect to Ethereum (passed as Environment Variable)
 // feel free to use your own mainnet node
 const web3 = new Web3(process.env.INFURA_URL);
 ```
@@ -177,28 +177,28 @@ Public Key:
 ```
 *Note on Windows you will have to run `node enslookup`*
 
-The full code for the enslookup example can be found on [TODO]()
+The full code for the enslookup example can be found on [github]().
 
 ## Future of ENS
 
-- ABIs - http://eips.ethereum.org/EIPS/eip-205
-- Text - http://eips.ethereum.org/EIPS/eip-634
-- We have only just scratched the surface...
-- How will you use ENS in your dapp?
+The ENS team are restlessly adding new features and expanding ENS's capabilities. 
+
+Two new mappings are being added 
+- [ABI Definitions](http://eips.ethereum.org/EIPS/eip-205) - for storing smart contract ABI's in ENS (very handy)
+- [Text](http://eips.ethereum.org/EIPS/eip-634) - storing of key/value text items against an ENS name
+
+We have only just scratched the surface of how ENS is being used to improve user experience.
+
+*How will you use ENS in your dapp?*
 
 
 
 
 
 ----
-## Scraps
+## Future Article
+
+### Uses of ENS
 
 - Soon, top level DNS TLDs will be mappable to ENS (https://medium.com/the-ethereum-name-service/upcoming-changes-to-the-ens-root-a1b78fd52b38)
 - It is being used to implement friendly usernames and identities (universal logins) (https://medium.com/@avsa/universal-logins-first-demo-1dc8b17a8de7)
-
-- A domain name has a root, and many subdomains separated by '.'
-- Each name can point to a single target or multiple targets depending on what you want to achieve. 
-- smart contract ABI definitions
-- content hashes (IPFS)
-- encryption public keys
-- key/value text items. 
