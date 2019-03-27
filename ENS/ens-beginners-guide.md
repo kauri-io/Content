@@ -8,7 +8,7 @@ An ENS name has a root name `ethereum.eth` which can contain sub-names like `wal
 
 In fact, ENS doesn't just map to addresses. ENS is highly extensible and supports many types of mappings. The same friendly name can be mapped to multiple endpoints at the same time. 
 
-So `ethereum.eth` name could point to:
+So the `ethereum.eth` name could point to:
 - A multisig wallet contract address
 - Public encryption keys for secure communication
 - Website content (via IPFS hash or multihash)
