@@ -25,7 +25,7 @@ First you will need to install Node.js and npm by following the install instruct
 
 If you are not running a full mainnet Ethereum node, you will need to setup an Infura endpoint for connecting. This is easy to do - just sign up on the [infura.io](https://infura.io) website. Create a new project and copy the mainnet URL. It will be something like this: `mainnet.infura.io/v3/<your project id>`.
 
-Now set your Infura URL with `https://` at the beginning as an environment variable. This will only set it for the current session so if you close your terminal window you will need to do it again.
+Now set your Infura URL including `https://` at the beginning, as an environment variable. This will only set it for the current session so if you close your terminal window you will need to do it again.
 
 On Linux or macOS:
 ```shell
