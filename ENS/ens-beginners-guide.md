@@ -174,7 +174,7 @@ if(await web3.eth.ens.supportsInterface(name, ensInterface.contentHash)){
 }
 ```
 
-Before you run the `enslookup` command make sure you have set your Infura URL environment, as described above.
+Before you run the `enslookup` command make sure you have set your Infura URL environment variable, as described above.
 
 When running the `enslookup` command on `ethereum.eth`:
 
