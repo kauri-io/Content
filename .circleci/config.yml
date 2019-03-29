@@ -13,8 +13,8 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: vale *.md
-
+      - run: vale **/*.md
+# --config
 workflows:
   version: 2
   ttd:
