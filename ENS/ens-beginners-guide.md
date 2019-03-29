@@ -2,13 +2,13 @@
 
 User experience is a key challenge when developing a dapp. Ethereum has complexities that should be hidden away to enable broad adoption. One such complexity, is an Ethereum address, it is long, unwieldy, and hard to remember.
 
-The Ethereum Name Service (ENS) is an incredibly useful tool for dapp developers. ENS is like DNS, in that it maps a memorable shortcut to an address. Using ENS we can map the friendly name `ethereum.eth` to the rather unfriendly `0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359`. Subsequently, the friendly name can be used in-place of the address, making it easier to remember, and reducing the chance of errors. 
+The Ethereum Name Service (ENS) is a useful tool for dapp developers. ENS is like DNS, in that it maps a memorable shortcut to an address. Using ENS we can map the friendly name `ethereum.eth` to the rather unfriendly `0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359`. Subsequently, you can use the friendly name in-place of the address, making it easier to remember, and reducing the chance of errors. 
 
 An ENS name has a root name `ethereum.eth` which can contain sub-names like `wallet.ethereum.eth`. The root name is owned by whoever successfully bid for it in a [Vickrey auction](https://medium.com/the-ethereum-name-service/a-beginners-guide-to-buying-an-ens-domain-3ccac2bdc770 "Vickrey auction").
 
-In fact, ENS doesn't just map to addresses. ENS is highly extensible and supports many types of mappings. The same friendly name can be mapped to multiple endpoints at the same time. 
+In fact, ENS doesn't just map to addresses. ENS is highly extensible and supports many types of mappings. It is possible, to map the same friendly name to multiple endpoints at the same time.
 
-So the `ethereum.eth` name could point to:
+For example the `ethereum.eth` name could point to:
 - A multisig wallet contract address
 - Public encryption keys for secure communication
 - Website content (via IPFS hash or multihash)
@@ -17,15 +17,15 @@ So the `ethereum.eth` name could point to:
 
 Many Ethereum libraries, including Web3.js now support ENS lookups out-of-the-box. Unfortunately using ENS is not as intuitive as the library documentation suggests; there are a number of things to look out for.
 
-To demonstrate how to lookup ENS names we will write a simple Node.js command-line tool called `enslookup`. Given an ENS name as an argument it will query the ENS registry for information about that name.
+To demonstrate how to lookup ENS names we will write a simple Node.js command-line tool called `enslookup`. Given an ENS name as an argument it queries the ENS registry for information about that name.
 
 ### Prerequisites
 
-First you will need to install Node.js and npm by following the install instructions on the [Node.js website](https://nodejs.org/ "Node.js").
+First install Node.js and npm by following the install instructions on the [Node.js website](https://nodejs.org/ "Node.js").
 
-If you are not running a full mainnet Ethereum node, you will need to setup an Infura endpoint for connecting. This is easy to do - just sign up on the [infura.io](https://infura.io) website. Create a new project and copy the mainnet URL. It will be something like this: `mainnet.infura.io/v3/<your project id>`.
+If you are not running a full mainnet Ethereum node, you need to setup an Infura endpoint for connecting. This is easy to do - just sign up on the [infura.io](https://infura.io) website. Create a new project and copy the mainnet URL. It should be something like this: `mainnet.infura.io/v3/<your project id>`.
 
-Now set your Infura URL including `https://` at the beginning, as an environment variable. This will only set it for the current session so if you close your terminal window you will need to do it again.
+Now set your Infura URL including `https://` at the beginning, as an environment variable. This only sets it for the current session so if you close your terminal window you will need to do it again.
 
 On Linux or macOS:
 ```shell
@@ -46,7 +46,7 @@ cd enslookup
 
 ### Web3.js
 
-We will be using Web3.js to interact with the ENS registry. To install Web3.js use the Node.js package manager `npm`.
+We are using Web3.js to interact with the ENS registry. To install Web3.js use the Node.js package manager `npm`.
 
 Create a file called `package.json`:
 
@@ -114,7 +114,7 @@ const Web3 = require('web3');
 const web3 = new Web3(process.env.INFURA_URL);
 ```
 
-Now, it is very tempting to jump right in and lookup an address using `web3.eth.ens.getAddress(EnsName)` but there is something important to consider first.
+Now, it is tempting to jump right in and lookup an address using `web3.eth.ens.getAddress(EnsName)` but there is something important to consider first.
 
 To resolve an address, the ENS name's owner must have configured a resolver smart contract. It is very likely that a resolver smart contract has not been configured for the ENS name. If you call `web3.eth.ens.getAddress(EnsName)` on an ENS name that has no resolver smart contract configured, Web3.js will give you a very unhelpful error message.
 
@@ -138,7 +138,7 @@ Surely we are ready to lookup an ENS address... right? Yes, kinda...
 
 Looking up addresses has been part of ENS from day 1 but other types of mapping have been added later. Consequently, the resolver smart contracts that are configured for each ENS name, may differ in what they support because they were deployed at different times.
 
-Luckily, the ENS team have implemented [standard interface detection](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-165.md "ERC-165 - Standard Interface Detection") so you can check which mappings each resolver smart contract supports.
+Luckily, the ENS team have implemented [standard interface detection](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-165.md "ERC-165 - Standard Interface Detection") to permit checking which mapping types a resolver smart contract supports.
 
 Here is a list of the currently available interfaces (*there are more but some are deprecated*):
 
@@ -180,7 +180,7 @@ if(await web3.eth.ens.supportsInterface(name, ensInterface.contentHash)){
 }
 ```
 
-Before you run the `enslookup` command make sure you have set your Infura URL environment variable, as described above.
+Before you run the `enslookup` command make sure your Infura URL environment variable is set, as described above.
 
 When running the `enslookup` command on `ethereum.eth`:
 
@@ -195,7 +195,7 @@ Public Key:
 ```
 *Note on Windows you will have to run `node enslookup`*
 
-The full code for the enslookup example can be found on [github](https://github.com/darrenlangley/enslookup).
+The full code for the enslookup example is available on [github](https://github.com/darrenlangley/enslookup).
 
 ## Future of ENS
 
@@ -205,18 +205,6 @@ Two new mappings are being added
 - [ABI Definitions](http://eips.ethereum.org/EIPS/eip-205) - for storing smart contract ABI's in ENS (very handy)
 - [Text](http://eips.ethereum.org/EIPS/eip-634) - storing of key/value text items against an ENS name
 
-We have only just scratched the surface of how ENS is being used to improve user experience.
+We have only just scratched the surface of ENS and its ability to improve user experience.
 
 *How will you use ENS in your dapp?*
-
-
-
-
-
-----
-## Future Article
-
-### Uses of ENS
-
-- Soon, top level DNS TLDs will be mappable to ENS (https://medium.com/the-ethereum-name-service/upcoming-changes-to-the-ens-root-a1b78fd52b38)
-- It is being used to implement friendly usernames and identities (universal logins) (https://medium.com/@avsa/universal-logins-first-demo-1dc8b17a8de7)
