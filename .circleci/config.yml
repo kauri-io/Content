@@ -3,13 +3,17 @@
 # Check https://circleci.com/docs/2.0/language-go/ for more details
 version: 2
 
+defaults: &defaults
+  working_directory: ~/Content
+
 jobs:
   "style":
     docker:
       - image: testthedocs/ttd-vale
+    <<: *defaults
     steps:
       - checkout
-      - run: /Content:/srv/tests
+      - command: vale Content/*.md
 
 workflows:
   version: 2
