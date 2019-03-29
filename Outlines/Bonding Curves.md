@@ -1,17 +1,11 @@
 Bonding Curves
+- Bonding Curves are pricing curves that mediate the supply of a token. (include longer definition & elaboration)
 
+- Bonding curves play a crucial role in token economics for a given crypto ecosystem. (include longer elaboration)
 
-Bonding Curves are pricing curves that mediate the supply of a token. (include longer definition elaboration)
+- Provide some examples of dApps, Cryptocollectibles, FOMO3D, and other things that feature bonding curves.
 
-
-
-Bonding curves play a crucial role in token economics for a given crypto ecosystem. (include longer elaboration)
-
-
-
-Provide some examples of dApps, Cryptocollectibles, FOMO3D, and other things that feature bonding curves.
-
-Discussing the consequences of different growth rates, convexity, and functions
+- Discussing the consequences of different growth rates, convexity, and functions
       exponential
       linear
       log
