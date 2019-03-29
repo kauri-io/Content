@@ -13,7 +13,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: vale Content/*.md
+      - run: vale *.md
 
 workflows:
   version: 2
