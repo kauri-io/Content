@@ -9,7 +9,7 @@ jobs:
       - image: testthedocs/ttd-vale
     steps:
       - checkout
-      - command: /Content:/srv/tests
+      - run: /Content:/srv/tests
 
 workflows:
   version: 2
