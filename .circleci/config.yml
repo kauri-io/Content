@@ -13,7 +13,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: vale --no-exit --config='/srv/vale-styles/.vale.ini' **/*.md
+      - run: vale --no-exit --config='/srv/.vale.ini' **/*.md
 
 workflows:
   version: 2
