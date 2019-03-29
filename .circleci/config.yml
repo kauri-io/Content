@@ -14,3 +14,9 @@ jobs:
     steps:
       - checkout
       - run: vale Content/*.md
+
+workflows:
+  version: 2
+  ttd:
+    jobs:
+      - "style"
