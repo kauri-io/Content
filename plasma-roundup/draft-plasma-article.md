@@ -42,7 +42,6 @@ Other notable early MVP's include [OmiseGO's research implementation](https://gi
 
 Moving beyond research, [Kyokan](https://github.com/kyokan/plasma) introduced their Golang implementation [extending the original MVP specification](https://kauri.io/article/7f9e1c04f3964016806becc33003bdf3/v4/minimum-viable-plasma-the-kyokan-implementation). Kyokan uses the FourthState rootchain contract reviewed above. The architecture includes root nodes to process transactions and package them into blocks, broadcasts blocks to validator nodes, processes exits and more.
 
-In Kyokan, validator nodes check the validity of blocks and exit if bad behavior is detected. The Plasma contract lives on the Ethereum root chain and supports deposits, block submissions, exits and challenges. Kyokan, which aims to provide a pluggable architecture, has deployed their [Plasma Block Explorer](https://explorer.kyokan.io/) on the Rinkeby test net:
 
 ![Kyokan Block Explorer](/images-for-article/Kyokan/kyokan-block-explorer.png)
 
