@@ -45,7 +45,6 @@ Making the significant jump from MVP to mainnet is [Kyokan](https://github.com/k
 While Plasma’s arrival on mainnnet is a notable milestone, the technology’s evolution needs more work and time before it is ready for mass adoption.  
 
 
-## Kyokan Plasma
 
 Moving beyond research, [Kyokan](https://github.com/kyokan/plasma) introduced their Golang implementation [extending the original MVP specification](https://kauri.io/article/7f9e1c04f3964016806becc33003bdf3/v4/minimum-viable-plasma-the-kyokan-implementation). Kyokan uses the FourthState rootchain contract reviewed above. The architecture includes root nodes to process transactions and package them into blocks, broadcasts blocks to validator nodes, processes exits and more.
 
