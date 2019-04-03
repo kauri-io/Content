@@ -1,4 +1,4 @@
-# Plasma Roundup: From MVP to Plasma Group
+# Plasma Roundup: From MVP to Mainnet
 
 Ethereum second layer scaling technology has come a long way in a short period of time. Second layer solutions, innovations beyond the layer one protocol level, include State Channels, Side Chains and Plasma. Taken together, layer two technologies present a wide scope of possibility for scaling the Ethereum blockchain.
 
