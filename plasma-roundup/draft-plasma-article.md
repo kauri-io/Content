@@ -20,7 +20,7 @@ For most of these projects you need Truffle, Ganache and npm installed.
 
 ## FourthState Labs
 
-Among the early Plasma implementations was [FourthState Labs](https://github.com/FourthState/plasma-mvp-rootchain), whose design included a rootchain contract according to the Plasma MVP. This rootchain, which other projects have also incorporated, is a series of Solidity smart contracts. Follow these steps to test them:
+Among the early Plasma implementations was [FourthState Labs](https://github.com/FourthState/plasma-mvp-rootchain), whose design included a rootchain contract according to the Plasma MVP. This rootchain, which other projects have also incorporated, is a series of Solidity smart contracts. It may be a good place to start if you are considering building your own Plasma chain. It is designed to maintain a mapping from from block number to merkle root, processing deposits, withdrawals and resolving transaction disputes. FourthState has written tests for these features which you can run by following these steps:
 
 ```shell
 git clone https://github.com/fourthstate/plasma-mvp-rootchain
