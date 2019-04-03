@@ -12,7 +12,7 @@ In January 2018, Vitalik posted the [“Minimal Viable Plasma” (MVP) specifica
 
 This overview is not meant to be exhaustive. Instead, by highlighting a few implementations, it aims to be indicative of the progress that Plasma has made over the past year.
 
-Although none of the Plasma models reviewed here are on mainnet or production ready, they show that this technology is not just theory. Taken together, the implementations suggest that Plasma is moving rapidly toward realizing the scaling potential that its creators and implementers envision.
+Although none of the Plasma models reviewed here are production ready, they show that this technology is not just theory. Taken together, the implementations suggest that Plasma is moving rapidly toward realizing the scaling potential that its creators and implementers envision.
 
 ## Prerequisites
 
