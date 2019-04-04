@@ -42,7 +42,7 @@ set INFURA_URL=https://mainnet.infura.io/v3/{your project id}
 
 Create a new project directory called _enslookup_ and change directory into it.
 
-```bash
+```shell
 mkdir enslookup
 cd enslookup
 ```
@@ -50,6 +50,14 @@ cd enslookup
 ### Web3.js
 
 We are using Web3.js to interact with the ENS registry. To install Web3.js use the Node.js package manager.
+
+Create a _package.json_ file.
+
+```shell
+npm init -y
+```
+
+Then install the Web3.js package.
 
 ```shell
 npm install web3 --save
@@ -61,7 +69,7 @@ Create a new file called _enslookup_ (notice there is no file extension).
 
 If you are on a Linux or macOS, make the file executable:
 
-```bash
+```shell
 chmod +x enslookup
 ```
 
@@ -177,7 +185,7 @@ Before you run the `enslookup` command make sure you set your Infura URL environ
 
 When running the `enslookup` command on `ethereum.eth`:
 
-```bash
+```shell
 $ ./enslookup ethereum.eth
 
 Name:		ethereum.eth
