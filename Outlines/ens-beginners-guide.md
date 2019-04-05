@@ -24,4 +24,3 @@
 - It is being used to implement friendly usernames and identities (universal logins) (https://medium.com/@avsa/universal-logins-first-demo-1dc8b17a8de7)
 - How will you use ENS in your dapp?
 
-
