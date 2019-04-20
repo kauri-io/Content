@@ -1,12 +1,12 @@
-# Accelerating DApp Development with Ethersjs
+# Accelerating DApp Development with Ethers.js
 
-Today's decentralized application stack often consists of a front end component, smart contracts, and a framework to interact with the blockchain. Web3 is used today in a majority of cases to facilitate the interaction with the Ethereum blockchain, however, Web3 is a large, poorly documented, and difficult to maintain. Ethersjs is an alternative library that offers all of the features of web3 in a tiny, well-tested package.
+Today's decentralized application stack often consists of a front end component, smart contracts, and a framework to interact with the blockchain. Web3 is used today in a majority of cases to facilitate the interaction with the Ethereum blockchain, however, Web3.js is large, poorly documented, and difficult to maintain. Ethers.js is an alternative library that offers all of the features of Web3.js in a smaller, well-tested package.
 
-Ethersjs is used today to create a seamless connection between a frontend and the Ethereum blockchain. In this example, we employ Angular 7.X and Ethersjs to create a simple wallet application and interact with a smart contract deployed on the Ethereum blockchain.
+Ethers.js is used today to create a connection between a frontend and the Ethereum blockchain. In this example, we employ Angular 7.X and Ethers.js to create a simple wallet application and interact with a smart contract deployed on the Ethereum blockchain.
 
 ### Prerequisites
 
-First, you will need to install nodejs and Angular. Both installations can be found here:
+First, you will need to install node.js and Angular. You can find both installations here:
 
 - [Nodejs](https://nodejs.org/en/)
 - [Angular](https://angular.io/guide/quickstart)
@@ -22,20 +22,19 @@ ng serve --open
 
 You should be greeted with the words "initial application" in your browser.
 
-Ethersjs follows the general standard of installing packages for your application. Simply run
+Ethers.js follows the general standard of installing node packages for your application, run the below to install it
 
 ```
 npm install --save ethers
 ```
 
-Now everything is set up to work with Ethersjs on our simple application.
+Now everything is set up to work with Ethers.js on our application.
 
 
 ## Creating a Wallet
 
-We are first going to use Ethersjs to create a new wallet. Change to the following html:
+We first use Ethers.js to create a new wallet. Change `/src/app/wallet/wallet.component.html` to the following html:
 
-/src/app/wallet/wallet.component.html
 
 ```
 <div fxFlex="20"></div>
@@ -47,9 +46,9 @@ We are first going to use Ethersjs to create a new wallet. Change to the followi
 <div></div>
 ```
 
-To create a wallet, we use the wallet.createRandom() to create a random public and private key. We can use this wallet to do other actions with, such as creating transactions and signing messages.
+To create a wallet, we use the `wallet.createRandom()` to create a random public and private key. We can use this wallet for other actions, such as creating transactions and signing messages.
 
-/src/app/wallet/wallet.component.ts
+In `/src/app/wallet/wallet.component.ts`, change the `onSubmit() {}` function to the below:
 
 ```
 onSubmit() {
@@ -60,9 +59,9 @@ onSubmit() {
   }
 ```
 
-Before we can do anything with this wallet, we must first connect it to the Ethereum blockchain. We will be doing this using the default web3 provider by Ethers.
+Before we can do anything with this wallet, we must first connect it to the Ethereum blockchain. We do this using the default web3 provider by Ethers.js.
 
-Add the following to the wallet.component.ts:
+Update the `ngOnInit() {}` function in `wallet.component.ts` to the below:
 
 ```
 provider: any;
@@ -76,9 +75,9 @@ This obtains the web3 connection provided by Metamask and makes it ready to use 
 
 ### Sending and Signing Transactions
 
-Next, we create the ability to send a transaction on our application. Ethers provides the ability to edit any data within a transaction, such as gas limit and what address you are sending the transaction to. In order to send a transaction using the wallet, create a send transaction button that uses the sendTransaction method from Ethersjs, as well as some form fields for input on the transaction.
+Next, we create the ability to send a transaction with our application. Ethers.js provides the ability to edit any data within a transaction, such as gas limit and what address you are sending the transaction to. In order to send a transaction using the wallet, create a send transaction button that uses the sendTransaction method from Ethers.js, as well as some form fields for input on the transaction.
 
-/src/app/wallet/wallet.component.html
+Inside `/src/app/wallet/wallet.component.html` add the code below inside the two `<div>`s
 
 ```
 <form [formGroup]="transactionForm" (ngSubmit)="sendTransaction(transactionForm.value)">
@@ -95,7 +94,8 @@ Next, we create the ability to send a transaction on our application. Ethers pro
     </form>
 ```
 
-In your class, import the formModules and create the base form information.
+In the `wallet.component.ts` class, import the `formModules` and create the base form information.
+
 
 ```
 import { Component, OnInit } from '@angular/core';
@@ -138,7 +138,7 @@ export class WalletComponent implements OnInit {
 }
 ```
 
-In order to send a transaction, Ethersjs provides a simple sendTransaction method for all wallets. Add a sendTransaction method to the wallet class, inputting the form.
+In order to send a transaction, Ethers.js provides a `sendTransaction` method for all wallets. Add a `sendTransaction` method to the wallet class, inputting the form.
 
 ```
 sendTransaction(form: NgForm) {
@@ -154,9 +154,9 @@ sendTransaction(form: NgForm) {
 }
 ```
 
-We first create the transaction object, giving where the transaction is going in the `to` field. `value` denotes how much ether, default in the units Wei, is being sent to the address mentioned. We use the parseEther util provided by ethers to easily convert from Ether to Wei. After creating the transaction object, we use our wallet we created before to send the transaction. In this implementation, the console logs the transaction receipt.
+We first create the transaction object, giving where the transaction is going in the `to` field. `value` denotes how much ether, default in the units Wei, is being sent to the address mentioned. We use the `parseEther` util provided by Ethers.js to easily convert from Ether to Wei. After creating the transaction object, we use our wallet we created before to send the transaction. In this implementation, the console logs the transaction receipt.
 
-Signing a message in a transaction is very useful for a number of reasons. A signed message can be used to verify that the owner is the address provided, and this allows smart contracts and other entities to verify the truth in a trustless system. To sign a message using Ethers, you use the signMessage function on your message.
+Signing a message in a transaction is useful for a number of reasons. A signed message can be used to verify that the owner is the address provided, and this allows smart contracts and other entities to verify the truth in a trustless system. To sign a message using Ethers, you use the `signMessage` function on your message.
 
 ```
 wallet.signMessage(message);
@@ -164,9 +164,9 @@ wallet.signMessage(message);
 
 ## Interacting with Smart Contracts
 
-One of the many novelties of Ethereum is the creation and use of smart contracts on the blockchain. Dapp development relies on easy interaction with smart contracts, and Ethers has an easy to use solution.
+One of the many novelties of Ethereum is the creation and use of smart contracts on the blockchain. Dapp development relies on interaction with smart contracts, and Ethers.js has a solution.
 
-Take for example this very simple [Sample Contract](https://ropsten.etherscan.io/address/0x8a32989b65186d3596251d7d7c8a427a26669354#code). In this contract, we store variables by adding it to the blockchain and can read all currently stored variables. Interacting with this contract with Ethers, we first create the ABI for it, found [here](https://ropsten.etherscan.io/address/0x8a32989b65186d3596251d7d7c8a427a26669354#code).
+Take for example this [Sample Contract](https://ropsten.etherscan.io/address/0x8a32989b65186d3596251d7d7c8a427a26669354#code). In this contract, we store variables by adding it to the blockchain and can read all currently stored variables. Interacting with this contract with Ethers.js, we create the ABI for it, found [here](https://ropsten.etherscan.io/address/0x8a32989b65186d3596251d7d7c8a427a26669354#code).
 
 ```
 let abi = [{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"add","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getValues","outputs":[{"name":"","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
@@ -180,7 +180,7 @@ let contractAddress = '0x8a32989b65186d3596251d7d7c8a427a26669354';
 let contract = new ethers.Contract(contractAddress, abi, wallet);
 ```
 
-In the contract, we find both the add and getValues functions. To call these functions using Ethers, you call the functions listed in the ABI. 
+In the contract, we find both the add and `getValues` functions. To call these functions using Ethers, you call the functions listed in the ABI. 
 
 ```
 await contract.add("Message");
@@ -190,7 +190,7 @@ contract.getValues()
         });
 ```
 
-We can add this to our UI by adding an additional field and a getValues field.
+We can add this to our UI by adding an additional field and a `getValues` field.
 
 ```
 <form [formGroup]="contractForm" (ngSubmit)="addToContract(contractForm.value)">
@@ -204,7 +204,7 @@ We can add this to our UI by adding an additional field and a getValues field.
 <p *ngIf="message">Message: {{message}}</p>
 ```
 
-We add the previous code to functions getValues() and addToContract(), as well as creating the forms in our ts.
+Add the code above to the `getValues()` and `addToContract()` functions, as well as adding the forms to `wallet.component.html`.
 
 ```
 contractForm: FormGroup;
@@ -237,6 +237,6 @@ addToContract(form: NgForm) {
 
 ## Further Improvements
 
-We have created a simple Dapp that can create a wallet, send a transaction, and interact with a smart contract. Using Ethersjs, we are able to interact with the Ethereum blockchain with ease and expand to more complex use cases. Further improvements to this demo that we have created would be to create a better design, add more wallet integrations, and separation of concerns between the wallet and contract component. With this demo app, you can now include a wallet app by just including the wallet web component in your dapp. 
+In this tutorial we created a dapp that creates a wallet, sends a transaction, and interacts with a smart contract. Using Ethersjs, we are able to interact with the Ethereum blockchain with ease and expand to more complex use cases. Further improvements to this demo that we have created would be to create a better design, add more wallet integrations, and separation of concerns between the wallet and contract component. With this demo app, you can now include a wallet app by just including the wallet web component in your dapp. 
 
-Ethersjs is a powerful tool and a strong alternative to web3 for dApp development. The small compact library makes creating dApps a breeze, taking all the heavy lifting off of the developer's shoulders and making it easier to focus on the smart contract or website design. For more information on Ethersjs, checkout out the [documentation](https://docs.ethers.io/ethers.js/html/index.html).
+Ethers.js is a powerful tool and a strong alternative to web3 for dApp development. The small compact library makes creating dApps a breeze, taking all the heavy lifting off of the developer's shoulders and making it easier to focus on the smart contract or website design. For more information on Ethers.js, checkout out the [documentation](https://docs.ethers.io/ethers.js/html/index.html).
