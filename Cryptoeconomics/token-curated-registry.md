@@ -2,21 +2,21 @@
 
 ## What is a Token-Curated Registry
 
-The idea behind Token-Curated Registries (TCR) is simple: create a list around a certain topic. With such simplicity comes flexibility: it’s possible to curate a list of persons, companies, schools, etc.
+The idea behind Token-Curated Registry (TCR) is simple: create a list around a certain topic. With such simplicity comes flexibility: it’s possible to curate a list of people, companies, schools, etc.
 
-Lists are inherent to people: we create, maintain, and consume them all the time. With token-curated registries, this process can become decentralized, as there are no central parties who control it: once deployed, such a list is fully autonomous from its creator.
+Lists are inherent to people: we create, maintain, and consume them all the time. With token-curated registries, this process can become decentralized, as there are no central parties who maintain it: once deployed, such a list is fully autonomous from its creator.
 
-There are three groups of users of a registry: consumers, producers, and candidates. Consumers are the “readers“ of the registry, who use the information for their own goals. Producers are the “writers” of the registry, they vote on whether to include given item to the list or not. Candidates nominate items to be included to the list.
+There are three groups of users of a registry: consumers, producers, and candidates. Consumers are the “readers“ of the registry, who use the information for their own goals. Producers are the “writers” of the registry, they vote on whether to include given item to the list or not. Candidates nominate items to be included in the list.
 
 ## Economics
 
-Each TCR has an internal token, which is used to coordinate and incentivize honest behavior.
+Each TCR has an internal token, which is used to coordinate producers and incentivize honest behavior.
 
 Candidates stake tokens when they nominate new items. Once the proposal is done, any member of the list can challenge it by making a deposit. 
 
-The challenge is resolved by token holders. Once a new item is proposed, each holder can vote in a limited period of time. Then, the votes are calculated and the outcome is executed. The more tokens a user owns, the more voting power he has.
+The challenge is resolved by token holders. Once a new item is proposed, each holder can vote for a limited period of time. Then, the votes are added together and the outcome is executed. The more tokens a user owns, the more voting power he has.
 
-If the item ends up included into the list (no challenge was initiated or the token holders voted for the proposal), a candidate keeps her stake. If the item is rejected, the stake is usually split between challenger and voters that were in majority.
+If an item ends up included into the list, a candidate keeps her stake. If the item is rejected, the stake is split between challenger and voters that were in majority.
 
 Existing registry members, or listees, can also be challenged at any time. For that case, they must keep a minimum deposit that will be seized in case a challenge will be successful so it can be shared between challenger and majority voters. In case a challenge will fail, the listee will keep the deposit, and the challenger stake will be split between listee and majority voters. 
 
@@ -26,7 +26,7 @@ One can create a list to curate anything meaningful: from comedy movies and best
 
 Sticking with the “good comedy movies” example, let’s look at how it would work. In that scenario, good candidates for the list producers might be movie enthusiasts with a ton of experience analyzing movies. The candidates for that list might be the movie creators themselves, as they have the incentive to put their movies to the list. As for consumers, it will be useful for anyone who loves comedy and needs to decide what to watch in the evening.
 
-Speaking of TCRs that life on Ethereum, FOAM project uses Token-Curated Registry to curate points-of-interest. Other use cases include curating URLs (AdChain), tokens (Messari), and smart contracts (Panvala).
+Speaking of TCRs that are live on Ethereum, FOAM project uses Token-Curated Registry to curate points-of-interest. Other use cases include curating URLs (AdChain), tokens (Messari), and smart contracts (Panvala).
 
 ## Creating a TCR
 
@@ -49,7 +49,6 @@ The parameters of TCR are:
 * the percent of the stake that goes to the listee or the challenger in case of a challenge
 
 * the percent of votes that form vote quorum
-
 ```solidity
 constructor(
 	address _token,
@@ -86,9 +85,9 @@ struct Movie {
 Movie[] public movies;
 ```
 
-Behind each TCR there is an ERC20 token. The token is used for staking during producing and challenging, as well as to determine the voting power of the voters.
+Behind each TCR there is an ERC20 token. The token is used for staking during proposing and challenging, as well as to determine the voting power of the voters.
 
-When a producer proposes a new movie to be included to the list, we create a new `Movie` object with the status “Applied”:
+When a producer proposes a new movie to be included in the list, we create a new `Movie` object with the status “Applied”:
 
 ```solidity
 function propose(string calldata _title) external {
@@ -97,7 +96,9 @@ function propose(string calldata _title) external {
 	movies.push(Movie(msg.sender, _title, now, 0, Status.Applied));
 }
 ```
+
 For challenging, we need a `Challenge` structure, which we will use mostly to distribute voting rewards.
+
 ```solidity
 struct Challenge {
 	address challenger;
@@ -133,7 +134,7 @@ function challenge(uint256 _index) external {
 }
 ```
 
-Voting is done via [commit-reveal scheme](https://en.wikipedia.org/wiki/Commitment_scheme). Token holders *commit* by staking the token along with passing the hash of their vote, and then *reveal* their choice and receive their tokens back.
+Voting is done via [commit-reveal scheme](https://en.wikipedia.org/wiki/Commitment_scheme). Token holders *commit* by staking the tokens along with passing the hash of their vote, and then *reveal* their choice and receive their tokens back.
 
 For each vote, we create a `Vote` object. We will use it later to calculate voter rewards.
 
@@ -181,7 +182,7 @@ function getHash(uint256 _index, bool _vote, bytes32 _salt) pure public returns(
 }
 ```
 
-After the vote is finished, we need to get its result. For that, we calculate the share of the tokens that were used to vote “Accept” and compare it to the percent of votes required to reach the quorum. If there were enough votes supporting the inclusion, we mark it as “Listed”. Otherwise, we mark it as “Kicked”.
+After the vote is finished, we need to get the result. For that, we calculate the share of the tokens that were used to vote “Accept” and compare it to the percent of votes required to reach the quorum. If there were enough votes supporting the inclusion, we mark it as “Listed”. Otherwise, we mark it as “Kicked”.
 
 Based on the outcome, we need to compensate either producer or challenger by returning her original stake as well as part of the stake of their opponent. Everything else will go to the voters based on their impact.
 
@@ -233,7 +234,7 @@ function claimReward(uint256 _challengeIndex) external {
 }
 ```
 
-For simplicity, we didn’t focus on the proposer's ability to leave the TCR. The only way to remove the listing is to challenge it. Also, the proposer has no way to recover her stake: it is either stay locked in TCR along with the listing or will be seized in case it will be challenged.
+For simplicity, we didn’t focus on the proposer's ability to leave the TCR. The only way to remove the listing is to challenge it. Also, the proposer has no way to recover her stake: it is either stay locked in a TCR along with the listing or will be seized in case it will be challenged.
 
 ### Front-end
 
@@ -263,7 +264,7 @@ async loadMovies() {
 }
 ```
 
-Let’s now show each movie in the list based on its status.
+Let’s now display each movie in the list based on its status.
 
 ```html
 <div v-for="(movie, index) in movies" class="movie-card" :class="{ 
@@ -302,11 +303,11 @@ That’s it!
 
 This TCR design, though, has several attack vectors.
 
-First, one or several malicious voters can spam the TCR by creating a bunch of low-quality proposals. However, as each proposal requires a deposit, this will require significant capital investment. Moreover, as those items are expected to be low-quality, they will be likely challenged and lose the voting, meaning that the attacker will lose her entire deposit. Therefore, this attack is unlikely to be feasible and attractive to the rational attacker.
+First, one or several malicious voters can spam the TCR by creating a bunch of low-quality proposals. However, as each proposal requires a deposit, it will require significant capital investment. Moreover, as those items are expected to be low-quality, they will be likely challenged and lose the voting, meaning that the attacker will lose her entire deposit. Therefore, this attack is unlikely to be feasible and attractive to the rational person.
 
-Another potential danger is reducing in quality of the items that were already included to the registry, or so-called “Registry poisoning”. This might happen both maliciously or not. In any case, token holders and challengers are expected to constantly keep track of the quality of the included items, and challenge them to be kicked in case they will degrade. Again, kicked items will lose their stake so it's costly to spoil listings intentionally.
+Another potential danger is reduction in quality of the items that were already included in the registry, or so-called “Registry poisoning”. This might happen both maliciously or not. In any case, token holders and challengers are expected to constantly keep track of the quality of the included items, and challenge them to be kicked in case they will degrade. Again, kicked items will lose their stake so it's costly to spoil listings intentionally.
 
-Finally, voters can choose to vote in any other way besides picking what they actually think is a good choice. One tactic the voters might pursue is “vote splitting“, where voters vote “Yes” with half of their tokens and “No” with the other half. That way, they are guaranteed to receive part of the reward while not putting any thought at all. Another tactic is “vote memeing“ where voters collude on an outcome whether they perceive it as valid or not. This technique is much more dangerous to the TCR because unlike vote splitting, it can affect the voting outcome. The biggest countermeasure to memeing is an ability to fork the TCR, leaving colluded voters with now worthless tokens.
+Finally, voters can choose to vote in any other way besides picking what they actually think is a good choice. One tactic the voters might pursue is “vote splitting“, where voters vote “Yes” with half of their tokens and “No” with the other half. That way, they are guaranteed to receive part of the reward while not putting any thought into voting at all. Another tactic is “vote memeing“ where voters collude on an outcome whether they perceive it as valid or not. This technique is much more dangerous for the TCR because unlike vote splitting, it can affect the voting outcome. The biggest countermeasure to memeing is an ability to fork the TCR, leaving colluded voters with now worthless tokens.
 
 ## Limitations and improvement ideas
 
@@ -322,18 +323,17 @@ Token-curated registry is still a nascent concept. Several use cases exist, but 
 
 Another open question is how to bootstrap the registry. TCRs is a three-sided marketplace that has “chicken-and-egg” problem: initially, there are no items, so consumers are not interested in it, and thus producers don’t want to apply, meaning that there are no items. One way to kickstart the registry is to fill it with items from a centralized list if items are known to be high-quality.
 
-## Wrap-up
+## Conclusion
 
 A token-curated registry is a powerful mechanism to incentivize decentralized and permissionless curation. However, it has a lot of nuances and potential shortcomings, as there are a few opportunities to game a system. Developers who want to leverage TCR in their dapps should keep in mind potential shortcomings.
 
-I’ve put everything that we made in this guide to the [monorepo on Github](https://github.com/Destiner/tcr-guide). Feel free to clone, fork, and otherwise play with it.
+I’ve put everything that we’ve made in this guide to the [monorepo on Github](https://github.com/Destiner/tcr-guide). Feel free to clone, fork, and otherwise play with it.
 
 You can access the live demo of the dapp [here](https://destiner.github.io/tcr-guide/).
 
 ## Further reading
 
 TCRs is a broad topic that goes beyond technical specifics. If you want to learn more, I recommend going through the following resources:
-
 * The first public description of the Token-curated registries: [Token-Curated Registries 1.0 – Mike Goldin – Medium](https://medium.com/@ilovebagels/token-curated-registries-1-0-61a232f8dac7)
 * Update by the author of the original paper, Mike Goldin, where he proposes improvements to the TCR design: https://medium.com/@ilovebagels/token-curated-registries-1-1-2-0-tcrs-new-theory-and-dev-updates-34c9f079f33d
 * “Awesome token-curated registries” repository on Github: [GitHub - miguelmota/awesome-token-curated-registries: Curated list of awesome Token Curated Registry (TCR) resources.](https://github.com/miguelmota/awesome-token-curated-registries)
