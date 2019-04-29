@@ -13,7 +13,7 @@ First, you will need to install node.js and Angular. You can find both installat
 
 ### Creating a Wallet Application
 
-To get started, download the following initial [Angular application](https://github.com/jacobcreech/Ethersjs-example/tree/initial). To start, run
+To get started, download the following initial [Angular application](https://github.com/jacobcreech/Ethersjs-example/tree/initial). Make sure you are on the `initial` branch. To start, run
 
 ```
 npm install
@@ -46,7 +46,7 @@ We first use Ethers.js to create a new wallet. Change `/src/app/wallet/wallet.co
 <div></div>
 ```
 
-To create a wallet, we use the `wallet.createRandom()` to create a random public and private key. We can use this wallet for other actions, such as creating transactions and signing messages.
+To create a wallet, we use the `wallet.createRandom()` to create a random public and private key. We can use this wallet for other actions, such as creating transactions.
 
 In `/src/app/wallet/wallet.component.ts`, change the `onSubmit() {}` function to the below:
 
@@ -141,7 +141,7 @@ export class WalletComponent implements OnInit {
 In order to send a transaction, Ethers.js provides a `sendTransaction` method for all wallets. Add a `sendTransaction` method to the wallet class, inputting the form.
 
 ```
-sendTransaction(form: NgForm) {
+sendTransaction(form: any) {
     let transaction = {
       to: form.toAddress,
       value: ethers.utils.parseEther(form.etherAmount)
@@ -156,17 +156,11 @@ sendTransaction(form: NgForm) {
 
 We first create the transaction object, giving where the transaction is going in the `to` field. `value` denotes how much ether, default in the units Wei, is being sent to the address mentioned. We use the `parseEther` util provided by Ethers.js to easily convert from Ether to Wei. After creating the transaction object, we use our wallet we created before to send the transaction. In this implementation, the console logs the transaction receipt.
 
-Signing a message in a transaction is useful for a number of reasons. A signed message can be used to verify that the owner is the address provided, and this allows smart contracts and other entities to verify the truth in a trustless system. To sign a message using Ethers, you use the `signMessage` function on your message.
-
-```
-wallet.signMessage(message);
-```
-
 ## Interacting with Smart Contracts
 
-One of the many novelties of Ethereum is the creation and use of smart contracts on the blockchain. Dapp development relies on interaction with smart contracts, and Ethers.js has a solution.
+One of the many novelties of Ethereum is the creation and use of smart contracts on the blockchain. Dapp development relies on interaction with smart contracts, and Ethers.js has a solution. With Ethers.js, you can interact with a smart contract to exchange tokens with two parties, or play one of the many Dapp games. 
 
-Take for example this [Sample Contract](https://ropsten.etherscan.io/address/0x8a32989b65186d3596251d7d7c8a427a26669354#code). In this contract, we store variables by adding it to the blockchain and can read all currently stored variables. Interacting with this contract with Ethers.js, we create the ABI for it, found [here](https://ropsten.etherscan.io/address/0x8a32989b65186d3596251d7d7c8a427a26669354#code).
+Take for example this [Sample Contract](https://ropsten.etherscan.io/address/0x8a32989b65186d3596251d7d7c8a427a26669354#code). In this contract, we store variables by adding it to the blockchain and can read all currently stored variables. Storing values on the Ethereum blockchain is useful for Dapp development, as the storage allows developers to reference variables to do interactions such as storing signatures, or keeping track of cryptokittens up for trade. Interacting with this contract with Ethers.js, we create the ABI for it, found [here](https://ropsten.etherscan.io/address/0x8a32989b65186d3596251d7d7c8a427a26669354#code). ABI stands for Application Binary Interface. This interface defines functions found at a smart contract address, and can be used to call various functions at that smart contract.
 
 ```
 let abi = [{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"add","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getValues","outputs":[{"name":"","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
@@ -221,7 +215,7 @@ constructor(private fb: FormBuilder) {
       this.contractAddress = "0x8a32989b65186d3596251d7d7c8a427a26669354";
   }
 
-addToContract(form: NgForm) {
+addToContract(form: any) {
           let contract = new ethers.Contract(this.contractAddress, this.abi, this.wallet);
           contract.add(form.value);
   }
