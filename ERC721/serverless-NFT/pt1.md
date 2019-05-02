@@ -39,6 +39,8 @@ And you're welcome to use the Infura key I made for this tutorial:
 INFURA_API_KEY=85939c42711147b291a40dc3a77177f8
 ```
 
+For reference, the 'develop' network uses the truffle development network, and the value of `TRUFFLE_MNEMONIC`, which you can find from the output of the `truffle develop` command.
+
 Check the boilerplate contracts compile, deploy and pass the dummy test locally:
 
 ```bash
@@ -384,8 +386,6 @@ module.exports = (deployer, helper, accounts) => {
 }
 ```
 
-<!-- TODO: What does this mean? -->
-
 Import the Metadata at the top of the file, duplicate the token deployment code, and replace it with Metadata so Metadata is imported first. Then change the Token deploy parameters to match the constructor arguments.
 
 ```javascript
@@ -445,16 +445,6 @@ Saving artifacts...
 
 If you get errors, try deleting the _build_ folder that truffle creates when compiling or migrating, or add the `--reset` flag to the command.
 
-<!-- TODO: Remove? -->
-
-Commit your changes
-
-```bash
-git add . && git commit -m 'Step 5: Create Migrations'
-```
-
-[Go to step 6](1-6.md)
-
 ## Step 6: Make Tests
 
 Rename _/test/Sample.test.js_ to _/test/Token.test.js_ or whatever you called your token contract, then replace all references to "Sample".
@@ -509,9 +499,7 @@ contract('Token', async function(accounts) {
 
 Import the Metadata at the top of the file then duplicate the token test code and replace it with Metadata so Metadata is imported first.
 
-<!-- TODO: What does this mean?  -->
-
-Also don't forget to set the deploy parameters for the token, including the metadata address.
+Don't forget to set the deploy parameters for the token, including the `metadata.address`:
 
 ```javascript
 var Metadata = artifacts.require('./Metadata.sol')
@@ -579,8 +567,6 @@ it('should return metadata uints as strings', async function() {
 })
 ```
 
-<!-- TODO: Fails, likely due to above -->
-
 Run the test to confirm it works
 
 ```bash
@@ -618,54 +604,44 @@ Compiling zeppelin-solidity/contracts/token/ERC721/ERC721Full.sol...
   1 passing (667ms)
 ```
 
-Add some random numbers to and run the test again to confirm it works:
+Add some random numbers too, and run the test again to confirm it works:
 
 ```javascript
- describe('Token.sol', function() {
-    it('should return metadata uints as strings', async function() {
-      const URI = 'https://domain.com/metadata/'
+describe('Token.sol', function() {
+  it('should return metadata uints as strings', async function() {
+    const URI = 'https://domain.com/metadata/'
 
-      let tokenURI_uint = 0
-      let tokenURI_result = await token.tokenURI(tokenURI_uint)
-      assert(
-        URI + tokenURI_uint.toString() === tokenURI_result,
-        'incorrect value "' + tokenURI_result + '" returned'
-      )
+    let tokenURI_uint = 0
+    let tokenURI_result = await token.tokenURI(tokenURI_uint)
+    assert(
+      URI + tokenURI_uint.toString() === tokenURI_result,
+      'incorrect value "' + tokenURI_result + '" returned'
+    )
 
-      tokenURI_uint = 2345
-      tokenURI_result = await token.tokenURI(tokenURI_uint)
-      assert(
-        URI + tokenURI_uint.toString() === tokenURI_result,
-        'incorrect value "' + tokenURI_result + '" returned'
-      )
+    tokenURI_uint = 2345
+    tokenURI_result = await token.tokenURI(tokenURI_uint)
+    assert(
+      URI + tokenURI_uint.toString() === tokenURI_result,
+      'incorrect value "' + tokenURI_result + '" returned'
+    )
 
-      tokenURI_uint = 23452345
-      tokenURI_result = await token.tokenURI(tokenURI_uint)
-      assert(
-        URI + tokenURI_uint.toString() === tokenURI_result,
-        'incorrect value "' + tokenURI_result + '" returned'
-      )
+    tokenURI_uint = 23452345
+    tokenURI_result = await token.tokenURI(tokenURI_uint)
+    assert(
+      URI + tokenURI_uint.toString() === tokenURI_result,
+      'incorrect value "' + tokenURI_result + '" returned'
+    )
 
-      tokenURI_uint = 134452
-      tokenURI_result = await token.tokenURI(tokenURI_uint)
-      assert(
-        URI + tokenURI_uint.toString() === tokenURI_result,
-        'incorrect value "' + tokenURI_result + '" returned'
-      )
-    })
+    tokenURI_uint = 134452
+    tokenURI_result = await token.tokenURI(tokenURI_uint)
+    assert(
+      URI + tokenURI_uint.toString() === tokenURI_result,
+      'incorrect value "' + tokenURI_result + '" returned'
+    )
   })
 })
+})
 ```
-
-<!-- TODO: Remove -->
-
-Commit your changes
-
-```bash
-git add . && git commit -m 'Step 6: Make Tests'
-```
-
-[Go to step 7](1-7.md)
 
 ## Step 7: Make Migration for Updates
 
@@ -675,8 +651,8 @@ Inside _Token.sol_ import the _Ownable.sol_ contract from open-zeppelin, inherit
 
 ```solidity
 pragma solidity ^0.5.0;
-import "openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
+import "../node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Metadata.sol";
 
 /**
@@ -707,7 +683,7 @@ Duplicate the file  _2_deploy_contracts.js_ and call it  _3_update_metadata.js_:
 cp ./migrations/2_deploy_contracts.js  ./migrations/3_update_metadata.js
 ```
 
-Change the metadata `deploy` in _3_update_metadata.js_ so that it contains an object that specified this contract will be replaced:
+Change the metadata `deploy` in _3_update_metadata.js_ so that it contains an object that specifies this contract will be replaced:
 
 ```javascript
 await deployer.deploy(Metadata, {replace: true})
@@ -722,16 +698,14 @@ let token = await Token.deployed()
 console.log(_ + 'Token deployed at: ' + token.address)
 ```
 
-Then update the token with the new metadata address
+Then update the token with the new metadata address:
 
 ```javascript
 await token.updateMetadata(metadata.address)
 console.log(_ + 'Token metadata updated to ' + metadata.address)
 ```
 
-<!-- TODO: What does nonces get weird mean? -->
-
-Run the migration to make sure it worked. If the nonces get weird try deleting the _build_ directory.
+Run the migration to make sure it worked. If you get an error about incorrect nonces this might be due to an out of sync truffle build. Try deleting the _build_ directory and running it again.
 
 ```bash
 $ yarn migrate --network develop --reset
@@ -794,17 +768,7 @@ You can see that the Token address didn't change but the metadata did. If you ha
 yarn migrate --network develop -f 3 --to 3
 ```
 
-This only run **from** (`-f`) migration number 3 **until** (`--to`) migration 3 (i.e., it only runs migration 3)
-
-<!-- TODO: Needed? -->
-
-Commit your changes
-
-```bash
-git add . && git commit -m 'Step 7: Make Migrations for Updates'
-```
-
-[Go to step 8](1-8.md)
+This only runs **from** (`-f`) migration number 3 **until** (`--to`) migration 3 (i.e., it only runs migration 3)
 
 ## Step 8: Update ERC-721 and Tests
 
@@ -812,28 +776,26 @@ Since we want to mint tokens, let's add a public function for minting to our Tok
 
 ```solidity
 pragma solidity ^0.5.0;
-import "openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
+import "../node_modules/openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Metadata.sol";
 
 /**
  * The Token contract does this and that...
  */
 contract Token is ERC721Full, Ownable {
-    address metadata;
-    constructor(string memory name, string memory symbol, address _metadata) public
-        ERC721Full(name, symbol)
-    {
+    address public metadata;
+    constructor(string memory name, string memory symbol, address _metadata) public ERC721Full(name, symbol) {
         metadata = _metadata;
     }
     function mint(address recepient) public onlyOwner {
         _mint(recepient, totalSupply() + 1);
     }
-    function updateMetadata(Metadata _metadata) public onlyOwner {
+    function updateMetadata(address _metadata) public onlyOwner {
         metadata = _metadata;
     }
     function tokenURI(uint _tokenId) external view returns (string memory _infoUrl) {
-        return metadata.tokenURI(_tokenId);
+        return Metadata(metadata).tokenURI(_tokenId);
     }
 }
 ```
@@ -908,59 +870,9 @@ Using network 'test'.
   2 passing (776ms)
 ```
 
-<!-- TODO: Remove? -->
-
-Commit your changes
-
-```bash
-git add . && git commit -m 'Step 8: Update ERC-721 and tests'
-```
-
-[Go to step 9](1-9.md)
-
 ## Step 9: Deploy
 
 Now that we have tests in place that prove out metadata works and our token can be minted let's deploy it to our local network, then deploy it to Rinkeby.
-
-In one console window start Truffle's local RPC (notice the mnemonic phrase is always the same).
-
-```bash
-$ yarn develop
-Truffle Develop started at http://127.0.0.1:9545/
-
-Accounts:
-(0) 0x627306090abab3a6e1400e9345bc60c78a8bef57
-(1) 0xf17f52151ebef6c7334fad080c5704d77216b732
-(2) 0xc5fdf4076b8f3a5357c5e395ab970b5b54098fef
-(3) 0x821aea9a577a9b44299b9c15c88cf3087f3b5544
-(4) 0x0d1d4e623d10f9fba5db95830f7d3839406c6af2
-(5) 0x2932b7a2355d6fecc4b5c0b6bd44cc31df247a2e
-(6) 0x2191ef87e392377ec08e7c08eb105ef5448eced5
-(7) 0x0f4f2ac550a1b4e2280d04c21cea7ebd822934b5
-(8) 0x6330a553fc93768f612722bb8c2ec78ac90b3bbc
-(9) 0x5aeda56215b167893e80b4fe645ba6d5bab767de
-
-Private Keys:
-(0) c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3
-(1) ae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f
-(2) 0dbbe8e4ae425a6d2687f1a7e3ba17bc98c673636790f1b8ad91193c05875ef1
-(3) c88b703fb08cbea894b6aeff5a544fb92e78a18e19814cd85da83b71f772aa6c
-(4) 388c684f0ba1ef5017716adb5d21a053ea8e90277d0868337519f97bede61418
-(5) 659cbb0e2411a44db63778987b1e22153c086a95eb6b18bdf89de078917abc63
-(6) 82d052c865f5763aad42add438569276c00d3d88a2d062d36b2bae914d58b8c8
-(7) aa3680d5d48a8283413f7a108367c7299ca73f553735860a87b08f39395618b7
-(8) 0f62d96d6675f32685bbdb8ac13cda7c23436f63efbb9d07700d8669ff12b7c4
-(9) 8d5366123cb560bb606379f90a0bfd4769eecc0557f1b362dcae9012b548b1e5
-
-Mnemonic: buddy drum hawk truck taxi dish card medal sketch shallow intact stool
-
-⚠️  Important ⚠️  : This mnemonic was created for you by Truffle. It is not secure.
-Ensure you do not use it on production blockchains, or else you risk losing funds.
-
-truffle(develop)>
-```
-
-<!-- TODO: Double check when earlier steps resolved -->
 
 Run the deploy command in another terminal window. We set it to be the first two migrations so that we don't update the metadata contract on this deploy.
 
@@ -1000,8 +912,6 @@ Saving artifacts...
 
 This command says "Replacing" because it can see from the previous artifacts that we have deployed these contracts before. Now let's try deploying to Rinkeby, make sure that the mnemonic phrase you set earlier has some ether in it.
 
-<!-- TODO: Test -->
-
 ```bash
 $ yarn migrate --network rinkeby -f 1 --to 2
 Using network 'rinkeby'.
@@ -1030,21 +940,11 @@ Saving artifacts...
 
 If you're feeling brave and have a mnemonic phrase with some mainnet ether feel free to go big. : )
 
-<!-- TODO: Remove -->
-
-Commit your changes
-
-```bash
-git add . && git commit -m 'Step 9: Deploy'
-```
-
-[Go to step 10](1-10.md)
-
 ## Step 10: Verify Contracts on Etherscan
 
-Now you are able to see your contracts on the block explorer [etherscan.io](https://etherscan.io). What you don't see is the  code you used to generate the contract. To add that and provide a user the security of knowing what this code does (and to provide a place to track the token), you can verify the contract. The easiest method is with a flattener, which imports every referenced file and combines them into one single file.
+Now you are able to see your contracts on the block explorer [etherscan.io](https://etherscan.io). What you don't see is the code you used to generate the contract. To add that and provide a user the security of knowing what this code does (and to provide a place to track the token), you can verify the contract. The easiest method is with a flattener, which imports every referenced file and combines them into one single file.
 
-A good option is "[truffle-flattener](##)" because it works with the truffle framework in mind. We installed it earlier so you should be able to use it from your project directory and generate the files. Begin by making a folder to store the output, and then flatten the files.
+A good option is "[truffle-flattener](https://github.com/nomiclabs/truffle-flattener)" because it works with the truffle framework in mind. We installed it earlier so you should be able to use it from your project directory and generate the files. Begin by making a folder to store the output, and then flatten the files.
 
 ```bash
 mkdir flat
@@ -1052,9 +952,7 @@ npx truffle-flattener contracts/Token.sol > flat/Token.sol
 npx truffle-flattener contracts/Metadata.sol > flat/Metadata.sol
 ```
 
-<!-- TODO: Check -->
-
-Now visit the etherscan.io endpoint for your deployed contracts. You may need to scroll back up to your deploy messages which  tell you the address of your contract. Use this address and go to `https://rinkeby.etherscan.io/address/_CONTACT_ADDRESS_`
+Now visit the etherscan.io endpoint for your deployed contracts. You may need to scroll back up to your deploy messages which tell you the address of your contract. Use this address and go to `https://rinkeby.etherscan.io/address/_CONTACT_ADDRESS_`
 
 Open the "Code" tab and click "Verify And Publish".  Enter "Token" under contract name, and select the compiler version you used. You can confirm the compiler in the _./build/Token.json_ file by searching for "network". This shows you a record of the deployment of your contract relevant to each network (rinkeby is number 4) alongside the compiler version. Mine is `0.5.0+commit.1d4f565a`, so I select that on the drop down on etherscan. I turn "Optimization" to off, since by default truffle does not run the compiler with optimization turned on. Then copy and paste the contents of _./flat/Token.sol_ into the text box.
 
@@ -1072,14 +970,4 @@ Now via the "Write Contract" tab you can directly access the "mint" function, an
 
 You may notice it doesn't have a name yet, or is called ERC-20 even though it is ERC-721, this is because there hasn't been any transactions yet and etherscan isn't that smart.
 
-End of part 1, celebrate by minting a token or two
-
-<!-- TODO: Remove -->
-
-Commit your code
-
-```bash
-git add . && git commit -m 'Step 10: Verify Contracts on Etherscan'
-```
-
-[Go to Part 2 Step 1](2-1.md)
+End of part 1, celebrate by minting a token or two.
