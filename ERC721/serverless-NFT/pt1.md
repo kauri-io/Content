@@ -1,3 +1,9 @@
+# Creating a Flexible Non-fungible token
+
+The first part of this tutorial shows you how to deploy an [Non-fungible token (NFT)](https://en.wikipedia.org/wiki/Non-fungible_token) using a technique that makes it easy to update details about your token as infrastructure and your needs change.
+
+The second part of this tutorial will show how to create a serverless solution for serving that metadata. This is a widely used web2 infrastructure solution that is cheap and scaleable. It is not decentralized; This is a solution for using the Internet as it exists today.
+
 ## Step 1: Setup Environment
 
 I'm using `node v9.11.2` and `yarn v1.7.0` for this tutorial. NPM and other versions of node should work.
