@@ -696,35 +696,79 @@ event BountyIssued(
 
 ![screenshot: results of the constructor transaction][screenshot-remix-constructor-transaction]
 
-Зеленая галочка означает, что транзакция прошла успешно.
+Иконка "зеленый кружок с галочкой" означает, что транзакция прошла успешно.
 
-Within the “Run” tab in Remix, we can now select our deployed Bounties contract so that we can invoke the `issueBounty` function. Under the “Deployed Contracts” section we see a list of function which can be invoked on the deployed smart contract.
+<br/>
 
-Here we have the following options:
+Теперь во вкладке `"Run"` окружения Remix
+можно выбрать наш контракт `"Bounties"`,
+чтоб вызвать функцию `issueBounty()`.
+Для этого следует найти нужную функцию 
+в секции `"Deployed Contracts"`.
 
-* `issueBounty` the colour of this button “pink” indicates that invocation would result in a transaction
-* `bounties` the colour of this button “blue” indicates that invocation would result in a call
+На данный момент секция содержит следующие функции:
+* `issueBounty` - розовый цвет этой кнопки 
+означает, что ее нажатие и вызов соответствующей функции
+создаст новую транзакцию.
+* `bounties` - синий цвет этой кнопки означает
+простой вызов функции без транзакции и изменения состояния контракта.
 
-![](https://api.beta.kauri.io:443/ipfs/QmUzyH4Vugc3vN52hna8r1r5hRzuLKTVXRC3vP4Huejqwt)
+![screenshot: buttons to invoke contract functions][screenshot-remix-contract-invoke-buttons]
 
-To invoke the `issueBounty` function, we need to first set the arguments in the “issueBounty” input box.
+Для вызова функции `issueBounty` 
+сперва нужно задать ее аргументы,
+вписав их в соответствующее поле ввода
+(расположенное напротив розовой кнопки).
+Порядок расположения значений при вводе
+должен совпадать с порядком объявления 
+соответствующих параметров в коде контракта.
 
-Set the `string _data` argument to some string “some requirements” and set the `uint64 _deadline` argument to a unix timestamp in the future e.g “1691452800” August 8th 2023.
+В качестве параметра `string _data` укажем `"некоторые требования"`
+(кавычки необходимы для типа `string`).
+В свою очередь, в качестве `uint64 _deadline`
+запишем значение `1691452800` 
+(без кавычек, поскольку `uint64` - целочисленный тип), 
+что соответствует дате `8 августа 2023 года`
 
-Since our `issueBounty` function is `payable` we must ensure `msg.value` is set, we do this by setting the values at the top of the “Run” tab with the RemixIDE.
+Поскольку функция `issueBounty` помечена ключевым словом `payable`,
+мы должны убедиться, что параметр `msg.value` задан.
+Ввести нужное значение количество эфира 
+можно в верхней части вкладки `"Run"` в среде Remix.
 
-Here we have the following options:
+Там мы увидим следующие настройки :
 
-* *Environment: *As previously alluded to, sets the blockchain environment to interact with.
-* *Account: *Allows the selection of an account to send the transaction from, and also to see the amount of ETH available in each account.
-* *Gas Limit: *Set the max amount of gas to be used by execution of the transaction
-* *Value: *The amount to send in `msg.value` here you can also select the denomination in “Wei, Gwei, Finney and Ether”
+* `Environment:` как уже изложено выше, 
+позволяет выбрать блокчейн, с которым предстоит работать
+(в котором находится наш опубликованный контракт).
 
-So go ahead and set “Value” to some number > 0, but less than the current amount available in the selected account. In this example we’ll set it to `1 ETH`
+* `Account:` позволяет выбрать учетную запись (`address`), 
+от имени которого будет произведен вызов функции.
+С баланса этого `address` будут списаны эфир и газ
+для исполнения вызова функции.
+Также тут можно посмотреть 
+список доступных учетных записей
+и их балансов.
 
-Clicking the “issueBounty” button in the “Deployed Contracts” section, within the “Run” tab, will send a transaction invoking the `issueBounty` function, on the deployed `Bounties` contract.
+* `Gas Limit:` позволяет задать верхний предел
+количества газа, который можно 
+использовать для выполнения кода в рамках данной транзакции.
 
-Within the console you will find the log output of the issueBounty transaction.
+* `Value:` количество эфира, перечисляемого на счет контракта.
+Для удобства ввода суммы можно выбрать единицу измерения: `Wei`, `Gwei`, `Finney`, `Ether`
+Стоит отметить, что внутри контракта 
+это значение доступно из переменной `msg.value`
+и там оно будет всегда измеряться в Wei и не зависит от настроек Remix.
+
+Итак, давайте зададим в поле `"Value"` какое-нибудь значение 
+больше нуля. В рамках даного упражнения введем `1 ETH`.
+
+Теперь можно нажать кнопку `"issueBounty"` 
+в секции `"Deployed Contracts"` вкладки `"Run"`
+и таким образом запустить транзакцию,
+которая вызовет функцию `issueBounty()` контракта `Bounties`.
+
+В консоли будет отображен результат работы этой транзакции.
+
 
 ![](https://api.beta.kauri.io:443/ipfs/QmUzyH4Vugc3vN52hna8r1r5hRzuLKTVXRC3vP4Huejqwt)
 
@@ -773,6 +817,7 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 [screenshot-virtual-machine-dropdown]: https://api.beta.kauri.io:443/ipfs/QmdAgBc9WzFmE4GwKBxHkMRCBBdAapHP1Ym3dR8mS2atSF
 [screenshot-remix-deploy-button]: https://api.beta.kauri.io:443/ipfs/QmerrAduWYrYaxMT5254xE5DjngDid81hgaVT32uqGt1qt
 [screenshot-remix-constructor-transaction]: https://api.beta.kauri.io:443/ipfs/QmXCiXYPFLbuk8X8eWv16F3PQFSp2ZEi8pstDrsSbYNybw
+[screenshot-remix-contract-invoke-buttons]: https://api.beta.kauri.io:443/ipfs/QmUzyH4Vugc3vN52hna8r1r5hRzuLKTVXRC3vP4Huejqwt
 
 [link-semantic-versioning]: https://semver.org/
 [link-unix-timestamp-wiki]: https://ru.wikipedia.org/wiki/UNIX-%D0%B2%D1%80%D0%B5%D0%BC%D1%8F 
