@@ -285,13 +285,13 @@ First, lets compile our `Bounties.sol` contract to ensure we have no errors. In 
 
 ![](https://api.beta.kauri.io:443/ipfs/QmPbH2hJxqjwyCbo7iLMovVQLZyb96V9EbzKkUhJnS4Eem)
 
-You will notice, a few static analysis warnings in the IDE above the compilation result. Remix runs a set of static analysers to help avoid known security vulnerabilities and follow best practices. You can read more about [Remix Analysis here.] (https://remix.readthedocs.io/en/latest/analysis_tab.html) We can ignore these warning for now and move on to deploying and interacting with our smart contract.
+You will notice, a few static analysis warnings in the IDE above the compilation result. Remix runs a set of static analysers to help avoid known security vulnerabilities and follow best practices. You can read more about `Remix Analysis` [here](https://remix.readthedocs.io/en/latest/analysis_tab.html) We can ignore these warning for now and move on to deploying and interacting with our smart contract.
 
 In Remix, select the `Run` tab in the top right hand side of the screen. Within the `Environment` dropdown section, select the `Javascript VM` option.
 
 ![](https://api.beta.kauri.io:443/ipfs/QmdAgBc9WzFmE4GwKBxHkMRCBBdAapHP1Ym3dR8mS2atSF)
 
-The “JavaScript VM” option, runs a Javascript VM blockchain within the browser, this allows you to deploy and send transactions to a blockchain within the RemixIDE in the browser. This is particularly useful for prototyping especially since no dependencies are required to be installed locally. [You can read more about running transactions within Remix here] (https://remix.readthedocs.io/en/latest/run_tab.html).
+The “JavaScript VM” option, runs a Javascript VM blockchain within the browser, this allows you to deploy and send transactions to a blockchain within the RemixIDE in the browser. This is particularly useful for prototyping especially since no dependencies are required to be installed locally. You can read more about running transactions within Remix [here](https://remix.readthedocs.io/en/latest/run_tab.html).
 
 Within the `Run` tab in Remix, with the `JavaScript VM` environment option selected. Click the `Deploy` button.
 
