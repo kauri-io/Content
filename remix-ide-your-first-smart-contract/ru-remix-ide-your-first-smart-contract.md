@@ -622,27 +622,74 @@ event BountyIssued(
 }
 ```
 
-## 7. Deploy & interact in Remix
+## 7. Публикация контракта и взаимодействие с ним средствами Remix
 
-Now that we have our smart contract we can deploy to a local development blockchain running in the RemixIDE (browser), and test our `issueBounty` function.
+И вот, наш контракт написан. 
+А значит, мы, наконец, можем поместить его
+в локальный тестовый мини-блокчейн внутри Remix IDE
+в целях тестирования функции `issueBounty()`.
 
-First, lets compile our `Bounties.sol` contract to ensure we have no errors. In Remix, select the “Compile” tab in the top right hand side of the screen, and start the compiler by selecting the “Start to Compile” option.
+Первым делом, скомпилируем наш контракт `Bounties.sol`
+и убедимся в отсутствии ошибок. 
+Для этого нужно выбрать вкладку `"Compile"`
+в правом верхнем углу экрана 
+и запустить процесс компиляции 
+нажатием на кнопку `"Start to Compile"`.
 
-![](https://api.beta.kauri.io:443/ipfs/QmPbH2hJxqjwyCbo7iLMovVQLZyb96V9EbzKkUhJnS4Eem)
+![screenshot: remix IDE compilation result with static warnings][screenshot-remix-static-warnings]
 
-You will notice, a few static analysis warnings in the IDE above the compilation result. Remix runs a set of static analysers to help avoid known security vulnerabilities and follow best practices. You can read more about [Remix Analysis here.] (https://remix.readthedocs.io/en/latest/analysis_tab.html) We can ignore these warning for now and move on to deploying and interacting with our smart contract.
+Как вы заметили, 
+над результатом компиляции появилось сообщение
+об ошибках, найденных при статическом анализе.
+Среда Remix запускает при компиляции 
+некоторые эвристики статического анализа,
+позволяющие выявить известные уязвимости в коде контракта.
+Также исправление этих ошибок поможет 
+следовать общепринятым рекомендациям и правилам
+качественной разработки кода контрактов.
 
-In Remix, select the `Run` tab in the top right hand side of the screen. Within the `Environment` dropdown section, select the `Javascript VM` option.
+Больше информации о статическом анализе в среде Remix 
+можно найти [по ссылке][doc-remix-analyzer].
 
-![](https://api.beta.kauri.io:443/ipfs/QmdAgBc9WzFmE4GwKBxHkMRCBBdAapHP1Ym3dR8mS2atSF)
+В рамках данного обучающего материала 
+эти ошибки можно временно не принимать во внимание
+и перейти непосредственно к публикации нашего контракта,
+а также к его тестированию.
 
-The “JavaScript VM” option, runs a Javascript VM blockchain within the browser, this allows you to deploy and send transactions to a blockchain within the RemixIDE in the browser. This is particularly useful for prototyping especially since no dependencies are required to be installed locally. [You can read more about running transactions within Remix here] (https://remix.readthedocs.io/en/latest/run_tab.html).
+Для этого выберем вкладку `"Run"`
+в правом верхнем углу экрана.
+В выпадающем списке `"Environment"` 
+следует выбрать вариант `"JavaScript VM"`
+как показано на снимке экрана ниже.
 
-Within the `Run` tab in Remix, with the `JavaScript VM` environment option selected. Click the `Deploy` button.
+![screenshot: ethereum environment drop-down][screenshot-virtual-machine-dropdown]
 
-![](https://api.beta.kauri.io:443/ipfs/QmerrAduWYrYaxMT5254xE5DjngDid81hgaVT32uqGt1qt)
+При использовании данной настройки
+в браузере будет создана виртуальная машина
+для блокчейна средствами JavaScript.
+Таким образом, все взаимодействие с контрактом
+будет происходить локально, не выходя за пределы
+вашего компьютера и браузера.
+Это очень полезно тем, что не требует установки
+дополнительных программ на ваш компьютер
+для знакомства с электронными контрактами.
 
-This executes a transaction to deploy the contract to the local blockchain environment running in the browser. We’ll talk more about contract creation transactions later on in the series.
+Узнать больше об исполнении транзакций внутри Remix IDE
+можно [из документации][doc-remix-javascript-vm]
+
+На вкладке `"Run"` окружения Remix, 
+выбрав окружение `"JavaScript VM"`,
+нажмите на кнопку `"Deploy"`
+как показано на снимке экрана ниже.
+
+![screenshot: "deploy" button in the "run" tab][screenshot-remix-deploy-button]
+
+Это действие выполнит транзакцию по публикации контракта
+в блокчейн, работающий локально в браузре.
+Подобные транзакции будут описаны подробней в последующих статьях.
+
+В консоли среды `Remix`, 
+расположенной прямо под областью редактирования кода, 
 
 Within the RemixIDE console, which is located directly below the editor panel, you will see the log output of the contract creation transaction.
 
@@ -720,12 +767,14 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 [tutorial-source-root]: https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract
 
 [screenshot-remix-create-file]: https://api.beta.kauri.io:443/ipfs/QmYMw578VU2z4nUwGbDwcoMBBmDTEsbriSNs7H44smJpYZ
-
 [screenshot-remix-compile]: https://api.beta.kauri.io:443/ipfs/QmSxzksHcCp9AibwAGsTxdYntdn6hGiBmjeCZm3bpKf4h6
+[screenshot-remix-static-warnings]: https://api.beta.kauri.io:443/ipfs/QmPbH2hJxqjwyCbo7iLMovVQLZyb96V9EbzKkUhJnS4Eem
+[screenshot-virtual-machine-dropdown]: https://api.beta.kauri.io:443/ipfs/QmdAgBc9WzFmE4GwKBxHkMRCBBdAapHP1Ym3dR8mS2atSF
+[screenshot-remix-deploy-button]: https://api.beta.kauri.io:443/ipfs/QmerrAduWYrYaxMT5254xE5DjngDid81hgaVT32uqGt1qt
 
 [link-semantic-versioning]: https://semver.org/
-
 [link-unix-timestamp-wiki]: https://ru.wikipedia.org/wiki/UNIX-%D0%B2%D1%80%D0%B5%D0%BC%D1%8F 
+[link-etherscan-example]: https://etherscan.io/address/0x69a70e299367ff4c3ba1fe8c93fbddd9b5b4771a
 
 [doc-solidity-types]: http://solidity.readthedocs.io/en/latest/types.html
 [doc-solidity-0.5.0-breaking]: https://solidity.readthedocs.io/en/v0.5.0/050-breaking-changes.html
@@ -734,6 +783,9 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 [doc-solidity-error-handling]: http://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions
 [doc-solidity-modifiers]: https://solidity.readthedocs.io/en/v0.4.24/common-patterns.html?highlight=modifier#restricting-access
 [doc-solidity-events]: https://solidity.readthedocs.io/en/latest/contracts.html#events
+[doc-remix-analyzer]: https://remix.readthedocs.io/en/latest/analysis_tab.html
+[doc-remix-javascript-vm]: https://remix.readthedocs.io/en/latest/run_tab.html
 
-[link-etherscan-example]: https://etherscan.io/address/0x69a70e299367ff4c3ba1fe8c93fbddd9b5b4771a
+
+
 
