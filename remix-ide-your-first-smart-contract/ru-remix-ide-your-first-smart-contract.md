@@ -218,11 +218,11 @@ So we set the msg.sender as the issuer and the msg.value as the bounty amount.
 return (bounties.length - 1);
 ```
 
-## Validation with Modifiers
+## 5. Validation with Modifiers
 
 Modifiers in solidity allow you to attach additional pieces of code to be run before or after the execution of a function. It is common practice in solidity to use modifiers to perform argument validation for solidity functions.
 
-## Validate Deadline
+## 5.1 Validate Deadline
 
 validateDeadline(_deadline) is added to ensure the deadline argument is in the future, it should not be possible for a user to issue a bounty with a deadline in the past.
 ```
@@ -253,7 +253,7 @@ So to modifier validateDeadline reads as follows:
 If the `deadline > now` continue and execute function body, else revert and refund remaining gas to caller.
 
 
-### Has Value
+### 5.2 Has Value
 
 `hasValue()` is added to ensure `msg.value` is a non zero value. Even though as previously discussed the `payable` keyword ensures msg.value is set, it can still be sent as zero.
 
@@ -269,7 +269,7 @@ modifier hasValue() {
 You can read more about how modifiers can be used to restrict access and guard against incorrect usage in the [solidity documentation] (https://solidity.readthedocs.io/en/v0.4.24/common-patterns.html?highlight=modifier#restricting-access)
 
 
-### Issue Bounty Event
+### 6. Issue Bounty Event
 
 It is best practice when modifying state in solidity to emit and event. Events allow blockchain clients to subscribe to state changes and perform actions based on those changes.
 
@@ -364,7 +364,7 @@ event BountyIssued(uint bounty_id, address issuer, uint amount, string data);
 }
 ```
 
-## Deploy & interact in Remix
+## 7. Deploy & interact in Remix
 
 Now that we have our smart contract we can deploy to a local development blockchain running in the RemixIDE (browser), and test our `issueBounty` function.
 
@@ -434,7 +434,7 @@ Set the `uint256` argument of the bounties function to `0` and click the “blue
 
 Here we confirm that the data inputs for our issuedBounty are retrieved correctly from the “bounties” array with deployed smart contracts storage.
 
-### Try it yourself
+### 8. Try it yourself
 
 Now that you have seen how to add a function to issue a bounty, try adding the following functions to the Bounties contract:
 
@@ -446,7 +446,7 @@ Note: For `acceptFulfilment` you will need to use the `address.transfer(uint amo
 
 You can find the [complete Bounties.sol file here for reference] (https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/blob/master/remix-bounties-smartcontract/Bounties-complete.sol).
 
-## Next Steps
+## 9. Next Steps
 - Read the next guide: [Understanding smart contract compilation and deployment](https://kauri.io/article/973c5f54c4434bb1b0160cff8c695369/understanding-smart-contract-compilation-and-deployment)
 - Learn more about Remix-IDE from the [documentation](https://remix.readthedocs.io/en/latest/) and [github](https://github.com/ethereum/remix-ide)
 
