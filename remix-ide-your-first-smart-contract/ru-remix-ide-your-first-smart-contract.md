@@ -56,8 +56,8 @@ pragma solidity ^0.5.0;
 Теперь создадим сам класс, который будет содежжать код котракта. Для этого напишем 
 
 ```
-contract Bounties {
-
+contract Bounties 
+{
 }
 ```
 
@@ -76,8 +76,8 @@ constructor() public {}
 ```
 pragma solidity ^0.5.0;
 
-contract Bounties {
-
+contract Bounties 
+{
     constructor() public {}
 }
 ```
@@ -126,8 +126,8 @@ enum BountyStatus
 ```
 // структура "заказ" (работа за вознаграждение)
 //
-struct Bounty {
-
+struct Bounty 
+{
     // учетная запись ethereum работодателя
     //
     address issuer;
@@ -182,8 +182,8 @@ Bounty[] public bounties;
 // создать задание
 //
 function issueBounty(
-    string memory _data, // описание работ
-    uint64 _deadline     // срок исполнения 
+    string memory _data,        // описание работ
+    uint64        _deadline     // срок исполнения 
     
 ) public   // функция может быть вызвана любым пользователем или другим контрактом в сети Ethereum
   payable  // при вызове этой функции контракт может получать эфир
@@ -421,96 +421,204 @@ modifier hasValue() {
 
 ### 6. Событие-уведомление "задание создано"
 
-It is best practice when modifying state in solidity to emit and event. Events allow blockchain clients to subscribe to state changes and perform actions based on those changes.
+В разработке на Solidity 
+считается хорошим тоном сгенерировать событие
+при изменении состояния контракта.
+События позволяют клиентским приложениям 
+подписываться на них и реагировать на произошедшие изменения.
+Например, web site может добавить на свою страницу новое задание,
+получив такой event от blockchain 
+при выполнении написанной нами ранее функции `issueBounty()`.
 
-For example a user interface showing a list of transfers in and out of an account, for example [etherscan] (https://etherscan.io/address/0x69a70e299367ff4c3ba1fe8c93fbddd9b5b4771a), could listen to a “transfer” event to update the user on the latest transfers in and out of an account.
+Еще одним примером является 
+обновление списка входящих и исходящих транзакций
+для некоторого контракта
+на сервисе [etherscan][link-etherscan-example].
 
-Read more about [solidity events here] (https://solidity.readthedocs.io/en/latest/contracts.html#events).
+Более детально о событиях как конструкции языка Solidity
+можно прочитать в [документации][doc-solidity-events].
 
-Since when issuing a bounty we change the state of our Bounties.sol contract we will issue a `BountyIssued` event.
-First, we need to declare our event:
+
+Поскольку в функции `issueBounty()` 
+нашего контракта `Bounties.sol`
+состояние меняется,
+мы сгенерируем событие `BountyIssued`. 
+Для этого объявим его :
+
 ```
-event BountyIssued(uint bounty_id, address issuer, uint amount, string data);
+event BountyIssued(
+    uint    bounty_id, // индекс задания в массиве
+    address issuer   , // создатель задания, который внес в контракт средства для вознаграждения
+    uint    amount   , // сумма гонорара
+    string  data     ); // описание требований к заданию
 ```
-Our BountyIssued event emits the following information about the bounty data stored:
 
-* *bountyId: *The id of the issued bounty
-* *issuer: *The account of the user who issued the bounty
-* *amount: *The amount in Weis allocated to the bounty
-* *data: *The requirements of the bounty as a string
+Таким образом, событие `BountyIssued` 
+передает клиентским приложениям следующую информацию
+о свежесозданном контракте: 
 
-Then in our `issueBounty` function, we need to emit the `BountyIssued` event:
+* *bountyId:* - идентификатор нового задания
+* *issuer:* - учетная запись пользователя, создавшего задание и оплатившего его
+* *amount:* - сумма вознаграждения за исполнения задания (количество WEI)
+* *data:* - строка с описанием требований к исполнению заданию
+
+Добавим же генерацию события в функцию `issueBounty()`
 ```
-bounties.push(Bounty(msg.sender, _deadline, _data, BountyStatus.CREATED, msg.value));
-*emit BountyIssued(bounties.length - 1,msg.sender, msg.value, _data);*
+bounties.push(
+    Bounty(
+        msg.sender, 
+        _deadline, 
+        _data, 
+        BountyStatus.CREATED, 
+        msg.value));
+        
+emit BountyIssued(            // добавленное событие
+        bounties.length - 1,  // индекс нового задания в качестве идентификатора
+        msg.sender,           // пользователь, финансирующий задание
+        msg.value,            // размер гонорара
+        _data);               // описание задания
+
 return (bounties.length - 1);
 ```
-Now that we have added our `issueBounty` function our `Bounties.sol` file should look like the following:
+
+После описанного выше добавления функции `issueBounty`
+наш контракт `Bounties.sol` будет выглядеть примерно вот так :
+
 ```
 pragma solidity ^0.5.0;
 /**
 * @title Bounties
 * @author Joshua Cassidy- <joshua.cassidy@consensys.net>
-* @dev Simple smart contract which allows any user to issue a bounty in ETH linked to requirements
-* which anyone can fulfil by submitting the evidence of their fulfilment
+* @dev Простой электронный контракт
+* который позволяет любому пользователю
+* оплатить криптовалютой "эфир"
+* задание с четко определенными критериями приёмки
+* награду может получить любой пользователь
+* предоставивший доказательства исполнения задачи
 */
-contract Bounties {
+
+contract Bounties 
+{
+
 /*
-* Enums
+* Множества (перечислимые типы)
 */
-enum BountyStatus { CREATED, ACCEPTED, CANCELLED }
+enum BountyStatus 
+{ 
+    CREATED  , // "создано" - новая задача, ожидающая иполнителя
+    ACCEPTED , // "принято к исполнению" - исполнитель найден и утвержден
+    CANCELLED  // "отменена" - работодатель больше не нуждается в данной услуге
+}
+
 /*
-* Storage
+* Состояние, хранилище
 */
 Bounty[] public bounties;
+
 /*
-* Structs
+* Структуры
 */
-struct Bounty {
+struct Bounty 
+{
+    // учетная запись ethereum работодателя
+    //
     address issuer;
+
+    // срок выполнения.
+    // исполнитель не получит вознаграждение, если нарушит его.
+    //
     uint deadline;
+
+    // описание задания
+    //
     string data;
+
+    // состояние задачи
+    // тип enum был только что объявлен нами выше
+    //
     BountyStatus status;
-    uint amount; //in wei
+
+    // сумма вознаграждения в WEI
+    // WEI - минимальная неделимая дробная часть валюты "эфир"
+    // 10^18 WEI == 1 ETH 
+    //
+    uint amount;
 }
+
+
 /**
-* @dev Contructor
+* @dev Конструктор
 */
-constructor() public {}
+constructor() public 
+{
+}
+
+
 /**
-* @dev issueBounty(): instantiates a new bounty
+* @dev issueBounty(): создает новое задание и выделяет на него средства
 * @param _deadline the unix timestamp after which fulfillments will no longer be accepted
 * @param _data the requirements of the bounty
 */
 function issueBounty(
-    string memory _data,
-    uint64 _deadline
-)
-public
-payable
-hasValue()
-validateDeadline(_deadline)
-returns (uint)
+    string memory _data, // описание работ
+    uint64 _deadline     // срок исполнения 
+    
+) public   // функция может быть вызвана любым пользователем или другим контрактом в сети Ethereum
+  payable  // при вызове этой функции контракт может получать эфир
+           // полученный эфир будет храниться "на балансе" контракта
+    hasValue()                  // проверяем, что при вызове контракту был отправлен эфир в ненулевом объеме.
+    validateDeadline(_deadline) // проверяем, что крайний срок не исчерпан на момент задания
+returns (uint)  // возвращает целое число - порядковый номер последнего добавленного задания
 {
-    bounties.push(Bounty(msg.sender, _deadline, _data, BountyStatus.CREATED, msg.value));
-    emit BountyIssued(bounties.length - 1,msg.sender, msg.value, _data);
+ bounties.push(
+        Bounty(
+            msg.sender, // адрес отправителя эфира, вызвавшего функцию. он же создатель нового задания.
+            _deadline,  // срок исполнения. передан как параметр.
+            _data,      // описание работ. передан как параметр.
+            BountyStatus.CREATED, // статус "задача создана", исполнитель еще не назначен
+            msg.value   // размер награды. 
+                        // до выполнения задания сам эфир будет храниться в контракте.
+                        // в структуру попадает только его количество
+                        // измеряемое в WEI
+        )
+    );
+
+    emit BountyIssued(            // добавленное событие
+        bounties.length - 1,  // индекс нового задания в качестве идентификатора
+        msg.sender,           // пользователь, финансирующий задание
+        msg.value,            // размер гонорара
+        _data);               // описание задания
+
+    // отнимаем единицу, поскольку 
+    // нумерация элементов массива начинается с нуля
     return (bounties.length - 1);
 }
+
 /**
-* Modifiers
+* Модификаторы
+* Проверка входных параметров
 */
-modifier hasValue() {
-    require(msg.value > 0);
-    _;
+modifier hasValue() 
+{
+    require(msg.value > 0); // проверяем, что контракт получил достаточно эфира
+    _; // исполняем основную функцию
 }
-modifier validateDeadline(uint _newDeadline) {
-    require(_newDeadline > now);
-    _;
+
+modifier validateDeadline(uint _newDeadline) 
+{
+    require(_newDeadline > now); // проверяем, что введенная дата не в прошлом. 
+                                 // чтоб контракт не "забивался" бесполезными данными.
+    _; // исполняем основную функцию
 }
+
 /**
-* Events
+* События-сообщения
 */
-event BountyIssued(uint bounty_id, address issuer, uint amount, string data);
+event BountyIssued(
+        uint    bounty_id, 
+        address issuer   , 
+        uint    amount   , 
+        string  data     );
 }
 ```
 
@@ -625,4 +733,7 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 [doc-solidity-function-visibility]: https://solidity.readthedocs.io/en/v0.4.24/contracts.html#visibility-and-getters
 [doc-solidity-error-handling]: http://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions
 [doc-solidity-modifiers]: https://solidity.readthedocs.io/en/v0.4.24/common-patterns.html?highlight=modifier#restricting-access
+[doc-solidity-events]: https://solidity.readthedocs.io/en/latest/contracts.html#events
+
+[link-etherscan-example]: https://etherscan.io/address/0x69a70e299367ff4c3ba1fe8c93fbddd9b5b4771a
 
