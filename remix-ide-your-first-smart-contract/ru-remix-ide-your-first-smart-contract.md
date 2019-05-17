@@ -318,7 +318,8 @@ Modifier - функция, объявленная особым образом,
 
 ## 5.1 Проверка крайнего срока выполнения (при создании задания)
 
-Добавим `modifier validateDeadline(_deadline)` ,
+Добавим **функцию-модификатор**
+`modifier validateDeadline(_deadline)` ,
 дабы с его помощью удостовериться,
 что переданная конечная дата находится в будущем.
 У пользователей не должно быть возможности создавать задания,
@@ -332,44 +333,93 @@ modifier validateDeadline(uint _newDeadline) {
 }
 ```
 
-We use the `modifier` keyword to declare a modifier, modifiers like functions can receive arguments of their own.
+Для объявления такой специальной функции
+необходимо использовать ключевое слово `modifier`.
+Модификаторы могут иметь свои входные параметры - 
+так же, как и "обычные" функции языка `Solidity`.
 
-The position of the `_;` symbol is key within a modifier. This body of the function being modified is inserted where this symbol appears.
+Расположение инструкции `_;` - 
+самая важная часть логики модификатора.
+В этом месте будет исполнен код "основной" 
+("модифицируемой") функции.
 
-So the validateDeadline modifier essentially says, execute this line:
+Таким образом, `modifier validateDeadline()`
+сперва выполнит проверку `require(_newDeadline > now);`, 
+а затем - основную функцию.
+
+Использованная для проверки функция `require()`, 
+принимает логическое условие в качестве параметра.
+Если условие ложно - то выполнение будет остановлено, 
+транзакция - отменена, а оставшийся газ - возвращен отправителю (он же `msg.sender`).
+
+Обычно `require()` используется для проверки входных данных
+до выполнения основной логики функции.
+
+В общем случае,
+для обработки нештатных ситуаций 
+и остановки работы контракта
+могут применяться 
+такие функции как:
+* `assert()`
+* `require()`
+* `revert()`
+
+Подробную информацию об этих функциях и обработке ошибок
+можно найти в [документации solidity][doc-solidity-error-handling]
+
+Таким образом, логику модификатора `modifier validateDeadline()`
+следует трактовать следующим образом :
+
+Если `deadline > now` - продолжаем исполнять основную функцию.
+Иначе - отменяем транзакцию 
+и возвращаем еще не использованный остаток газа 
+его вледельцу.
+
+
+### 5.2 Модификатор `hasValue()`
+
+Реализуем логику `modifier hasValue()`, 
+дабы с его помощью удостовериться,
+что количество адресованного контракту эфира 
+не равно нулю.
+
+Ранее упомянутое ключевое слово `payable`
+предоставляет возможность получать эфир,
+но не гарантирует этого. 
+Поскольку количество отправляемого эфира может быть любым.
+То есть, другой пользователь имеет полное право
+"отправить" нулевое количество.
+
 ```
-require(_newDeadline > now);
+Примечание переводчика: очевидно, что это количество не может быть отрицательным
+поскольку это было бы эквивалентно 
+"забрать силой эфир у другого пользователя"
+что абсолютно недопустипо.
 ```
-Then execute the main function.
 
-For validation the `require` keyword allows for conditionals to be set, if not met, the execution is halted, reverted, and remaining gas returned to the user.
+Абсолютно так же, как в `modifier validateDeadline()`,
+мы воспользуемся функцией `require()`
+чтоб удостовериться в выполнении условия 
+`количество отправленного эфира больше нуля`.
 
-In general `require` should be used to validate user inputs, responses from external contracts, and state conditions prior to execution.
-
-You can read more about [assert, require, and revert here] (http://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions).
-
-So to modifier validateDeadline reads as follows:
-
-If the `deadline > now` continue and execute function body, else revert and refund remaining gas to caller.
-
-
-### 5.2 Has Value
-
-`hasValue()` is added to ensure `msg.value` is a non zero value. Even though as previously discussed the `payable` keyword ensures msg.value is set, it can still be sent as zero.
-
-Similar to `validateDeadline` we use `require` to ensure `msg.value` input is valid e.g `>0`
 ```
 modifier hasValue() {
     require(msg.value > 0);
     _;
 }
 ```
-`payable` is actually a pre-defined modifier in solidity, and validates that ETH is sent when calling a function which requires the smart contract to be funded.
 
-You can read more about how modifiers can be used to restrict access and guard against incorrect usage in the [solidity documentation] (https://solidity.readthedocs.io/en/v0.4.24/common-patterns.html?highlight=modifier#restricting-access)
+Кстати, ранее использованный нами `payable` - это
+тоже модификатор, но встроенный в язык `Solidity`.
+Он гарантирует, что эфир (а также, газ) отправляется контракту
+при вызове функции, которая требует финансирования.
+
+Детальную информацию о модификаторах,
+а также о контроле доступа,
+можно найти в [документации языка Solidity][doc-solidity-modifiers].
 
 
-### 6. Issue Bounty Event
+### 6. Событие-уведомление "задание создано"
 
 It is best practice when modifying state in solidity to emit and event. Events allow blockchain clients to subscribe to state changes and perform actions based on those changes.
 
@@ -573,4 +623,6 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 [doc-solidity-0.5.0-breaking]: https://solidity.readthedocs.io/en/v0.5.0/050-breaking-changes.html
 
 [doc-solidity-function-visibility]: https://solidity.readthedocs.io/en/v0.4.24/contracts.html#visibility-and-getters
+[doc-solidity-error-handling]: http://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions
+[doc-solidity-modifiers]: https://solidity.readthedocs.io/en/v0.4.24/common-patterns.html?highlight=modifier#restricting-access
 
