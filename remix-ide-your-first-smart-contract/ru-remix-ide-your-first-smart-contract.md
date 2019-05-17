@@ -173,58 +173,158 @@ struct Bounty {
 Bounty[] public bounties;
 ```
 
-### 4.2 Issue Bounty Function
+### 4.2 Функция "создать задание"
 
-Now that we have declared our state variables we can now add functions to allow users to interact with our smart contract
+Ранее мы подготовили переменные для работы с состоянием.
+Теперь же - напишем функции для взаимодействия с нашим `smart contract`.
 
 ```
+// создать задание
+//
 function issueBounty(
-    string memory _data,
-    uint64 _deadline
-)
+    string memory _data, // описание работ
+    uint64 _deadline     // срок исполнения 
+    
+) public   // функция может быть вызвана любым пользователем или другим контрактом в сети Ethereum
+  payable  // при вызове этой функции контракт может получать эфир
+           // полученный эфир будет храниться "на балансе" контракта
 
-public payable hasValue() validateDeadline(_deadline) returns (uint)
+    hasValue()  // проверяем, что при вызове контракту был отправлен эфир в ненулевом объеме.
+                // реализацию этого modifier запрограммируем позже
+    validateDeadline(_deadline) 
+                // проверяем, что крайний срок не исчерпан на момент задания
+                // реализацию этого modifier запрограммируем позже
+returns (uint)  // возвращает целое число - порядковый номер последнего добавленного задания
 {
-    bounties.push(Bounty(msg.sender, _deadline, _data,
-    BountyStatus.CREATED, msg.value));
+    bounties.push(
+        Bounty(
+            msg.sender, // адрес отправителя эфира, вызвавшего функцию. он же создатель нового задания.
+            _deadline,  // срок исполнения. передан как параметр.
+            _data,      // описание работ. передан как параметр.
+            BountyStatus.CREATED, // статус "задача создана", исполнитель еще не назначен
+            msg.value   // размер награды. 
+                        // до выполнения задания сам эфир будет храниться в контракте.
+                        // в структуру попадает только его количество
+                        // измеряемое в WEI
+        )
+    );
+            
+    // отнимаем единицу, поскольку 
+    // нумерация элементов массива начинается с нуля
     return (bounties.length - 1);
 }
 ```
 
-The function issueBounty receives a string memory `_data` and an integer `_deadline` as arguments (the requirements as a string, and the deadline as a unix timestamp)
+Функция `issueBounty()` принимает следующие параметры:
+* `_data` - требования к исполнителю и описание работы. Имеет тип `string memory`
+* `_deadline` - время и дата крайнего срока исполнения задания 
+с точностью до секунды в формате [unix timestamp][link-unix-timestamp-wiki]
 
-As of Solidity version 0.5.0 explicit data location for all variables of struct, array or mapping types is now mandatory. Read more about [Solidity 0.5.0 breaking changes here](https://solidity.readthedocs.io/en/v0.5.0/050-breaking-changes.html)
+Начиная с версии `0.5.0` языка Solidity, 
+нужно обязательно указывать явно
+способ хранения (`memory` либо `storage`)
+для всех переменных, имеющих тип
+* строка - `string`
+* массив - `array`
+* ассоциативный массив - `mapping`
 
-Since string is an array of bytes we must explicitly specify the data location of the argument `_data`. We specify `memory` since we do not wish to store this data when the transaction has been completed.
+Для контрактов более ранних версий 
+будут использованы соответствующие способы хранения по умолчанию.
+Детальную информацию об этих важных изменениях 
+в версии `0.5.0`
+можно прочитать по данной [ссылке][doc-solidity-0.5.0-breaking]
 
-Solidity requires that you define the return type(s) We specify: `returns(uint)` Which means we are returning a uint (the array index of the Bounty as the ID)
 
-We define the visibility of this function as `public`.Read more about [solidity function visibility](https://solidity.readthedocs.io/en/v0.4.24/contracts.html#visibility-and-getters)
+Реализация строк в языке `Solidity` 
+базируется на байтовом массиве 
+(что в случае длинных строк более затратно, 
+чем хранение чисел - прим. переводчика).
+Следовательно, для параметра `_data` 
+мы должны указать тип хранения.
+Наш выбор падет на `memory`, 
+поскольку нам не нужно хранить эти данные 
+после окончания работы функции `issueBounty()`,
+а также транзакции, в рамках которой эта функция будет выполняться.
 
-In order to send ETH to our contract we need to add the payable keyword to our function. Without this payable keyword the contract will reject all attempts to send ETH to it via this function.
+Язык `Solidity` требует объявления 
+типа возвращаемого значения 
+(или нескольких типов в случае, 
+если возвращается больше одного значения).
+Мы указали `returns(uint)` - беззнаковое целое.
+В него будет записываться индекс последнего, 
+только что добавленного, задания.
 
-The body of our function just has two lines
+Функция объявлена с областью видимости `public`. 
+Дополнительную информацию о `видимости функций в Solidity` 
+вы найдете [по данной ссылке][doc-solidity-function-visibility]
+
+Для того, чтоб контракт при вызове функции `issueBounty()`
+мог получать средства в криптовалюте "эфир" - `ETH`,
+необходимо добавить ключевое слово `payable`
+в описание указанной функции.
+Без данного ключевого слова 
+контракт будет отвергать все попытки
+послать ему эфир при вызове функции `issueBounty()`.
+
+
+Тело функции состоит всего лишь из двух инструкций
 ```
 bounties.push(Bounty(msg.sender, _deadline, _data,
 BountyStatus.CREATED, msg.value));
 ```
 
-First we insert a new Bounty struct to out bounties array, setting the BountyStatus to CREATED.
+Сперва мы формируем экземпляр структуры
+объявленного нами ранее типа `struct Bounty`
+со статусом `BountyStatus.CREATED` 
+и помещаем ее в наш массив `bounties`.
 
-In Solidity, msg.sender is automatically set as the address of the sender, and msg.value is set to the amount of Weis ( 1 ETH = 1000000000000000000 Weis).
+В языке solidity каждая функция имеет скрытый параметр `msg`,
+в котором содержится контекст выполнения - 
+то есть, разная полезная информация о транзакции.
+Нас интересуют такие поля как
+* `msg.sender` - поскольку там хранится адрес пользователя или контракта, вызвавшего нашу функцию (имеет тип `address`)
+* `msg.value` - содержит количество перечисленных средств. 
+Измеряется в WEI - минимально допустимой, неделимой дробной части эфира.
+(1 ETH = 1000000000000000000 wei = 10^18 wei)
 
-So we set the msg.sender as the issuer and the msg.value as the bounty amount.
+Таким образом, мы зададим `msg.sender` в качесиве поля `issuer`
+и `msg.value` в качестве поля `amount` соответственно.
+(поля принадлежат объявленной нами ранее структуре `struct Bounty`).
+
+
 ```
 return (bounties.length - 1);
 ```
 
-## 5. Validation with Modifiers
+Далее мы просто возвращаем индекс 
+только что созданной структуры в массиве.
+Поскольку мы ее только что создали и поместили в массив,
+его длина гарантированно будет больше нуля, 
+и ошибок можно пока не опасаться.
 
-Modifiers in solidity allow you to attach additional pieces of code to be run before or after the execution of a function. It is common practice in solidity to use modifiers to perform argument validation for solidity functions.
+## 5. Проверка входных данных с помощью Modifiers
 
-## 5.1 Validate Deadline
+Modifier - функция, объявленная особым образом,
+которую можно "прикрепить" средствами языка `Solidity`
+к другой, "основной" функции.
+Логика modifier может быть исполнена как перед, так и после 
+выполнения основной функции.
 
-validateDeadline(_deadline) is added to ensure the deadline argument is in the future, it should not be possible for a user to issue a bounty with a deadline in the past.
+```
+Широко распространена практика 
+запуска modifier перед основной функцией
+с целью проверки её входных параметров
+```
+
+## 5.1 Проверка крайнего срока выполнения (при создании задания)
+
+Добавим `modifier validateDeadline(_deadline)` ,
+дабы с его помощью удостовериться,
+что переданная конечная дата находится в будущем.
+У пользователей не должно быть возможности создавать задания,
+срок исполнения которых истек, так и не успев начаться.
+
+
 ```
 modifier validateDeadline(uint _newDeadline) {
     require(_newDeadline > now);
@@ -467,4 +567,10 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 
 [link-semantic-versioning]: https://semver.org/
 
+[link-unix-timestamp-wiki]: https://ru.wikipedia.org/wiki/UNIX-%D0%B2%D1%80%D0%B5%D0%BC%D1%8F 
+
 [doc-solidity-types]: http://solidity.readthedocs.io/en/latest/types.html
+[doc-solidity-0.5.0-breaking]: https://solidity.readthedocs.io/en/v0.5.0/050-breaking-changes.html
+
+[doc-solidity-function-visibility]: https://solidity.readthedocs.io/en/v0.4.24/contracts.html#visibility-and-getters
+
