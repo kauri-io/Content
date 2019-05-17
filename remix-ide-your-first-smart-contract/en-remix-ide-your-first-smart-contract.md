@@ -159,7 +159,7 @@ For validation the `require` keyword allows for conditionals to be set, if not m
 
 In general `require` should be used to validate user inputs, responses from external contracts, and state conditions prior to execution.
 
-You can read more about [assert, require, and revert here] (http://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions).
+You can read more about `assert`, `require`, and `revert` [here](http://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions).
 
 So to modifier validateDeadline reads as follows:
 
