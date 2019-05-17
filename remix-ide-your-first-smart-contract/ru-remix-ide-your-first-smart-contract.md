@@ -1,29 +1,56 @@
 
-The easiest place to start writing smart contracts in Solidity in within the [online Remix IDE.](https://remix.ethereum.org/)
+#### Примечания от переводчика
 
-Given it is an online IDE, no installation or development environment setup is required, you can navigate to the site and get started!
+Данныая статья является переводом [материала][link-original-article], опубликованного пользователм [@joshorig][joshorig-profile]. Переводчик сохранил авторский стиль изложения от первого лица.
 
-Remix also provides very good tools for debugging, static analysis, and deployment all within the online environment.
+Во избежание неоднозначностей и разночтений, часть устоявшихся терминов оставлена без перевода. Например: `JavaScript`, `Blockchain`, `Solidity`.
 
-[The source code used in this tutorial can be found here.](https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract)
+Ссылки, приведенные в статье, ведут на страницы с англолязычной документацией, поскольку соответствующая документация на русском отсутствует на момент создания данного перевода.
 
-Before we get started, a quick reminder of what we will be building: A dApp which will allow any user to issue a bounty in ETH
+# Среда разработки Remix - создайте свой первый Smart Contract
 
-* Any user with an Ethereum account can issue a bounty in ETH along with some requirements
-* Any user can submit a fulfilment of the bounty along with some evidence
-* The bounty issuer can accept a fulfilment which would result in the fulfiller being paid out
+## 1. Вступление от автора
 
-In Remix, create a new file by selecting the “+” icon in the upper left-hand corner. Name the file: Bounties.sol
+Простейшим способом разработать свой `smart contract` на языке `Solidity` является использование [онлайн-окружения Remix][remix-ide-open]
 
-![](https://api.beta.kauri.io:443/ipfs/QmYMw578VU2z4nUwGbDwcoMBBmDTEsbriSNs7H44smJpYZ)
+Она не требует никаких действий по установке либо настройке, поскольку выполнена как сайт, а не как приложение. Просто откройте [этот сайт][remix-ide-open] - и вы уже готовы приступить к написанию кода своего контракта.
 
-In the first line of our Solidity Smart Contract, we tell the compiler which version of Solidity to use:
+Среда разработки Remix предоставляет обширный набор вспомогательных средств для отладки, статического анализа и публикации кода контракта. Все они доступны как часть единого онлайн-окружения.
 
-`pragma solidity ^0.5.0;`
 
-This tells Solidity that the code can be compiled with Solidity compiler version 0.5.0 and above, up to version 0.6.0 (the ^ character limits the compiler version up to the next breaking change, being 0.6.0)
+[Исходный код][tutorial-source-root], приведенный в данном обучающем материале, можно найти [по этой ссылке][tutorial-source-root].
 
-To create the contract class we add the following:
+
+Прежде, чем продолжить, вспомним: `"А что, собственно, будет являться конечным результатом нашей работы?"`.
+
+```
+Пользователи нашего распределенного приложения (dApp)
+смогут создавать задания
+и выплачивать за их выполнение гонорар 
+в криптовалюте "эфир" (имеющей буквенный код ETH).
+```
+
+* Любой пользователь, имеющий учетную запись в блокчейне Ethereum, может создать задание. Задание содержит описание критериев приемки выполненной работы, а также значение суммы гонорара для исполнителя.
+(под учетной записью понимается пара ключей `"public key/pivate key"` - прим. переводчика)
+* Любой пользователь может подать заявку на получение гонорара, предоставив доказательства факта выполнения задания надлежащим образом.
+* Создатель задания должен подтвердить приемку работы, дабы получить ее результат. В этом случае вознаграждение будет автоматически выплачено исполнителю созданным нами контрактом.
+
+## 2. Создание контракта в среде Remix
+
+Откройте [страницу][remix-ide-open] среды Remix. В левом верхнем углу вы увидите кнопку с иконкой `"+"`. Нажмите на нее и введите `"Bounties.sol"` в качестве имени файла в появившееся диалоговое окно.
+
+![screenshot : creatng a file in remix][screenshot-remix-create-file]
+
+В качестве первой строки нашего контракта на языке Solidity обязательно должен находиться номер версии компилятора.
+
+```
+pragma solidity ^0.5.0;
+```
+
+Благодаря этой инструкции, Solidity будет знать, что нужен компилятор версии `0.5.0` либо новее. Но не более новый, чем `0.6.0`, в которой могут быть изменения, ломающие обратную совместимость. Данное ограничение обеспечивается символом `^`, стоящим перед номером версии.
+(Таким образом, `Solidity` следует правилам [semantic versioning][link-semantic-versioning] - прим. переводчика)
+
+Теперь создадим сам класс, который будет содежжать код котракта. Для этого напишем 
 
 ```
 contract Bounties {
@@ -31,13 +58,17 @@ contract Bounties {
 }
 ```
 
-Next, we add a constructor so that our Contract can be instantiated:
+Далее, добавим конструктор, дабы иметь возможность создать экземпляр нашего контракта.
 
-`constructor() public {}`
+```
+constructor() public {}
+```
 
-At this stage we have the basic skeleton of a Smart Contract, we can now test it compiles in the Remix IDE.
+## 3. Компиляция контракта
 
-Your Bounties.sol file should look like this:
+На этом этапе мы получили базовый каркас электронного контракта (Smart Contract). Далее - скомпилируем его в Remix IDE.
+
+Ваш файл `Bounties.sol` сейчас должен выглядеть следующим образом:
 
 ```
 pragma solidity ^0.5.0;
@@ -48,45 +79,99 @@ contract Bounties {
 }
 ```
 
-In Remix, select the “Compile” tab in the top right-hand side of the screen, and start the compiler by selecting the “Start to Compile” option
+В окружении Remix выберите `вкладку "Compile"` в правом верхнем углу экрана и запустите процесс компиляции нажатием `кнопки "Start to Compile"` как показано на снимке экрана ниже.
 
-![](https://api.beta.kauri.io:443/ipfs/QmSxzksHcCp9AibwAGsTxdYntdn6hGiBmjeCZm3bpKf4h6)
+![screenshot: compile a smart contract in Remix IDE][screenshot-remix-compile]
 
-If everything is ok, you should see a green label with the name of your contract: “Bounties”, this indicates the compilation was successful.
+В случаче успеха вы должны увидеть название своего `контракта "Bounties"` на зеленом фоне, как показано на том же снимке экрана.
 
-## Issuing a Bounty
+## 4. Публикация задания
 
-Now that we have the basic skeleton of our smart contract, we can start adding functions, first we will tackle allowing a user to issue a bounty.
+Пришло время расширить наш каркас контракта некоторой функциональностью.
+Начнем с публикации задания.
 
-### Declare state variables
+### 4.1 Объявление переменных для хранения состояния
 
-What are state variables in solidity? A smart contract instance can maintain a state, which is kept in the storage area of the EVM. This state consists of one or more variables of the solidity types. These state variables can only be modified via a function call invoked within a transaction.
+Что же такое переменные состояния в `Solidity`? 
+Дело в том, что экземпляр электронного контракта имеет возможность запоминать свое состояние,
+помещая его в хранилище EVM (Ehtereum Virtual Machine - прим. переводчика).
+Это состояние описываеться одной либо несколькими переменными, 
+которые могут иметь один из встроенных в язык Solidity типов. 
+Значение, хранящееся в этих переменных, может быть изменено 
+лишь функциями, вызванными во время транзакции.
 
-[You can see a full list of solidity types in the solidity types documentation ](http://solidity.readthedocs.io/en/latest/types.html)
+Исчерпывающий список типов можно найти в документации языка `Solidity`. 
+А именно, в [секции "Types"][doc-solidity-types].
 
-First, let's declare an enum which we’ll use to keep track of a bounties state
-
-`enum BountyStatus { CREATED, ACCEPTED, CANCELLED }`
-
-Next, we define a struct which defines the data held about an issued bounty
+Первым делом, давайте объявим перечислимый тип, 
+описывающий множество состояний, в которых может находиться задача.
 
 ```
+// множество "состояния задачи"
+//
+enum BountyStatus 
+{ 
+    CREATED  , // "создано" - новая задача, ожидающая иполнителя
+    ACCEPTED , // "принято к исполнению" - исполнитель найден и утвержден
+    CANCELLED  // "отменена" - работодатель больше не нуждается в данной услуге
+}
+```
+
+<br>
+Далее объявим структуру, для хранения данных о задаче.
+
+```
+// структура "заказ" (работа за вознаграждение)
+//
 struct Bounty {
+
+    // учетная запись ethereum работодателя
+    //
     address issuer;
+
+    // срок выполнения.
+    // исполнитель не получит вознаграждение, если нарушит его.
+    //
     uint deadline;
+
+    // описание задания
+    //
     string data;
+
+    // состояние задачи
+    // тип enum был только что объявлен нами выше
+    //
     BountyStatus status;
+
+    // сумма вознаграждения в WEI
+    // WEI - минимальная неделимая дробная часть валюты "эфир"
+    // 10^18 WEI == 1 ETH 
+    //
     uint amount;
 }
 ```
 
-What is a struct? Structs allow us to define custom composite types which allow us to aggregate/organise data.
+<br>
+Что такое структура? 
+Структура - это конструкция языка, 
+позволяющая описывать собственные типы данных. 
+По сути, это - набор переменных, 
+которые могут принадлежать как типам, встроенным в язык `Solidity`, 
+так и являться другими структурами.
+Набор переменных объединяют в структуру
+с целью их группирования и более понятной организации 
+при разработке кода контракта.
 
-Now, let's define an array where we will store data about each issued bounty
 
-`Bounty[] public bounties;`
+<p>
+Давайте-ка добавим в наш контракт переменную-массив, 
+хранящую данные обо всех созданных контрактах.
 
-### Issue Bounty Function
+```
+Bounty[] public bounties;
+```
+
+### 4.2 Issue Bounty Function
 
 Now that we have declared our state variables we can now add functions to allow users to interact with our smart contract
 
@@ -367,3 +452,17 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 
 >If you have found any errors, feel free to update this guide by selecting the **'Update Article'** option in the right hand menu, and/or [update the code](https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract)
 
+
+[link-original-article]: https://kauri.io/article/124b7db1d0cf4f47b414f8b13c9d66e2/v8/remix-ide-your-first-smart-contract
+[joshorig-profile]: https://kauri.io/public-profile/7b88584d0e6a608fa3a8716b0ca1620d61834a0c
+
+[remix-ide-open]: https://remix.ethereum.org/
+[tutorial-source-root]: https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract
+
+[screenshot-remix-create-file]: https://api.beta.kauri.io:443/ipfs/QmYMw578VU2z4nUwGbDwcoMBBmDTEsbriSNs7H44smJpYZ
+
+[screenshot-remix-compile]: https://api.beta.kauri.io:443/ipfs/QmSxzksHcCp9AibwAGsTxdYntdn6hGiBmjeCZm3bpKf4h6
+
+[link-semantic-versioning]: https://semver.org/
+
+[doc-solidity-types]: http://solidity.readthedocs.io/en/latest/types.html
