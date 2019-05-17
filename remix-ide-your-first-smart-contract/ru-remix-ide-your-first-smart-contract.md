@@ -690,12 +690,13 @@ event BountyIssued(
 
 В консоли среды `Remix`, 
 расположенной прямо под областью редактирования кода, 
+можно увидеть результат выполнения транзакции,
+которая создала экземпляр контракта.
+Этот результат будет похож на снимок экрана ниже
 
-Within the RemixIDE console, which is located directly below the editor panel, you will see the log output of the contract creation transaction.
+![screenshot: results of the constructor transaction][screenshot-remix-constructor-transaction]
 
-![](https://api.beta.kauri.io:443/ipfs/QmXCiXYPFLbuk8X8eWv16F3PQFSp2ZEi8pstDrsSbYNybw)
-
-The “green” tick indicates that the transaction itself was successful.
+Зеленая галочка означает, что транзакция прошла успешно.
 
 Within the “Run” tab in Remix, we can now select our deployed Bounties contract so that we can invoke the `issueBounty` function. Under the “Deployed Contracts” section we see a list of function which can be invoked on the deployed smart contract.
 
@@ -771,6 +772,7 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 [screenshot-remix-static-warnings]: https://api.beta.kauri.io:443/ipfs/QmPbH2hJxqjwyCbo7iLMovVQLZyb96V9EbzKkUhJnS4Eem
 [screenshot-virtual-machine-dropdown]: https://api.beta.kauri.io:443/ipfs/QmdAgBc9WzFmE4GwKBxHkMRCBBdAapHP1Ym3dR8mS2atSF
 [screenshot-remix-deploy-button]: https://api.beta.kauri.io:443/ipfs/QmerrAduWYrYaxMT5254xE5DjngDid81hgaVT32uqGt1qt
+[screenshot-remix-constructor-transaction]: https://api.beta.kauri.io:443/ipfs/QmXCiXYPFLbuk8X8eWv16F3PQFSp2ZEi8pstDrsSbYNybw
 
 [link-semantic-versioning]: https://semver.org/
 [link-unix-timestamp-wiki]: https://ru.wikipedia.org/wiki/UNIX-%D0%B2%D1%80%D0%B5%D0%BC%D1%8F 
