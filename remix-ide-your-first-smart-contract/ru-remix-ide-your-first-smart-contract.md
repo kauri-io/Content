@@ -769,40 +769,88 @@ event BountyIssued(
 
 В консоли будет отображен результат работы этой транзакции.
 
+![screenshot: issueBounty function invoked][screenshot-invoked-issue-bounty]
 
-![](https://api.beta.kauri.io:443/ipfs/QmUzyH4Vugc3vN52hna8r1r5hRzuLKTVXRC3vP4Huejqwt)
+Иконка "зеленый кружок с галочкой" 
+свидетельствует об успехе транзакции.
 
-The “Green” tick indicates the transaction was successful.
+Раскодированный вывод содержит значение, 
+которое вернула вызванная функция. В данном случае это ноль `0`.
 
-The decoded output, gives you the return value of the function call, here it is `0`.
+Мы ожидаем получить индекс нового экземпляра
+структуры типа `Bounty` 
+в массиве, хранящем состояние контракта.
+Мы можем проверить это, 
+вызвав функцию `bounties` 
+в секции `Deployed Contracts`.
+Введем ноль `0` в качестве аргумента и нажмем синюю кнопку 
+с названием `bounties`.
 
-This should be the index of our “Bounty” data within the bounties array in our smart contract data store. We can double check the storage was correct by invoking the “bounties” method in the “Deployed Contracts” section.
+![screenshot: the result of bounties getter invocation][screenshot-array-getter-called]
 
-Set the `uint256` argument of the bounties function to `0` and click the “blue” bounties button.
+На этом снимке экрана мы можем увидеть, что данные, 
+которые мы ввели ранее при вызове `issueBounty`,
+успешно записаны хранилище `smart contract`,
+поскольку именно их мы только что извлекли 
+вызовом функции `bounties` из одноименного поля-массива.
 
-![](https://api.beta.kauri.io:443/ipfs/QmS17UXysJzMLibRzDShajzzMsV5Lkvi3jdjJQTYVqrQzu)
+### 8. Попробуйте сами!
 
-Here we confirm that the data inputs for our issuedBounty are retrieved correctly from the “bounties” array with deployed smart contracts storage.
+Прочитав эту статью, 
+вы изучили "как реализовать функцию добавления нового задания".
+Теперь попробуйте самостоятельно добавить следующие функции:
 
-### 8. Try it yourself
+* `fulfilBounty(uint _bountyId, string _data)` - 
+эта функция должна сохранить запись 
+о выполнении задачи с заданным идентификатором-индексом.
+`msg.sender` следует трактовать как учетную запись исполнителя.
 
-Now that you have seen how to add a function to issue a bounty, try adding the following functions to the Bounties contract:
+* `acceptFulfilment(uint _bountyId, uint _fulfilmentId)` - 
+вызвав эту функцию, создатель контракта 
+подтверждает приемку работы и соглашается, 
+что она была выполнена надлежащим образом.
+При этом вознаграждение выплачивается исполнителю
+при условии, что существует заявка от исполнителя.
 
-* `fulfilBounty(uint _bountyId, string _data)` This function should store a fulfilment record attached to the given bounty. The `msg.sender` should be recorded as the fulfiller.
-* `acceptFulfilment(uint _bountyId, uint _fulfilmentId)` This function should accept the given fulfilment, if a record of it exists against the given bounty. It should then pay the bounty to the fulfiller.
-* `function cancelBounty(uint _bountyId)` This function should cancel the bounty, if it has not already been accepted, and send the funds back to the issuer
+* `function cancelBounty(uint _bountyId)` -
+эта функция должна отменить заказ на работу
+при условии отсутствия факта приёмки этого заказа.
+В этом случае средства возвращаются создателю задания.
 
-Note: For `acceptFulfilment` you will need to use the `address.transfer(uint amount)` function to send the ETH to the `fulfiller`. You can read more about the [address.transfer member here] (https://solidity.readthedocs.io/en/latest/units-and-global-variables.html#address-related).
+Примечание автора: для реализации функции `acceptFulfilment`
+нужно будет использовать функцию `address.transfer(uint amount)`,
+которая производит пересылку эфира из контракта на адрес исполнителя.
 
-You can find the [complete Bounties.sol file here for reference] (https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/blob/master/remix-bounties-smartcontract/Bounties-complete.sol).
+[Документация][doc-solidity-transfer] по функции `address.transfer` 
+находится [по ссылке][doc-solidity-transfer].
 
-## 9. Next Steps
-- Read the next guide: [Understanding smart contract compilation and deployment](https://kauri.io/article/973c5f54c4434bb1b0160cff8c695369/understanding-smart-contract-compilation-and-deployment)
-- Learn more about Remix-IDE from the [documentation](https://remix.readthedocs.io/en/latest/) and [github](https://github.com/ethereum/remix-ide)
+Полную версию контракта `Bounties.sol` 
+можно посмотреть в справочных целях
+[на github][tutorial-source-full-contract]
 
->If you enjoyed this guide, or have any suggestions or questions, let me know in the comments. 
 
->If you have found any errors, feel free to update this guide by selecting the **'Update Article'** option in the right hand menu, and/or [update the code](https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract)
+## 9. Что дальше?
+
+- Прочитайте следующую статью данного цикла: [Understanding smart contract compilation and deployment](https://kauri.io/article/973c5f54c4434bb1b0160cff8c695369/understanding-smart-contract-compilation-and-deployment)
+- Изучите возможности среды Remix по [документации](https://remix.readthedocs.io/en/latest/) и [github репозиторию](https://github.com/ethereum/remix-ide)
+
+
+> Понравился этот обущающий материал? 
+Появились вопросы или предложения по его содержанию? <br> Тогда откройте [статью-оригинал][link-original-article]
+и напишите там свои комментарии на английском языке.
+Автор будет рад пообщаться с вами.
+
+> Нашли ошибку в содержании статьи? 
+<br> Тогда откройте [статью-оригинал][link-original-article]
+и отредактируйте ее, нажав кнопку `Update Article`
+в меню по правую сторону экрана.
+
+> Нашли ошибку перевода или опечатку?
+<br> Тогда отредактируйте этот перевод,
+нажав кнопку `Update Article` в меню по правую сторону экрана.
+
+> Нашли ошибку в коде? <br>
+Отправьте pull request [на github](https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract)
 
 
 [link-original-article]: https://kauri.io/article/124b7db1d0cf4f47b414f8b13c9d66e2/v8/remix-ide-your-first-smart-contract
@@ -810,6 +858,7 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 
 [remix-ide-open]: https://remix.ethereum.org/
 [tutorial-source-root]: https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract
+[tutorial-source-full-contract]: https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/blob/master/remix-bounties-smartcontract/Bounties-complete.sol
 
 [screenshot-remix-create-file]: https://api.beta.kauri.io:443/ipfs/QmYMw578VU2z4nUwGbDwcoMBBmDTEsbriSNs7H44smJpYZ
 [screenshot-remix-compile]: https://api.beta.kauri.io:443/ipfs/QmSxzksHcCp9AibwAGsTxdYntdn6hGiBmjeCZm3bpKf4h6
@@ -818,6 +867,8 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 [screenshot-remix-deploy-button]: https://api.beta.kauri.io:443/ipfs/QmerrAduWYrYaxMT5254xE5DjngDid81hgaVT32uqGt1qt
 [screenshot-remix-constructor-transaction]: https://api.beta.kauri.io:443/ipfs/QmXCiXYPFLbuk8X8eWv16F3PQFSp2ZEi8pstDrsSbYNybw
 [screenshot-remix-contract-invoke-buttons]: https://api.beta.kauri.io:443/ipfs/QmUzyH4Vugc3vN52hna8r1r5hRzuLKTVXRC3vP4Huejqwt
+[screenshot-invoked-issue-bounty]: https://api.beta.kauri.io:443/ipfs/QmUzyH4Vugc3vN52hna8r1r5hRzuLKTVXRC3vP4Huejqwt
+[screenshot-array-getter-called]: https://api.beta.kauri.io:443/ipfs/QmS17UXysJzMLibRzDShajzzMsV5Lkvi3jdjJQTYVqrQzu
 
 [link-semantic-versioning]: https://semver.org/
 [link-unix-timestamp-wiki]: https://ru.wikipedia.org/wiki/UNIX-%D0%B2%D1%80%D0%B5%D0%BC%D1%8F 
@@ -832,7 +883,7 @@ You can find the [complete Bounties.sol file here for reference] (https://github
 [doc-solidity-events]: https://solidity.readthedocs.io/en/latest/contracts.html#events
 [doc-remix-analyzer]: https://remix.readthedocs.io/en/latest/analysis_tab.html
 [doc-remix-javascript-vm]: https://remix.readthedocs.io/en/latest/run_tab.html
-
+[doc-solidity-transfer]: https://solidity.readthedocs.io/en/latest/units-and-global-variables.html#address-related
 
 
 
