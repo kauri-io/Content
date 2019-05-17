@@ -186,9 +186,9 @@ You can read more about how modifiers can be used to restrict access and guard a
 
 It is best practice when modifying state in solidity to emit and event. Events allow blockchain clients to subscribe to state changes and perform actions based on those changes.
 
-For example a user interface showing a list of transfers in and out of an account, for example [etherscan] (https://etherscan.io/address/0x69a70e299367ff4c3ba1fe8c93fbddd9b5b4771a), could listen to a “transfer” event to update the user on the latest transfers in and out of an account.
+For example a user interface showing a list of transfers in and out of an account, for example [etherscan](https://etherscan.io/address/0x69a70e299367ff4c3ba1fe8c93fbddd9b5b4771a), could listen to a “transfer” event to update the user on the latest transfers in and out of an account.
 
-Read more about [solidity events here] (https://solidity.readthedocs.io/en/latest/contracts.html#events).
+Read more about solidity events [here](https://solidity.readthedocs.io/en/latest/contracts.html#events).
 
 Since when issuing a bounty we change the state of our Bounties.sol contract we will issue a `BountyIssued` event.
 First, we need to declare our event:
