@@ -1,5 +1,5 @@
 
-The easiest place to start writing smart contracts in Solidity in within the [online Remix IDE.](https://remix.ethereum.org/)
+The easiest place to start writing smart contracts in Solidity is within the [online Remix IDE.](https://remix.ethereum.org/)
 
 Given it is an online IDE, no installation or development environment setup is required, you can navigate to the site and get started!
 
