@@ -122,7 +122,7 @@ bounties.push(Bounty(msg.sender, _deadline, _data,
 BountyStatus.CREATED, msg.value));
 ```
 
-First we insert a new Bounty struct to out bounties array, setting the BountyStatus to CREATED.
+First we insert a new Bounty struct to our bounties array, setting the BountyStatus to CREATED.
 
 In Solidity, msg.sender is automatically set as the address of the sender, and msg.value is set to the amount of Weis ( 1 ETH = 1000000000000000000 Weis).
 
