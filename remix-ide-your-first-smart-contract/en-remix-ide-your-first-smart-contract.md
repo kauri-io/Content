@@ -335,7 +335,7 @@ Clicking the “issueBounty” button in the “Deployed Contracts” section, w
 
 Within the console you will find the log output of the issueBounty transaction.
 
-![](https://api.beta.kauri.io:443/ipfs/QmUzyH4Vugc3vN52hna8r1r5hRzuLKTVXRC3vP4Huejqwt)
+![](0xD961220f3C356Bee7E7905377fE9Da95DE6F978E)
 
 The “Green” tick indicates the transaction was successful.
 

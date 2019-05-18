@@ -912,7 +912,7 @@ event BountyIssued(
 [screenshot-remix-deploy-button]: https://api.beta.kauri.io:443/ipfs/QmerrAduWYrYaxMT5254xE5DjngDid81hgaVT32uqGt1qt
 [screenshot-remix-constructor-transaction]: https://api.beta.kauri.io:443/ipfs/QmXCiXYPFLbuk8X8eWv16F3PQFSp2ZEi8pstDrsSbYNybw
 [screenshot-remix-contract-invoke-buttons]: https://api.beta.kauri.io:443/ipfs/QmUzyH4Vugc3vN52hna8r1r5hRzuLKTVXRC3vP4Huejqwt
-[screenshot-invoked-issue-bounty]: https://api.beta.kauri.io:443/ipfs/QmUzyH4Vugc3vN52hna8r1r5hRzuLKTVXRC3vP4Huejqwt
+[screenshot-invoked-issue-bounty]: https://api.kauri.io/ipfs/QmQ1JYgeqgViBNxcSajU1NMh41v2UD2UFtYcdodDMv63zR
 [screenshot-array-getter-called]: https://api.beta.kauri.io:443/ipfs/QmS17UXysJzMLibRzDShajzzMsV5Lkvi3jdjJQTYVqrQzu
 
 [link-semantic-versioning]: https://semver.org/
