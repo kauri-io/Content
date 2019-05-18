@@ -5,7 +5,7 @@ Given it is an online IDE, no installation or development environment setup is r
 
 Remix also provides very good tools for debugging, static analysis, and deployment all within the online environment.
 
-[The source code used in this tutorial can be found here.](https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract)
+The source code used in this tutorial [can be found here](https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract).
 
 Before we get started, a quick reminder of what we will be building: A dApp which will allow any user to issue a bounty in ETH
 
@@ -62,7 +62,7 @@ Now that we have the basic skeleton of our smart contract, we can start adding f
 
 What are state variables in solidity? A smart contract instance can maintain a state, which is kept in the storage area of the EVM. This state consists of one or more variables of the solidity types. These state variables can only be modified via a function call invoked within a transaction.
 
-[You can see a full list of solidity types in the solidity types documentation ](http://solidity.readthedocs.io/en/latest/types.html)
+You can see a full list of solidity types in the [solidity types documentation](http://solidity.readthedocs.io/en/latest/types.html)
 
 First, let's declare an enum which we’ll use to keep track of a bounties state
 
@@ -106,7 +106,8 @@ public payable hasValue() validateDeadline(_deadline) returns (uint)
 
 The function issueBounty receives a string memory `_data` and an integer `_deadline` as arguments (the requirements as a string, and the deadline as a unix timestamp)
 
-As of Solidity version 0.5.0 explicit data location for all variables of struct, array or mapping types is now mandatory. Read more about [Solidity 0.5.0 breaking changes here](https://solidity.readthedocs.io/en/v0.5.0/050-breaking-changes.html)
+As of Solidity version 0.5.0 explicit data location for all variables of struct, array or mapping types is now mandatory. 
+Read more about `Solidity 0.5.0 breaking changes` [here](https://solidity.readthedocs.io/en/v0.5.0/050-breaking-changes.html)
 
 Since string is an array of bytes we must explicitly specify the data location of the argument `_data`. We specify `memory` since we do not wish to store this data when the transaction has been completed.
 
@@ -179,7 +180,8 @@ modifier hasValue() {
 ```
 `payable` is actually a pre-defined modifier in solidity, and validates that ETH is sent when calling a function which requires the smart contract to be funded.
 
-You can read more about how modifiers can be used to restrict access and guard against incorrect usage in the [solidity documentation] (https://solidity.readthedocs.io/en/v0.4.24/common-patterns.html?highlight=modifier#restricting-access)
+You can read more about how modifiers can be used to restrict access and guard against incorrect usage 
+[in the solidity documentation](https://solidity.readthedocs.io/en/v0.4.24/common-patterns.html?highlight=modifier#restricting-access)
 
 
 ### Issue Bounty Event
@@ -355,9 +357,9 @@ Now that you have seen how to add a function to issue a bounty, try adding the f
 * `acceptFulfilment(uint _bountyId, uint _fulfilmentId)` This function should accept the given fulfilment, if a record of it exists against the given bounty. It should then pay the bounty to the fulfiller.
 * `function cancelBounty(uint _bountyId)` This function should cancel the bounty, if it has not already been accepted, and send the funds back to the issuer
 
-Note: For `acceptFulfilment` you will need to use the `address.transfer(uint amount)` function to send the ETH to the `fulfiller`. You can read more about the [address.transfer member here] (https://solidity.readthedocs.io/en/latest/units-and-global-variables.html#address-related).
+Note: For `acceptFulfilment` you will need to use the `address.transfer(uint amount)` function to send the ETH to the `fulfiller`. You can read more `about the address.transfer member` [here](https://solidity.readthedocs.io/en/latest/units-and-global-variables.html#address-related).
 
-You can find the [complete Bounties.sol file here for reference] (https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/blob/master/remix-bounties-smartcontract/Bounties-complete.sol).
+You can find the `complete Bounties.sol file` [here](https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/blob/master/remix-bounties-smartcontract/Bounties-complete.sol) for reference.
 
 ## Next Steps
 - Read the next guide: [Understanding smart contract compilation and deployment](https://kauri.io/article/973c5f54c4434bb1b0160cff8c695369/understanding-smart-contract-compilation-and-deployment)
