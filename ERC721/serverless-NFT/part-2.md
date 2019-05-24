@@ -149,7 +149,7 @@ We handle requests for our token metadata that follows the format we built into 
 
 Let's work with this format for now and improve it later. We log the event to see if we can find the `tokenId` parameter passed to the URL. This is easier to do in our local setup so follow the URL pattern `http://localhost:9000/metadata?tokenId=666`
 
-Add some `console.log`s to the handler function so we can read what's going on in those parameters:
+Add some `console.log`s to the _metadata.js_ handler function so we can read what's going on in those parameters:
 
 ```javascript
 exports.handler = function(event, context, callback) {
@@ -255,7 +255,7 @@ When we check our endpoint (and if you have a JSON prettier browser extension) i
 
 ## Step 4: Add proxy routing
 
-On netlify we still use the inconvenient URL format, `/.netlify/functions/metadata?tokenId=666`, to see the new endpoint. Add  configuration to improve the URL. Go back into the _netlify.toml_ file and add some re-write rules so that we can transform a pretty URL like `/metadata/666` into something that our lambda function understands like `/.netlify/functions/metadata?tokenId=666`:
+On netlify we still use the inconvenient URL format, `/.netlify/functions/metadata?tokenId=666`, to see the new endpoint. Open the _netlify.toml_ file and add some re-write rules so that we can transform a pretty URL like `/metadata/666` into something that our lambda function understands like `/.netlify/functions/metadata?tokenId=666`:
 
 ```toml
 [build]
@@ -271,7 +271,7 @@ This redirects queries from `/metadata` to whatever is at the location `/.netlif
 
 ## Step 5: Add opensea.io
 
-To make sure our metadata shows up on sites like opensea we want to make sure the service understands the format we serve. Their docs say they expect metadata that adheres to the following example:
+To make sure our metadata shows up on sites like opensea we want to serve a format the service understands. The [Opensea docs](https://docs.opensea.io) say they expect metadata that adheres to the following example:
 
 ```json
 {
@@ -331,9 +331,7 @@ With an additional `attributes` key that you can populate like:
 }
 ```
 
-<!-- TODO: What is the below supposed to be? -->
-
-Add some attributes to our endpoint. Maybe our `tokenId` should reflect a zodiac sign:
+Add some attributes to our endpoint. Maybe our `tokenId` could reflect a zodiac sign:
 
 ```javascript
 exports.handler = function(event, context, callback) {
@@ -388,7 +386,7 @@ function returnZodiac(tokenId) {
 
 ## Step 6: Add rarebits
 
-Another popular NFT marketplace is rarebits. Let's adhere to their format as well:
+Another popular NFT marketplace is [rarebits](https://rarebits.io/). Let's adhere to their format as well:
 
 ```json
 {
@@ -404,7 +402,7 @@ Another popular NFT marketplace is rarebits. Let's adhere to their format as wel
 }
 ```
 
-What do you know! It follows it's own spec! You can now see why it's important to maintain some flexibility around your metadata endpoint until we live in a world that has settled on a standard that everyone uses and isn't hosted on a lambda function on netlify.
+What do you know! It follows it's own spec! You can now see why it's important to maintain flexibility around your metadata endpoint. Until we live in a world that has settled on a standard that everyone uses and isn't hosted on a lambda function on netlify.
 
 Add info to our token so it adheres to rarebits as well:
 
@@ -449,7 +447,7 @@ exports.handler = function(event, context, callback) {
 };
 ```
 
-Now we have a fat json object returned
+Now we have a fat json object returned.
 
 ![](https://uc3591ee0d156272d6d44a75e14f.previews.dropboxusercontent.com/p/thumb/AAQ6MYlutPXbhs2zT648D1SxsE_EgC4ufuyWWAc8VfD5UAohsfVOep_nB3BdU2hNRWh-M0JhnIh7x-CcmDjG1lPNdINvN2drm_tt8eGhNeyqPIiEb-W1y3v2WzsiKa1lM-NG9WpvcpXNlooKLwOwZxg427x9QYZb3X1YZ7XlT_y9lRf8HBbQSVLyYFEAjgBEFcz44KFz4g5uW8_X1wBloC-Qhsdv9O0x0LFHs1ZJyi5NmztHBkbijUc1n2JKnDsJ_cb898eSpprjuY8unTY07B5g3Pwfg7lM54NDhMrsbnHqh2-hsOtKHOrfziLXM_Xnojqlpx_n2WM3U_RtH-Iq3m65/p.png?size=1600x1200&size_mode=3)
 
@@ -459,7 +457,7 @@ Now we have a metadata API endpoint and we don't have to do anything to service 
 
 When we deployed our Token we used a metadata endpoint that returned `https://domain.com/metadata/{tokenId}`, but `domain.com` isn't our domain! We have to update our metadata endpoint.
 
-Thankfully we built in that ability, and a migration. Inside the _Metadata.sol_ contract and update the URI with our netlify subdomain:
+Thankfully we built in that ability, and a migration. Inside the _Metadata.sol_ contract update the URI with our netlify subdomain:
 
 ```solidity
 function tokenURI(uint _tokenId) public pure returns (string memory _infoUrl) {
@@ -495,7 +493,7 @@ Return to our etherscan certified token and mint our first token. You should see
 
 ![](https://uc18af950bb2bbb43caed8ef91a5.previews.dropboxusercontent.com/p/thumb/AAR5ahct-jMZKMnqELbKxvL2F7ccPdf6EsEJTpslZaLR4apXE3pnij17_F9koFQgsyRO2gf-ByPAZQQxCXC5FHCkW81w72fiElR7V2xUFIrRqHiLyMILO9WB5U5bCr67Gzr20WUQhvvxgfhOmDq_tIDsKIRijXpR3BpAXvhQf5IECyMtjg_ulK5rkLsf9tORJXFZr35I3zEzFNHA8N7SrjXL7b3_5RMXw0ooBPysfvuyJDnB_MwDk_elmlPH3RKQjwsex-AExDb7a1poxw_gG-K3ek6hWCsQC94lBjRaZnKw65ICjWnRTZ046IQSOzhKo3UMnfVIq_lLkp8OJ557mN0x/p.png?size=1600x1200&size_mode=3)
 
-Since I'm using a metamask account that is the same as my deploy account, I have permission to mint a token. Open the _write contract_ tab, authenticate with metamask, and do just that.
+Since I'm using a metamask account that is the same as my deploy account, I have permission to mint a token. Open the _write contract_ tab, authenticate with metamask, and mint a token.
 
 ![](https://uc6b0904cff6e65b808ed1505ab1.previews.dropboxusercontent.com/p/thumb/AAQ44Gg0Qi2wLm1BXIlj3yYIw0kUijaocI4Nm799pkoXyR9pPicsQtEgIetVruEPo3TM1eF-PucIicmH7801ctrhrelGNl_Oxf_hv-OhUGzIV284I86w3P7-y-G-YSs_iMfPhIAvFiaoU9Ak9e7_KT_lBDjA2rCtM2FdY5A2GXzjTH-pQm92uHV893asK7gZ-3XvLqxYKnOs6DPQgR4GS1i7PJSU8Wp59zZC-mMxfTULkiCmUkwI-RpN5cP22TpA6rDHH5mwG4hHVYVdFa0-T8JCUrcguRwD8Dusv3xTxoDO-_8sQSubAwJ53Z3eAuLWXBoq1WpfF2QvH_EUmSdGj011/p.png?size=1600x1200&size_mode=3)
 
@@ -505,7 +503,7 @@ Since I added my own address as the recipient, I should be the proud owner of to
 
 Wow, there's a token!
 
-Open opensea and see if they've noticed that we exist. With rarebits and opensea you have to request your token to be tracked before it shows up in the sidebar, but you can skip that by hard coding the contract address in to the URL. Knowing our token address is at `0x1170a2c7d4913d399f74ee5270ac65730ff961bf` and our `tokenId` is `1` we are able to visit the rinkeby version of the URL like this:
+Open opensea and see if they've noticed that we exist. With rarebits and opensea you have to request that they track your token before it shows up in the sidebar, but you can skip that by hard coding the contract address in to the URL. Knowing our token address is at `0x1170a2c7d4913d399f74ee5270ac65730ff961bf` and our `tokenId` is `1` we are able to visit the rinkeby version of the URL like this:
 
 <https://rinkeby.opensea.io/assets/0x1170a2c7d4913d399f74ee5270ac65730ff961bf/1>
 
@@ -534,7 +532,5 @@ Let's add it to rarebits too.
 ![](https://ucb4894f15b87e1d4d2a0f6f9cb9.previews.dropboxusercontent.com/p/thumb/AATeH3f78SkisPzM0BGUke0SSL2PcPKeUYvjB9YPr8IwEmZRiZ8XKWAnCdpmD6_DFb5Mg5ray985x0yaG-5TkxrgRACnqdbN5JYi8Gwom05hnUoIBTnWCYHTSlZfV6k9gde_515kIGIYFcgFF7s-0zwm1IDZ6UEx8jhmMpl7Y4-2TiMHPF_fORqxTzBi2AOYS_UxlBoOjPSlV1YOws8Vpj51M5SFpkq1-GdSpn9rh9CTe71iKSRSBFrR4QwamHPI93s7cGPfZE17OyeFWiMiPvskG4L5PxPIDl278PMH5jJv5FdWaHDqfIGGQgPI3q2oCQpsfLawMH0XJnskp3yOFYwX/p.png?size=1600x1200&size_mode=3)
 
 ## Next Steps
-
-<!-- TODO: More to add? -->
 
 Try making your background change color depending on the number of the ID (more interesting than modulo 256^2 on the id)
