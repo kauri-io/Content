@@ -2,7 +2,7 @@
 
 The first part of this tutorial shows you how to deploy an [Non-fungible token (NFT)](https://en.wikipedia.org/wiki/Non-fungible_token) using a technique that makes it easy to update details about your token as infrastructure and your needs change.
 
-The second part of this tutorial will show how to create a serverless solution for serving that metadata. This is a widely used web2 infrastructure solution that is cheap and scaleable. It is not decentralized; This is a solution for using the Internet as it exists today.
+The second part of this tutorial will show how to create a serverless solution for serving your token metadata. This is a widely used web2 infrastructure solution that is cheap and scaleable. It is not decentralized; This is a solution for using the Internet as it exists today.
 
 ## Step 1: Setup Environment
 
@@ -962,15 +962,16 @@ Now visit the etherscan.io endpoint for your deployed contracts. You may need to
 
 Open the "Code" tab and click "Verify And Publish".  Enter "Token" under contract name, and select the compiler version you used. You can confirm the compiler in the _./build/Token.json_ file by searching for "network". This shows you a record of the deployment of your contract relevant to each network (rinkeby is number 4) alongside the compiler version. Mine is `0.5.0+commit.1d4f565a`, so I select that on the drop down on etherscan. I turn "Optimization" to off, since by default truffle does not run the compiler with optimization turned on. Then copy and paste the contents of _./flat/Token.sol_ into the text box.
 
-![](https://uc2f0e18954ef9af004113a7dbff.previews.dropboxusercontent.com/p/thumb/AASg_QjABUJEz_RWkFsUZnQtm224kccV5xIRZWRF9oaaByY5cIEwrLh56ExlHAWnsEpuq8eYdP5bNHkAuOHHdHtBLD1UBV6emwDJdNGgi2rzIElWz5OHbwvpw0xLX5UIbZACYdFAXy260xiBjIzqHCu-H5yVqA18iLHJEDoBoc9rJ7TeLW2LoyaCWbAiJU5S-Ypu-UwRVF_nR91AEbJNVy_mx3t81CQp-fkW2UFj_TIgQ3M6xI7GBygMEogrVFekOyWX4cJ1xp38znQXWyf8yXyFDI2jAQjf7GNXh-NPR3DZedE9ilevyuhsUqa-jAUusKspH-upr-hK4eQ8r_9t4eLb/p.png?size=1600x1200&size_mode=3)
+![](https://www.dropbox.com/s/403vw7lrskvty09/Screenshot%202018-12-13%2016.04.22.png?dl=1)
+(screenshot is out of date and uses an older compiler)
 
 Confirm you are not a robot and then click "Verify and Publish". If everything worked you see a success message like this:
 
-![](https://uc49f381dace0d97ad8daf33649b.previews.dropboxusercontent.com/p/thumb/AARE2XDZMAIUMRHw0EHhBXOMekmTGdlUM3awL93aICPT5qAcG-9lBzq0IyOZxBGLVzXBjhDH2gQtn9PeIO3-BNQZgBi8j6FWWQ94ErOhqcJmqQkYfd16BLeZrGpl_G5lEhKSpOxY-tBrLQ1ejQszemaL4_0G1696zWl45IVZLaYeIz1PFrGhPZ3d6hSkAUPccDAhH25SJ46pAD3xSnLsaTDbbGtmS_Q_K9AHMLJn_s-4Xuqj9yJLT5LJ1gvGfssQ21rG-jDeqq3lD-NSXNQocPw6zgtLLy8JWuMqDSWxPd140SWyq4HqH15zDRXJw1lHNJIF6ignEFJ5GRU1Jf8HAgmh/p.png?size=1600x1200&size_mode=3)
+![](https://www.dropbox.com/s/wrs6mabjzrmypg8/Screenshot%202018-12-13%2016.06.37.png?dl=1)
 
 If you click your address link you now see that your contract has a lot more information on it:
 
-![](https://uc50aa7dbe41b77b3738d47ffbf8.previews.dropboxusercontent.com/p/thumb/AATcfQB6ENsTA06SmRHzA95UvfyJ2FubZpwX-K-sr9xqYzwlUGEu4qXPp8YVLuxr8XKub3jrxn-mTqaA50IM6jBZNjK1Cu_exrEmHXDowHZmfY8mRrlvORturZJrktbvn6T1T4kXhD4SKBxZj0TRXDK4A2mRPNwDYOHW6Hb6Il_7GVWkBGxGSGCpdlGEwwJ8zK37-R9lO1ffIbGixi41igPwm8A3WalVScuae-d8ePGtN_WLYYn5UyKRVk3tjS0JW9ZdvbISzPibYixj4GUvBE4tvcZ6d8-rRz5UF0AD8wgUQEISrp6IE9sC_6WMusp1P4ySBgTSL32zPT2Bte4kskYi/p.png?size=1600x1200&size_mode=3)
+![](https://www.dropbox.com/s/ooh5fzd18elyr3y/Screenshot%202018-12-13%2016.08.44.png?dl=1)
 
 Now via the "Write Contract" tab you can directly access the "mint" function, and if your metamask has the same seed phrase as your deploy account you can mint from the browser. Since your contract is a compliant ERC-721 you can also look at it via the lens of a token account. To do so, change the word "address" in the URL to "token", for example [https://rinkeby.etherscan.io/token/_CONTRACT_ADDRESS_](https://rinkeby.etherscan.io/token/_CONTRACT_ADDRESS_)
 
