@@ -533,4 +533,7 @@ Let's add it to rarebits too.
 
 ## Next Steps
 
-Try making your background change color depending on the number of the ID (more interesting than modulo 256^2 on the id)
+-   Make a more interesting generative image
+    -   One example is the cloudinary's hue rotate used by ENSNifty.com ([github link](https://github.com/ENS-Nifty/ens-nifty-frontend/blob/master/functions/metadata.js#L73))
+-   Add a database to your lambda function for richer metadata
+    -   **Bonus**: Get in a fight on Twitter about the meaning of true decentralization!
