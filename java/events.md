@@ -22,7 +22,7 @@ Most enterprise Java developers will be familiar with the Event Bus pattern, whe
 _The Event Bus Pattern_
 ![](https://api.dev2.kauri.io:443/ipfs/QmUwbWrK2kgPz2RpwghveWcgRQsH1BSiQhHtam6hFpxp1J)
 
-Ethereum smart contract events can be utilised in a similar way, with the Ethereum network acting as a kind of messaging queue.  Off-chain services can register an event filter with a node, and will subsequently be notified any time that this event is emitted in the Ethereum network.  These event notifications can then be used as a trigger for further off-chain processing, such as updating a NoSQL based cache of the smart contract state.
+Ethereum smart contract events can be utilised in a similar way, with the Ethereum network acting as a kind of messaging queue.  Off-chain services can register an event filter with a node, and will subsequently be notified each time this event is emitted in the Ethereum network.  These event notifications can then be used as a trigger for further off-chain processing, such as updating a NoSQL based cache of the smart contract state.
 
 _Ethereum as an 'Event Bus'_
 ![](https://api.dev2.kauri.io:443/ipfs/QmaMerpsdaU6xMT7QfJpfCa8ttZa9DuiGDrQaA7GzRiY9d)
