@@ -17,7 +17,7 @@ Events are stored as logs rather than within EVM storage, and because of this, t
 ## Common Uses for Events
 ### Asynchronous Off-chain Triggers
 
-Most enterprise Java developers will be familiar with the Event Bus pattern, where a events are published to a queue such as RabbitMQ or Amazon SQS.  This pattern allows services that are interested in specific events to consume them off the bus asynchronously and perform further processing, without any coupling between the publisher and consumer services.
+Most enterprise Java developers will be familiar with the Event Bus pattern, where events are published to a queue such as RabbitMQ or Amazon SQS.  This pattern allows services that are interested in specific events to consume them off the bus asynchronously and perform further processing, without any coupling between the publisher and consumer services.
 
 _The Event Bus Pattern_
 ![](https://api.dev2.kauri.io:443/ipfs/QmUwbWrK2kgPz2RpwghveWcgRQsH1BSiQhHtam6hFpxp1J)
