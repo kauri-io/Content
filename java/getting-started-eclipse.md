@@ -112,6 +112,7 @@ Now we have created our project, imported the Web3j library and prepared a progr
 First import the packages needed for our code, or allow your IDE to automatically import them for you:
 
 ```java
+import java.io.IOException;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.protocol.core.methods.response.EthBlockNumber;
@@ -127,7 +128,7 @@ To connect to the node, Web3j requires the JSON-RPC API endpoint:
 Web3j web3 = Web3j.build(new HttpService("<NODE ENDPOINT>"));
 ```
 
--   **Local Ethereum node**
+#### Local Ethereum node
 
 If you are running locally a [Geth](https://geth.ethereum.org/), [Parity](https://www.parity.io/) or [Pantheon](https://github.com/PegaSysEng/pantheon) client. Your node JSON-RPC API endpoint is `http://localhost:8545` by default
 
@@ -135,7 +136,7 @@ If you are running locally a [Geth](https://geth.ethereum.org/), [Parity](https:
 Web3j web3 = Web3j.build(new HttpService("http://localhost:8545"));
 ```
 
--   **Ganache**: Local development blockchain
+#### Ganache: Local development blockchain
 
 If you are running [Ganache](https://www.trufflesuite.com/ganache) on your machine. Your node JSON-RPC API endpoint is `http://localhost:7545` by default.
 
@@ -143,9 +144,9 @@ If you are running [Ganache](https://www.trufflesuite.com/ganache) on your machi
 Web3j web3 = Web3j.build(new HttpService("http://localhost:7545"));
 ```
 
-_Note: Ganache doesn't support all the JSON-RPC API operations specified, for example `net_peercount`._
+_Note: As a test netwrok, Ganache doesn't support all the JSON-RPC API operations specified, for example `net_peercount`._
 
--   **Infura**: Hosted nodes for public mainet and testnets
+#### Infura: Hosted nodes for public mainet and testnets
 
 If you use [Infura](https://infura.io). The node JSON-RPC API endpoint is `https://<network>.infura.io/v3/<project key>`.
 
@@ -155,9 +156,7 @@ Web3j web3 = Web3j.build(new HttpService("https://mainnet.infura.io/v3/<project 
 
 ### 3. Execute API operations
 
-Web3j implements a JSON-RPC API client for Ethereum which can be used in the following way `<response> = web3.<operation>.send()`.
-
-**Note:** Serilisation of the JSON-RPC request can raise an `IOException` exception, so it needs to be handled. For example:
+Web3j implements a JSON-RPC API client for Ethereum which can be used in the following way `<response> = web3.<operation>.send()`. For example:
 
 ```java
 try {
@@ -175,9 +174,11 @@ try {
 }
 ```
 
+**Note:** Serilization of the JSON-RPC request can raise an `IOException` exception, so you need to handle it.
+
 ## Result
 
-The following code shows the entire Java program which connects to an Ethereum node and runs a few JSON-RPC calls.
+The following code shows the entire Java program which connects to an Ethereum node and runs some JSON-RPC calls.
 
 ```java
 //Main.java
