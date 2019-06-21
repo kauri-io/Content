@@ -6,7 +6,7 @@ Ethereum-Java content series
 In this section, Java developers can get started with Blockchain and Ethereum to understand the basic functionallities around accounts and smart contracts using the Java library [Web3j](https://web3j.io/).
 
 
-[### Getting started, Connect to an Ethereum client](getting-started-eclipse.md) - greg
+### [Getting started, Connect to an Ethereum client](getting-started-eclipse.md) - greg
 
 > [Chris: We will likely need an IntelliJ version too, or do we combine the posts, and separate the post after installing?]
 > [Greg: I only did Eclipse because I think it is more clear for the reader. But yeah we would likely need the same for IntelliJ, would be nice to have some sort of multi-choice pannel]
@@ -17,7 +17,7 @@ Web3j class - Connect to the node (HTTP/WebSocket)
 Web3j class - Interract with the node (basic): client version, gasPrice, ...
 
 
-[### Manage an Ethereum account](manage-accounts.md) - greg
+### [Manage an Ethereum account](manage-accounts.md) - greg
 
 Account creation and wallet
 Account information (balance, nonce, transaction history)
@@ -34,7 +34,7 @@ Deployment
 Function (call/transaction)
 
 
-[### Listen Smart Contract events](events.md) - Craig
+### [Listen Smart Contract events](events.md) - Craig
 
 Observable
 Filters
@@ -54,7 +54,7 @@ https://github.com/web3j/web3j-maven-plugin
 https://github.com/web3j/web3j-gradle-plugin
 
 
-[### Testing](pantheon_testing.md) - Craig
+### [Testing](pantheon_testing.md) - Craig
 
 Junit
 embedded Pantheon
