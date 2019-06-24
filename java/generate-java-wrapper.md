@@ -67,7 +67,7 @@ contract DocumentRegistry {
 
 ## Generate a Java Smart Contract Wrapper
 
-### Web3j Command Line tool and solc
+### Method 1 - Web3j Command Line tool and solc
 
 This first method consists to generate the Smart contract ABI and bytecode from **solc (Solidity Compiler)** and provide those two files as input to **web3j-cli** to generate the Java Wrapper.
 
@@ -184,7 +184,7 @@ As a result, you should see the Java Wrapper file generated into the folder `<pa
 
 <br />
 
-### Web3j Command Line tool and Truffle artefacts
+### Method 2 - Web3j Command Line tool and Truffle artefacts
 
 [**Truffle**](https://www.trufflesuite.com/truffle) is one of the most well-known framework to develop, test and deploy with Ethereum. It is possible associate **Truffle** for the Smart Contract development and testing with **Web3j** to build the middleware client.
 
@@ -298,7 +298,7 @@ As a result, you should see the Java Wrapper file generated into the folder `<pa
 
 <br />
 
-### web3j-maven-plugin
+### Method 3 - web3j-maven-plugin
 
 The next solution is more elegant than the two precendent because you don't have to install webj-cli and copy the file to your source folder. This part can be done directly inside your java project using Maven and the plugin [**web3j-maven-plugin**](https://github.com/web3j/web3j-maven-plugin).
 
@@ -317,6 +317,8 @@ Version: 0.5.9+commit.c68bc34e.Linux.g++
 <br />
 
 **2. Place the smart contract into the folder `src/main/resources`**
+
+Copy the Smart Contract source DocumentRegistry.sol into the folder `src/main/resources` of the Maven project.
 
 <br />
 
@@ -400,8 +402,38 @@ The last step simply consist to build our Maven project using for example `mvn c
 
 <br />
 
-### web3j-gradle-plugin
+### Method 4 - web3j-gradle-plugin
 
+Finaly the last method is very similar to the preivous one with Maven but using Gradle.
+
+**1. Prerequisite**
+
+- solc (Solidity Compiler): Use the following [link](https://solidity.readthedocs.io/en/develop/installing-solidity.html) to install solc on your machine and run the command below to make sure solc version is greater or equals to `0.5.6` (version specified in the smart contract).
+
+```shell
+$ solc --version
+solc, the solidity compiler commandline interface
+Version: 0.5.9+commit.c68bc34e.Linux.g++
+```
+
+<br />
+
+**2. Place the smart contract into the folder `src/main/solidty`**
+
+Copy the Smart Contract source DocumentRegistry.sol into the folder `src/main/solidty` of the Maven project.
+
+**3. Configure Graddle to generate the Wrapper during the build**
+
+First import the web3j-graddle pluggin into the build file `id 'org.web3j' version '4.3.0'`.
+
+Then we can configure the plugin like this and specify the package name wanted as well as the target folder for the generated wrapper classes
+
+```
+web3j {
+    generatedPackageName = 'me.gjeanmart.tutorials.javaethereum.contracts.generated'
+    generatedFilesBaseDir = "$buildDir/contracts"
+}
+```
 
 *build.gradle*
 ```gradle
@@ -444,8 +476,17 @@ web3j {
 
 ```
 
+**4. Execute gradle build**
+
+In this last step, we only need to execute the build using `./gradlew tasks --all` and verify that our generated wrapper classes has correctly been generated.
+
 ![](https://imgur.com/dA0sVy1.png)
 
+
+
+
+
+<br />
 <br />
 
 ## Use the generated Java Smart Contract Wrapper
