@@ -219,7 +219,7 @@ The concept here is to first construct the transaction object `rawTransaction` a
 
 Once a transaction is broadcast to the network, a transaction hash is returned to the client as a ticket but the transaction isn't performed yet. A set of miners/validators present on the network will pick up all the pending transactions, group them into the next block and agree on the validity. Once verified, the transaction is mined into the new block. At this point, the client can claim a transaction receipt by transaction hash to aknowledge the good execution of his transaction.
 
-<schema or sequence diagram></schema>
+![](https://web3j.readthedocs.io/en/latest/_images/web3j_transaction.png)
 
 <br />
 
