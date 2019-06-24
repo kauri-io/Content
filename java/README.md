@@ -42,7 +42,7 @@ Filters
 Reference to Eventeum for more robust and complex usecase
 
 
-### Generate a Java Wrapper from your Smart Contract
+### [Generate a Java Wrapper from your Smart Contract](generate-java-wrapper.md) - greg
 
 ######  Cli
 Install command line tool (web3j) and run the command
