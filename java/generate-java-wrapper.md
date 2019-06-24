@@ -74,6 +74,7 @@ This first method consists to generate the Smart contract ABI and bytecode from 
 <br />
 
 **1. Install solc and verify the version**
+
 Use the following [link](https://solidity.readthedocs.io/en/develop/installing-solidity.html) to install solc on your machine and run the command below to make sure solc version is greater or equals to `0.5.6` (version specified in the smart contract).
 
 ```shell
@@ -85,6 +86,7 @@ Version: 0.5.9+commit.c68bc34e.Linux.g++
 <br />
 
 **2. Install web3j-cli**
+
 To install web3j-cli, download the latest release package [here](https://github.com/web3j/web3j/releases).
 
 Then unzip the package like this:
@@ -94,9 +96,9 @@ $ unzip web3j-4.3.0.zip
 Archive:  web3j-4.3.0.zip
    creating: web3j-4.3.0/
    creating: web3j-4.3.0/lib/
-  inflating: web3j-4.3.0/lib/console-4.3.0-all.jar
+  inflating: web3j-4.3.0/lib/console-4.3.0-all.jar  
    creating: web3j-4.3.0/bin/
-  inflating: web3j-4.3.0/bin/web3j
+  inflating: web3j-4.3.0/bin/web3j   
   inflating: web3j-4.3.0/bin/web3j.bat
 ```
 
@@ -105,14 +107,14 @@ And run the following command
 ```shell
 $ ./web3j-4.3.0/bin/web3j version
 
-              _      _____ _     _
-             | |    |____ (_)   (_)
-__      _____| |__      / /_     _   ___
+              _      _____ _     _        
+             | |    |____ (_)   (_)       
+__      _____| |__      / /_     _   ___  
 \ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
  \ V  V /  __/ |_) |.___/ / | _ | || (_) |
   \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
-                         _/ |
-                        |__/
+                         _/ |             
+                        |__/              
 
 Version: 4.3.0
 Build timestamp: 2019-05-09 06:48:01.876 UTC
@@ -162,14 +164,14 @@ For example:
 ```shell
 $ web3j solidity generate -a DocumentRegistry.abi  -b DocumentRegistry.bin -o . -p me.gjeanmart.tutorials.javaethereum.wrapper
 
-              _      _____ _     _
-             | |    |____ (_)   (_)
-__      _____| |__      / /_     _   ___
+              _      _____ _     _        
+             | |    |____ (_)   (_)       
+__      _____| |__      / /_     _   ___  
 \ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
  \ V  V /  __/ |_) |.___/ / | _ | || (_) |
   \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
-                         _/ |
-                        |__/
+                         _/ |             
+                        |__/              
 
 Generating me.gjeanmart.tutorials.javaethereum.wrapper.DocumentRegistry ... File written to .
 ```
@@ -187,6 +189,7 @@ As a result, you should see the Java Wrapper file generated into the folder `<pa
 [**Truffle**](https://www.trufflesuite.com/truffle) is one of the most well-known framework to develop, test and deploy with Ethereum. It is possible associate **Truffle** for the Smart Contract development and testing with **Web3j** to build the middleware client.
 
 **1. Install Truffle**
+
 Truffle comes as a npm package.
 
 ```shell
@@ -205,6 +208,7 @@ Web3.js v1.0.0-beta.37
 <br />
 
 **2. Initialise a new Truffle project**
+
 To initialize a Truffle project, we will execute the command `truffle init` in a new folder. You should obtain a tree view composed of `contracts/`, `migration/`, `test/` and `truffle-config.js`.
 
 ```shell
@@ -236,6 +240,7 @@ drwxrwxr-x 2 gjeanmart gjeanmart 4096 Jun 24 14:25 test
 <br />
 
 **3. Add the contract into the folder `contracts`**
+
 Copy the Smart Contract source `DocumentRegistry.sol` into the folder `contracts`.
 
 <br />
@@ -265,19 +270,19 @@ total 136
 
 **5. Generate the Smart Contract Java Wrapper from the Truffle Artefact**
 
-FInally, web3j-cli provides a way to generate the Smart Contract Java Wrapper directly from the Truffle artefact result of `truffle compile`.
+Finally, web3j-cli provides a way to generate the Smart Contract Java Wrapper directly from the Truffle artefact result of `truffle compile`.
 
 ```shell
 $ web3j  truffle generate ./build/contracts/DocumentRegistry.json -o . -p me.gjeanmart.tutorials.javaethereum.wrapper
 
-              _      _____ _     _
-             | |    |____ (_)   (_)
-__      _____| |__      / /_     _   ___
+              _      _____ _     _        
+             | |    |____ (_)   (_)       
+__      _____| |__      / /_     _   ___  
 \ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
  \ V  V /  __/ |_) |.___/ / | _ | || (_) |
   \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
-                         _/ |
-                        |__/
+                         _/ |             
+                        |__/              
 
 Generating me.gjeanmart.tutorials.javaethereum.wrapper.DocumentRegistry ... File written to .
 ```
@@ -320,6 +325,7 @@ Version: 0.5.9+commit.c68bc34e.Linux.g++
 In the next step, we will configure two Maven plugins:
 
 - ***web3j-maven-plugin***:
+
 The first plugin is doing exactly the same operation as the two previous methods but in an automated and integrated with Maven.
 First of all, we configure the plugin to be executed automaticaly when entering on phase `generate-sources` of the project.
 Secondly we configure the plugin parameters:
@@ -329,6 +335,7 @@ Secondly we configure the plugin parameters:
 
 
 - ***build-helper-maven-plugin***
+
 The second plugin is simply used to add the *sourceDestination* folder into the classpath so we can import the generated Java Wrapper classes
 
 <br />
