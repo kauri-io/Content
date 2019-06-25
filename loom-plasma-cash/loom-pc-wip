@@ -1,0 +1,18 @@
+# Outline: Work in Progress
+
+- Introduce Plasma and Plasma Cash
+	- Loom Network's implementation of Plasma Cash (ERC721/ERC20/ETH compatible, etc.);
+	- Review how Sparse Merkle Trees improve the Plasma specification;
+
+- Overview the flow:
+	- exclusion proofs;
+	- exits;
+	- challenges;
+
+	- Demonstrate flow using Loom's Transfer Gateway;
+	- Show how to use deposit, transfer, withdraw, and exit coins;
+
+- Review differences/trade offs between Loom's Plasma Cash and other implementations by OmiseGo and Plasma Group;
+
+- Where is Plasma Cash live? What is it doing in the wild? Plasma Cash on Loom's dAppchain;
+
