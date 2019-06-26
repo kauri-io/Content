@@ -9,7 +9,7 @@ Different methods exist to achieve the generation of a Smart Contract Java Wrapp
 - web3j-maven-plugin
 - web3j-gradle-plugin
 
-To illustrate the methods listed above, we will use the following Smart Contract which noratize documents into a registry on the Ethereum Blockchain.
+To illustrate the methods listed above, we will use the following Smart Contract which noratizes documents into a registry on the Ethereum Blockchain.
 
 *DocumentRegistry.sol*
 ```solidity
@@ -17,7 +17,7 @@ pragma solidity ^0.5.6;
 
 
 /**
-*  @dev Smart Contract resposible to notarize documents on the Ethereum Blockchain
+*  @dev Smart Contract responsible to notarize documents on the Ethereum Blockchain
 */
 contract DocumentRegistry {
 
