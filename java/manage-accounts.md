@@ -234,7 +234,7 @@ String walletPassword = "secr3t";
 String walletPath = "/path/to/wallet/UTC--2019-06-20T11-41-39.478000000Z--256c75c85f9c27ac5b2a22f085d9643f7ed91dc1.json";
 
 // Decrypte and open the wallet into a Credential object
-Credentials credentials = WalletUtils.loadCredentials(walletPassword, walletPath);etBalance().toString(), Unit.ETHER));
+Credentials credentials = WalletUtils.loadCredentials(walletPassword, walletPath);
 
 // Get nonce
 EthGetTransactionCount ethGetTransactionCount = web3.ethGetTransactionCount(credentials.getAddress(), DefaultBlockParameterName.LATEST).send();
