@@ -48,7 +48,7 @@ contract DocumentRegistry {
   }
 
   /**
-   *  @dev Verify a document identified by its has was noterized in the registry previsouly.
+   *  @dev Verify a document identified by its hash was noterized in the registry.
    *  @param _documentHash Document hash
    *  @return bool if document was noterized previsouly in the registry
    */
