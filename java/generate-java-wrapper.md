@@ -489,9 +489,9 @@ In this last step, we only need to execute the build using `./gradlew tasks --al
 <br />
 <br />
 
-## Use the generated Java Smart Contract Wrapper
+## Summary
 
-
+TODO
 
 
 <br />
