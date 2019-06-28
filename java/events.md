@@ -2,7 +2,7 @@
 
 ## What is a Smart Contract Event
 
-You can emit an event from any smart contract function triggered by a transaction, and are an important piece of the Ethereum application architecture puzzle.
+You can emit an event from any smart contract function triggered by a transaction, and they are an important piece of the Ethereum application architecture puzzle.
 
 These events consist of a name and up to 17 arguments, with the content of these arguments provided by the emitting function.  Arguments can either be indexed or non-indexed; with indexed arguments allowing for efficient off-chain querying.
 
