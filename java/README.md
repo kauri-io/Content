@@ -27,21 +27,6 @@ Send transaction
 - Signing methods (node, middleware, client)
 - TransactionManager (RawTransactionManager, FastRawTransactionManager, ReadonlyTransactionManager) and TransactionReceiptProcessor (Polling, Queuing, NoOp)
 
-
-### Interact with a Smart Contract
-
-Deployment
-Function (call/transaction)
-
-
-### [Listen Smart Contract events](events.md) - Craig
-
-Observable
-Filters
-
-Reference to Eventeum for more robust and complex usecase
-
-
 ### [Generate a Java Wrapper from your Smart Contract](generate-java-wrapper.md) - greg
 
 ######  Cli
@@ -53,6 +38,18 @@ https://github.com/web3j/web3j-maven-plugin
 ###### Gradle
 https://github.com/web3j/web3j-gradle-plugin
 
+### [Interact with a Smart Contract](interacting.md) - Craig
+
+Deployment
+Function (call/transaction)
+
+
+### [Listen Smart Contract events](events.md) - Craig
+
+Observable
+Filters
+
+Reference to Eventeum for more robust and complex usecase
 
 ### [Testing](pantheon_testing.md) - Craig
 
