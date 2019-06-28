@@ -9,68 +9,68 @@ Testcontainers is a super useful library that allows you to fire up a Docker con
 In this guide, I'll describe how to start and shutdown a [Pantheon](https://github.com/PegaSysEng/pantheon) node during your integration tests, so that you do not have to be concerned with starting a node manually or within your CI pipeline
 
 ## Starting Pantheon
+_ClassRule_
 
-```
-private static FixedHostPortGenericContainer pantheonContainer;
-
-@BeforeClass
-public static void startPantheon() throws InterruptedException {
-        pantheonContainer = new FixedHostPortGenericContainer("pegasyseng/pantheon:latest");
-        pantheonContainer.waitingFor(Wait.forListeningPort());
-
-        pantheonContainer
-                .withFixedExposedPort(8545, 8545)
-                .withFixedExposedPort(8546, 8546)
-                .withEnv("MINER_ENABLED", "true")
-                .withEnv("MINER_COINBASE", "00a329c0648769a73afac7f9381e08fb43dbea72")
-                .withEnv("RPC_HTTP_ENABLED", "true")
-                .withEnv("RPC_WS_ENABLED", "true")
-                .withEnv("NETWORK", "dev")
-                .start();
-
-        waitForPantheonToStart(10000, Web3j.build(new HttpService("http://localhost:8545")));
+``` java
+@ClassRule
+public static final GenericContainer pantheonContainer =
+        new GenericContainer("pegasyseng/pantheon:1.1.3")
+                .withExposedPorts(8545, 8546)
+                .withCommand(
+                        "--miner-enabled",
+                        "--miner-coinbase=0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+                        "--rpc-http-enabled",
+                        "--rpc-ws-enabled",
+                        "--network=dev")
+                .waitingFor(Wait.forHttp("/liveness").forStatusCode(200).forPort(8545));
 }
 ```
 
-Its preferential and more performant to start Pantheon once before all tests execute, rather than before every test, which is why this method is static, with the `@BeforeClass` JUnit annotation.
+Its preferential and more performant to start Pantheon once before all tests execute, rather than before every test, which is why the container is static with the `@ClassRule` JUnit annotation.
 
-A `FixedHostPortGenericContainer` is instantiated, which takes a docker image name as an argument.  We're using the latest release version of Pantheon in this instance.  The standard default ports for http and websocket RPC ports are exposed with the `withFixedExposedPort(..)` method.
+A `GenericContainer` is instantiated, which takes a docker image name as an argument.  We're using the 1.1.3 version of Pantheon in this instance.  The standard default ports for http and websocket RPC are exposed with the `withExposedPorts(..)` method.
 
-A number of environment variables are set, to configure the node to be suitable for testing:
+A number of runtime command arguments are set, which configure the node in a way that is suitable for testing:
 
-**MINER_ENABLED:** We need to enable mining so that the transactions that we send within our tests are actually included within blocks.
+**--miner-enabled:** We need to enable mining so that the transactions that we send within our tests are actually included within blocks.
 
-**MINER_COINBASE:** Set the coinbase to be an account that you have a private key for.  This is so that the account will actually have some Ether to pay for the gas fees needed to send transactions.  Here we have set the address to be the well known Parity dev account.
+**--miner-coinbase:** Set the coinbase to be an account that you have a private key for.  This is mandatory when mining is enabled, so here we set the account to be the well known Pantheon dev account, which is automatically loaded with Ether when in dev mode.
 
-**RPC\_HTTP\_ENABLED:** Enable the http RPC endpoint, so Web3j can connect.
+**--rpc-http-enabled:** Enable the http RPC endpoint, so Web3j can connect.
 
-**RPC\_WS\_ENABLED:** Enable the websocket RPC endpoint.  This is not required if only http is being tested.
+**--rpc-ws-enabled:** Enable the websocket RPC endpoint.  This is not required if only http is being tested.
 
-**NETWORK:** The network type is set to `dev`.  This starts a private development node, with a pre-defined configuration to make mining very easy, to be easier on CPU usage.
+**--network=dev:** The network type is set to `dev`.  This starts a private development node, with a pre-defined configuration to make mining very easy, to be easier on CPU usage.
 
-## Waiting for Pantheon to Start
+For a full list of all available Pantheon commands, see the official documentation [here](https://docs.pantheon.pegasys.tech/en/stable/Reference/Pantheon-CLI-Syntax/).
+
+### Waiting for Pantheon to Start
+
+Finally, we must wait for Pantheon to fully start before running our tests.  Luckily, Pantheon comes autoconfigured with a liveness endpoint out of the box, so testcontainers is instructed to automatically poll the `/liveness` endpoint on port `8545` until a 200 response is returned.  We can then be confident that Pantheon is running correctly.
+
+## Connecting to the Pantheon container using Web3j
 
 ```
-private static void waitForPantheonToStart(long secondsToWait, Web3j web3j) {
-    Awaitility
-            .await()
-            .atMost(secondsToWait, TimeUnit.SECONDS)
-            .until(() -> {
-                try {
-                    //Wait for one block to mine so the miner account has some eth...
-                    if (web3j.ethBlockNumber().send().getBlockNumber().intValue() > 0) {
-                        return true;
-                    }
-
-                    return false;
-                } catch (Throwable t) {
-                    //If an error occurs, the node is not yet up
-                    return false;
-                }
-            });
-}
+final Integer port = pantheonContainer.getMappedPort(8545);
+Web3j web3j = Web3j.build(new HttpService(
+        "http://localhost:" + port), 500, Async.defaultExecutorService());
+        
+Credentials credentials = Credentials.create("0x8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63");
 ```
-We need to ensure that Pantheon is up and running before the tests begin executing.  To do this, the [Awaitility](`https://github.com/awaitility/awaitility`) library is used to continuously poll the node to obtain the latest block number until a successful response is received.  We actually wait until the block number is greater than zero as this means a block has been mined so we can guarantee that our test account (the miner coinbase) has some ether to use within the tests.
+
+### Mapped Port
+
+The default JSON RPC port, 8545, was exposed when creating the container, but it was not mapped to the same port on localhost.  A random available port is automatically selected instead, which is beneficial because it removes the chance of the port not being open on your test machine (which could happen if you are running the tests in parallel for example).
+
+To obtain the mapped port number, simply call the `getMappedPort(..)` method on the container.  This port should then be used when constructing the Web3j connection url.
+
+## Polling Interval
+
+By default, Web3j polls the connected Ethereum client every 10 seconds for operations such as getting the latest mined blocks and checking if events have been emitted.  Our Pantheon test network will generally create blocks much faster than every 10 seconds so reducing the poll interval in Web3j should increase the speed of the tests.  The poll interval can be passed to the `Web3j.build` static method, and here we are configuring the interval to be 500ms.
+
+### Test Credentials
+
+Sending transactions in the private dev network still requires gas, so we must have access to an account with a positive balance.  This has been thought out, and the development network has a number of accounts that are pre-loaded with more test Ether than you could ever need!  The private keys of these accounts are well known and are documented [here]{https://docs.pantheon.pegasys.tech/en/stable/Configuring-Pantheon/Accounts-for-Testing/), which makes it easy to generate a `Credentials` object for use in your tests.
 
 ## Stopping Pantheon
 
