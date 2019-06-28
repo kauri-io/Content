@@ -1,54 +1,47 @@
-Manage an Ethereum account with Web3j
-========
+# Manage an Ethereum account with Web3j
 
-The Ethereum blockchain is often compared to a World Computer with a global state. The global state grows after each new block and is composed of many accounts organised in a [Merkle tree](https://en.wikipedia.org/wiki/Merkle_tree).
+The Ethereum blockchain is often compared to a World Computer with a global state. The global state grows after each new block and cosists of many accounts organised in a [Merkle tree](https://en.wikipedia.org/wiki/Merkle_tree).
 
 ![](https://imgur.com/iQLdaOW.png)
 
 Each account has a state composed of information such as balance, nonce, storageRoot and codeHash, and is identified by a 20 bytes address (for example: `0x66aac71c0c81ec00aebead84914a10e307a4cbf9`).
 
 There are two types of accounts:
-- Externally owned accounts, which are controlled by private keys and have no code associated with them.
-- Contract accounts, which are controlled by their contract code and have code associated with them.
+
+-   **Externally owned accounts**, which are controlled by private keys and have no code associated with them.
+-   **Contract accounts**, which are controlled by their contract code and have code associated with them.
 
 ![](https://imgur.com/3dlka35.png)
 
-
-In this tutorial, we will focus on externally owned accounts to retrieve information such as a balance, create or open an account and send transactions to another account using the Java library Web3j.
-
-<br />
+In this tutorial, we focus on externally owned accounts and how to retrieve information such as a balance, create or open an account and send transactions to another account using the Java library [Web3j](https://web3j.io/).
 
 ## 1. Retrieve public information about an account
 
-The Ethereum blockchain is a public shared ledger which can be queried to retrieve information about the state at a different time (block #).
-
+The Ethereum blockchain is a public shared ledger which we can query to retrieve information about the state at a different time, or block number.
 
 ### Get account's balance
 
-Every accounts have a balance of the Ethereum native cryptocurrency called **Ether**. Using our Web3j instance (see article-1), it is possible to retrieve the balance of an account at a given block using the function `web3.ethGetBalance(<accountAddress>, <blockNo>).send()`
+Every account has a balance of the Ethereum native cryptocurrency called **Ether**. Using our Web3j instance (see [article-1](#)), it is possible to retrieve the balance of an account at a given block using the function `web3.ethGetBalance(<accountAddress>, <blockNo>).send()`
 
-<br />
+The balance is stored by default in the smallest denomination of ether called _wei_ (1 ether = 10^18 wei) but Web3j provides a convenience utility class `Convert` to convert values between different units.
 
-The balance is stored by default in the smallest denomination of ether called *wei* (1 ether = 10^18 wei) but Web3j provides a convenient utility class `Convert` to convert values between different units.
-
-<br />
-
-- Retrieve the latest balance (latest block) of an account:
+-   Retrieve the latest balance (latest block) of an account:
 
 ```java
 EthGetBalance balanceWei = web3.ethGetBalance("0xF0f15Cedc719B5A55470877B0710d5c7816916b1", DefaultBlockParameterName.LATEST).send();
+System.out.println("balance in wei: " + balanceWei);
 
 BigDecimal balanceInEther = Convert.fromWei(balanceWei.getBalance().toString(), Unit.ETHER);
+System.out.println("balance in ether: " + balanceInEther);
 ```
 
 ![](https://imgur.com/S7w0eEH.png)
 
-The latest balance of the account `0xF0f15Cedc719B5A55470877B0710d5c7816916b1` is *33.25 ether*.
+In the example above, the latest balance of the account `0xF0f15Cedc719B5A55470877B0710d5c7816916b1` is _33.25 ether_.
 
+<!-- TODO: Not working right now, check comments and give ideas -->
 
-<br />
-
-- Retrieve the balance of an account at a specific block:
+-   Retrieve the balance of an account at a specific block:
 
 ```java
 EthGetBalance balance = web3.ethGetBalance("0xF0f15Cedc719B5A55470877B0710d5c7816916b1", new DefaultBlockParameterNumber(3000000)).send();
@@ -58,15 +51,13 @@ BigDecimal balanceInEther = Convert.fromWei(balance.getBalance().toString(), Uni
 
 ![](https://imgur.com/PuUtKHV.png)
 
-The balance at block #3,000,000 of the account `0xF0f15Cedc719B5A55470877B0710d5c7816916b1` is *8.12 ethers*.
-
-<br />
+The balance at block #3,000,000 of the account `0xF0f15Cedc719B5A55470877B0710d5c7816916b1` is _8.12 ethers_.
 
 ### Get account's nonce
 
-Another information included in the state of an account is the *nonce*, a sequence number symbolizing the number of transactions performed by an account.
+Also included in the state of an account is the _nonce_, a sequence number symbolizing the number of transactions performed by an account.
 
-Web3j offers the method `web3.ethGetTransactionCount(<accountAddress>, <blockNo>).send()` to retrieve the nonce at a given block number.
+Web3j provides the method `web3.ethGetTransactionCount(<accountAddress>, <blockNo>).send()` to retrieve the nonce at a given block number.
 
 ```java
 EthGetTransactionCount ethGetTransactionCount = web3.ethGetTransactionCount("0xF0f15Cedc719B5A55470877B0710d5c7816916b1", DefaultBlockParameterName.LATEST).send();
@@ -76,28 +67,27 @@ BigInteger nonce =  ethGetTransactionCount.getTransactionCount();
 
 ![](https://imgur.com/uJ2bcNk.png)
 
-
-
-<br />
-
 ## 2. Open or create an account
 
-In order to control an externally owned account and the fund allocated on it, it is required to own the 32 bytes **Private Key** associated to this account. A private key is a very confidential information so it usually doesn't come in clear text like `3a1076bf45ab87712ad64ccb3b10217737f7faacbf2872e88fdd9a537d8fe266` but is secured and encrypted in a wallet. There is many form of wallets (more or less secured and practical):
+In order to control an externally owned account and the fund allocated on it, the 32 bytes **Private Key** associated to an account is needed. A private key is a confidential piece of information, so it usually doesn't come in clear text like `3a1076bf45ab87712ad64ccb3b10217737f7faacbf2872e88fdd9a537d8fe266` but is secured and encrypted in a wallet. There are many forms of wallets (more or less secured and practical):
 
-![](https://imgur.com/N74l0TI.png)      ![](https://imgur.com/m4JjJsM.png)      ![](https://imgur.com/X8mANUY.png)
+![](https://imgur.com/N74l0TI.png)
 
+![](https://imgur.com/m4JjJsM.png)
 
-In this section, we will learn how to load an existing wallet and create a new one with Web3j to instanciate a *Credentials* object which can be used to sign and send transaction securely on the Ethereum blockchain.
+![](https://imgur.com/X8mANUY.png)
 
-<br />
+In this section, we learn how to load an existing wallet and create a new one with Web3j to instanciate a `Credentials` object which we can use to sign and send transactions securely on the Ethereum blockchain.
 
 ### Load a wallet
 
 #### From a JSON encryted keystore
 
-The first form of wallet is the JSON encryted keystore, it is a password-encrypted version of the private key. This is the most standard way used by clients such as [Pantheon](https://pegasys.tech/) or [Geth](https://geth.ethereum.org/) but also by Online tool like [MyEtherWallet](https://www.myetherwallet.com/) to secure a private key from potential attackers.
+The first form of wallet is the JSON encryted keystore, which is a password-encrypted version of the private key. This is the most standard way used by clients such as [Pantheon](https://pegasys.tech/) or [Geth](https://geth.ethereum.org/), but also by online tools like [MyEtherWallet](https://www.myetherwallet.com/) to secure a private key from potential attackers.
 
 Web3j provides a utility class called `WalletUtils` to load a wallet into a `Credentials` object (wrapper containing the account address and the keypair).
+
+<!-- TODO: Where do these three details come from? -->
 
 ```java
 String walletPassword = "secr3t";
@@ -125,7 +115,6 @@ Another common form of private key you might have heard of is the **Mnemonic sen
 A mnemonic controls multiple private keys because of a mechanism to derive deterministically the mnemonic from a path.
 
 The mnemonic can optionally be encrypted with a password.
-
 
 ```java
 String password = null; // no encryption
@@ -171,7 +160,6 @@ Credentials credentials = Credentials.create(pk);
 
 ![](https://imgur.com/svlvLnF.png)
 
-
 <br />
 
 ### Create a wallet
@@ -201,21 +189,23 @@ System.out.println("Account address: " + credentials.getAddress());
 Now we have learnt how to retrieve public information (state) like the balance from an account and how to open an account using different methods, we can send a transaction to another account.
 
 A transaction on the Ethereum blockchain is composed of several information:
-- **nonce:** a count of the number of transaction sent by the sender
-- **gasPrice (in wei):** the amount the sender is willing to pay per unit of gas required to execute the transaction.
-- **gasLimit:** the maximum amount of gas the sender is willing to pay to execute this transaction.
-- **to:** The address of the recipient account
-- **value (in wei):** the amount of Wei to be transferred from the sender to the recipient. In a contract-creating transaction, this value serves as the starting balance within the newly created contract account.
-- **signature:** Cryptographic signature that identified the sender of the transaction (from)
-- **data:** Optional field used to communicate with a smart contract (encoded string including the function name and the parameters)
+
+-   **nonce:** a count of the number of transaction sent by the sender
+-   **gasPrice (in wei):** the amount the sender is willing to pay per unit of gas required to execute the transaction.
+-   **gasLimit:** the maximum amount of gas the sender is willing to pay to execute this transaction.
+-   **to:** The address of the recipient account
+-   **value (in wei):** the amount of Wei to be transferred from the sender to the recipient. In a contract-creating transaction, this value serves as the starting balance within the newly created contract account.
+-   **signature:** Cryptographic signature that identified the sender of the transaction (from)
+-   **data:** Optional field used to communicate with a smart contract (encoded string including the function name and the parameters)
 
 There is two ways to send a transaction to the blockchain:
-- **Via the Ethereum node:**
-This involves sending a non-signed transaction to the Ethereum client having the account *unlocked*.
-***I personnaly don't recommend this method which might put your account at risk if the Ethereum node isn't correctly protected***
 
-- **Offline transaction:**
-The concept here is to first construct the transaction object `rawTransaction` and sign it with your private key (Web3j Credential). Secondly send it to the Ethereum node via the JSON-RPC API to be propagated across the network.
+-   **Via the Ethereum node:**
+    This involves sending a non-signed transaction to the Ethereum client having the account _unlocked_.
+    **_I personnaly don't recommend this method which might put your account at risk if the Ethereum node isn't correctly protected_**
+
+-   **Offline transaction:**
+    The concept here is to first construct the transaction object `rawTransaction` and sign it with your private key (Web3j Credential). Secondly send it to the Ethereum node via the JSON-RPC API to be propagated across the network.
 
 Once a transaction is broadcast to the network, a transaction hash is returned to the client as a ticket but the transaction isn't performed yet. A set of miners/validators present on the network will pick up all the pending transactions, group them into the next block and agree on the validity. Once verified, the transaction is mined into the new block. At this point, the client can claim a transaction receipt by transaction hash to aknowledge the good execution of his transaction.
 
@@ -258,9 +248,10 @@ BigInteger value = Convert.toWei("1", Unit.ETHER).toBigInteger();
 Gas represents the fees of the network which will be taken by the miner who mines the block which includes your transaction.
 
 When sending a transaction, two parameters are important:
-- **Gas Limit (in unit):** Gas limit refers to the maximum amount of gas you’re willing to spend on a particular transaction. After the transaction is executed, if too much gas (gasLimit) was sent, the remaining gas is refunded to the sender.
 
-- **Gas Price (in wei):** Amount of Ether you’re willing to pay for every unit of gas
+-   **Gas Limit (in unit):** Gas limit refers to the maximum amount of gas you’re willing to spend on a particular transaction. After the transaction is executed, if too much gas (gasLimit) was sent, the remaining gas is refunded to the sender.
+
+-   **Gas Price (in wei):** Amount of Ether you’re willing to pay for every unit of gas
 
 ```java
 // A transfer cost 21,000 units of gas
@@ -270,12 +261,12 @@ BigInteger gasLimit = BigInteger.valueOf(21000);
 BigInteger gasPrice = Convert.toWei("1", Unit.GWEI).toBigInteger();
 ```
 
-
 #### 4. Prepare the raw transaction
 
 A raw transaction for a transfer of funds contains all the transaction data fields except:
-- data: not a smart contract transaction
-- signature: signature not signed yet
+
+-   data: not a smart contract transaction
+-   signature: signature not signed yet
 
 ```java
 // Prepare the rawTransaction
@@ -311,7 +302,6 @@ EthSendTransaction ethSendTransaction = web3.ethSendRawTransaction(hexValue).sen
 String transactionHash = ethSendTransaction.getTransactionHash();
 ```
 
-
 #### 7. Wait for the transaction to be mined.
 
 As explained previously, when the signed transaction is propagated to the network, depending on many factors (gas price, network congestion) it can take some time to see the transaction mined and added to the last block.
@@ -328,7 +318,6 @@ do {
   Thread.sleep(3000); // Retry after 3 sec
 } while(!transactionReceipt.isPresent());
 ```
-
 
 #### Result
 
@@ -421,12 +410,9 @@ public class Transaction {
     }
   }
 }
-
 ```
 
-
 ![](https://imgur.com/8XU21KA.gif)
-
 
 <br />
 
@@ -446,12 +432,12 @@ An account is controlled by the person owning the private key of this account. T
 
 To send a transaction between two accounts, Web3j can generate a transaction oject, sign it and propagate it to the network to finally pool the Blockchain in order to get the transaction receipt when it's been mined.
 
-
 <br />
 
 ## Resources
-- [Ethereum Unit converter (WEI, GWEI, ETHER, ....)](https://etherconverter.online/)
-- [Web3j Transaction doc](https://web3j.readthedocs.io/en/latest/transactions.html#transaction-signing-via-an-ethereum-client)
-- [Web3j RawTransaction Integration Tests](https://github.com/web3j/web3j/blob/master/integration-tests/src/test/java/org/web3j/protocol/scenarios/CreateRawTransactionIT.java)
-- [Ethereum - What is Gas Price and Limit](https://masterthecrypto.com/ethereum-what-is-gas-gas-limit-gas-price/)
-- [Diving into Ethereum World State](https://medium.com/cybermiles/diving-into-ethereums-world-state-c893102030ed)
+
+-   [Ethereum Unit converter (WEI, GWEI, ETHER, ....)](https://etherconverter.online/)
+-   [Web3j Transaction doc](https://web3j.readthedocs.io/en/latest/transactions.html#transaction-signing-via-an-ethereum-client)
+-   [Web3j RawTransaction Integration Tests](https://github.com/web3j/web3j/blob/master/integration-tests/src/test/java/org/web3j/protocol/scenarios/CreateRawTransactionIT.java)
+-   [Ethereum - What is Gas Price and Limit](https://masterthecrypto.com/ethereum-what-is-gas-gas-limit-gas-price/)
+-   [Diving into Ethereum World State](https://medium.com/cybermiles/diving-into-ethereums-world-state-c893102030ed)
