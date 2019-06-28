@@ -39,9 +39,7 @@ System.out.println("balance in ether: " + balanceInEther);
 
 In the example above, the latest balance of the account `0xF0f15Cedc719B5A55470877B0710d5c7816916b1` is _33.25 ether_.
 
-<!-- TODO: Not working right now, check comments and give ideas -->
-
--   Retrieve the balance of an account at a specific block:
+-   Retrieve the balance of an account at a specific block, if the blockchain you connect to has generated any blocks so far. Test chains may not have yet:
 
 ```java
 EthGetBalance balance = web3.ethGetBalance("0xF0f15Cedc719B5A55470877B0710d5c7816916b1", new DefaultBlockParameterNumber(3000000)).send();
@@ -57,7 +55,7 @@ The balance at block #3,000,000 of the account `0xF0f15Cedc719B5A55470877B0710d5
 
 Also included in the state of an account is the _nonce_, a sequence number symbolizing the number of transactions performed by an account.
 
-Web3j provides the method `web3.ethGetTransactionCount(<accountAddress>, <blockNo>).send()` to retrieve the nonce at a given block number.
+Web3j provides the method `web3.ethGetTransactionCount(<accountAddress>, <blockNo>).send()` to retrieve the nonce at a given block number, in this case the most recent block.
 
 ```java
 EthGetTransactionCount ethGetTransactionCount = web3.ethGetTransactionCount("0xF0f15Cedc719B5A55470877B0710d5c7816916b1", DefaultBlockParameterName.LATEST).send();
@@ -87,8 +85,6 @@ The first form of wallet is the JSON encryted keystore, which is a password-encr
 
 Web3j provides a utility class called `WalletUtils` to load a wallet into a `Credentials` object (wrapper containing the account address and the keypair).
 
-<!-- TODO: Where do these three details come from? -->
-
 ```java
 String walletPassword = "secr3t";
 String walletDirectory = "/path/to/wallets";
@@ -106,15 +102,13 @@ String privateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
 
 ![](https://imgur.com/p92p616.png)
 
-<br />
-
 #### From a Mnemonic phrase
 
-Another common form of private key you might have heard of is the **Mnemonic sentence** (or seed phrase) which converts the 32 bytes key to a group of 12 easy to remember words. For example: `candy maple cake sugar pudding cream honey rich smooth crumble sweet treat`. This form has been established by Bitcoin under the proposal [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki).
+Another common form of private key is the **Mnemonic sentence** (or seed phrase) which converts the 32 bytes key to a group of 12 easy to remember words. For example: `candy maple cake sugar pudding cream honey rich smooth crumble sweet treat`. This form was established by Bitcoin under the proposal [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki).
 
 A mnemonic controls multiple private keys because of a mechanism to derive deterministically the mnemonic from a path.
 
-The mnemonic can optionally be encrypted with a password.
+You can optionally encrypt the mnemonic with a password.
 
 ```java
 String password = null; // no encryption
@@ -125,7 +119,7 @@ Credentials credentials = WalletUtils.loadBip39Credentials(password, mnemonic);
 
 ![](https://imgur.com/xN2Ruaj.png)
 
-By default, Web3j uses a derivation path equals to `m/44'/60'/0'/1`. However, it is possible to open another account on a different path:
+By default, Web3j uses a derivation path equal to `m/44'/60'/0'/1`. However, it is possible to open another account on a different path:
 
 ```java
 String password = null; // no encryption
@@ -146,8 +140,6 @@ Credentials credentials = Credentials.create(derivedKeyPair);
 
 ![](https://imgur.com/eEgEdOY.png)
 
-<br />
-
 #### From a Private key
 
 As mentionned before, a private key is a 32 bytes long number. To parse a private key with Web3j, only need to pass the private key to the class `Credentials`.
@@ -159,8 +151,6 @@ Credentials credentials = Credentials.create(pk);
 ```
 
 ![](https://imgur.com/svlvLnF.png)
-
-<br />
 
 ### Create a wallet
 
@@ -181,8 +171,6 @@ System.out.println("Account address: " + credentials.getAddress());
 ```
 
 ![](https://imgur.com/kbcemsH.png)
-
-<br />
 
 ## 3. Send a transaction
 
@@ -210,8 +198,6 @@ There is two ways to send a transaction to the blockchain:
 Once a transaction is broadcast to the network, a transaction hash is returned to the client as a ticket but the transaction isn't performed yet. A set of miners/validators present on the network will pick up all the pending transactions, group them into the next block and agree on the validity. Once verified, the transaction is mined into the new block. At this point, the client can claim a transaction receipt by transaction hash to aknowledge the good execution of his transaction.
 
 ![](https://web3j.readthedocs.io/en/latest/_images/web3j_transaction.png)
-
-<br />
 
 ### Send fund from one account to another
 
@@ -414,15 +400,11 @@ public class Transaction {
 
 ![](https://imgur.com/8XU21KA.gif)
 
-<br />
-
 Now you understand the core principles behind sending transactions with Web3j, I can tell you a secret. Web3j provides a Utility class called 'Transfer' which takes care of everything (nonce, gas, transaction receipt polling, etc.) in one line of code.
 
 ```java
 TransactionReceipt receipt = Transfer.sendFunds(web3, credentials, recipientAddress, BigDecimal.valueOf(1), Unit.ETHER).send();
 ```
-
-<br />
 
 ## Summary
 
@@ -431,8 +413,6 @@ In this article, we learnt that the Ethereum Global State is actually composed o
 An account is controlled by the person owning the private key of this account. The private key can have many forms and is usually secured in a wallet. Web3j allows to open a wallet from a JSON encrypted file, a mnemonic phrase or directly from the private key.
 
 To send a transaction between two accounts, Web3j can generate a transaction oject, sign it and propagate it to the network to finally pool the Blockchain in order to get the transaction receipt when it's been mined.
-
-<br />
 
 ## Resources
 
