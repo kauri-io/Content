@@ -64,7 +64,7 @@ The default JSON RPC port, 8545, was exposed when creating the container, but it
 
 To obtain the mapped port number, simply call the `getMappedPort(..)` method on the container.  This port should then be used when constructing the Web3j connection url.
 
-## Polling Interval
+### Polling Interval
 
 By default, Web3j polls the connected Ethereum client every 10 seconds for operations such as getting the latest mined blocks and checking if events have been emitted.  Our Pantheon test network will generally create blocks much faster than every 10 seconds so reducing the poll interval in Web3j should increase the speed of the tests.  The poll interval can be passed to the `Web3j.build` static method, and here we are configuring the interval to be 500ms.
 
