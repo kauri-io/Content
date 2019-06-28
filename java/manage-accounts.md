@@ -108,7 +108,7 @@ Another common form of private key is the **Mnemonic sentence** (or seed phrase)
 
 A mnemonic controls multiple private keys because of a mechanism to derive deterministically the mnemonic from a path.
 
-You can optionally encrypt the mnemonic with a password.
+We can optionally encrypt the mnemonic with a password.
 
 ```java
 String password = null; // no encryption
@@ -142,7 +142,7 @@ Credentials credentials = Credentials.create(derivedKeyPair);
 
 #### From a Private key
 
-As mentionned before, a private key is a 32 bytes long number. To parse a private key with Web3j, only need to pass the private key to the class `Credentials`.
+As mentioned before, a private key is a 32 bytes long number. To parse a private key with Web3j, we need to pass the private key to the class `Credentials`.
 
 ```java
 String pk = "c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3";
@@ -154,7 +154,7 @@ Credentials credentials = Credentials.create(pk);
 
 ### Create a wallet
 
-Finally, if you don't already have an account and want to create a new one from scratch. Web3j's `WalletUtils` offers a simple method to create a JSON encryptd keystore.
+Finally, if we don't already have an account and want to create a new one from scratch. Web3j's `WalletUtils` offers a method to create a JSON encrypted keystore.
 
 ```java
 String walletPassword = "secr3t";
@@ -174,32 +174,32 @@ System.out.println("Account address: " + credentials.getAddress());
 
 ## 3. Send a transaction
 
-Now we have learnt how to retrieve public information (state) like the balance from an account and how to open an account using different methods, we can send a transaction to another account.
+Now we have learned how to retrieve public information (state), like the balance from an account and how to open an account using different methods, we can send a transaction to another account.
 
-A transaction on the Ethereum blockchain is composed of several information:
+A transaction on the Ethereum blockchain is composed of the following information:
 
--   **nonce:** a count of the number of transaction sent by the sender
+-   **nonce:** a count of the number of transaction sent by the sender.
 -   **gasPrice (in wei):** the amount the sender is willing to pay per unit of gas required to execute the transaction.
 -   **gasLimit:** the maximum amount of gas the sender is willing to pay to execute this transaction.
--   **to:** The address of the recipient account
--   **value (in wei):** the amount of Wei to be transferred from the sender to the recipient. In a contract-creating transaction, this value serves as the starting balance within the newly created contract account.
--   **signature:** Cryptographic signature that identified the sender of the transaction (from)
--   **data:** Optional field used to communicate with a smart contract (encoded string including the function name and the parameters)
+-   **to:** The address of the recipient account.
+-   **value (in wei):** the amount of Wei to transfer from the sender to the recipient. In a contract-creating transaction, this value serves as the starting balance within the newly created contract account.
+-   **signature:** Cryptographic signature that identified the sender of the transaction (from).
+-   **data:** Optional field used to communicate with a smart contract (encoded string including the function name and the parameters).
 
-There is two ways to send a transaction to the blockchain:
+There are two ways to send a transaction to the blockchain:
 
 -   **Via the Ethereum node:**
     This involves sending a non-signed transaction to the Ethereum client having the account _unlocked_.
     **_I personnaly don't recommend this method which might put your account at risk if the Ethereum node isn't correctly protected_**
 
 -   **Offline transaction:**
-    The concept here is to first construct the transaction object `rawTransaction` and sign it with your private key (Web3j Credential). Secondly send it to the Ethereum node via the JSON-RPC API to be propagated across the network.
+    The concept is to first construct the transaction object `rawTransaction` and sign it with a private key (Web3j Credential). Secondly send it to the Ethereum node via the JSON-RPC API to propagate across the network.
 
-Once a transaction is broadcast to the network, a transaction hash is returned to the client as a ticket but the transaction isn't performed yet. A set of miners/validators present on the network will pick up all the pending transactions, group them into the next block and agree on the validity. Once verified, the transaction is mined into the new block. At this point, the client can claim a transaction receipt by transaction hash to aknowledge the good execution of his transaction.
+Once a transaction is broadcast to the network, a transaction hash is returned to the client but the transaction isn't performed yet. A set of miners/validators present on the network pick up all the pending transactions, group them into the next block and agree on the validity. Once verified, the transaction is mined into the new block. At this point, the client can claim a transaction receipt by transaction hash to aknowledge the good execution of his transaction.
 
 ![](https://web3j.readthedocs.io/en/latest/_images/web3j_transaction.png)
 
-### Send fund from one account to another
+### Send funds from one account to another
 
 #### 1. Load an account and get the nonce
 
@@ -209,7 +209,7 @@ As explained in the previous sections, we need to load an account from one the m
 String walletPassword = "secr3t";
 String walletPath = "/path/to/wallet/UTC--2019-06-20T11-41-39.478000000Z--256c75c85f9c27ac5b2a22f085d9643f7ed91dc1.json";
 
-// Decrypte and open the wallet into a Credential object
+// Decrypt and open the wallet into a Credential object
 Credentials credentials = WalletUtils.loadCredentials(walletPassword, walletPath);
 
 // Get nonce
@@ -219,7 +219,7 @@ BigInteger nonce =  ethGetTransactionCount.getTransactionCount();
 
 #### 2. Configure recipient account and amount to send
 
-In the next step, we are just going to configure the amount (in Wei) to send to a recipient account.
+In the next step, we configure the amount (in Wei) to send to a recipient account.
 
 ```java
 // Recipient account
@@ -231,13 +231,13 @@ BigInteger value = Convert.toWei("1", Unit.ETHER).toBigInteger();
 
 #### 3. Configure Gas parameters
 
-Gas represents the fees of the network which will be taken by the miner who mines the block which includes your transaction.
+Gas represents the fees of the network which taken by the miner who mines the block which includes your transaction.
 
 When sending a transaction, two parameters are important:
 
--   **Gas Limit (in unit):** Gas limit refers to the maximum amount of gas you’re willing to spend on a particular transaction. After the transaction is executed, if too much gas (gasLimit) was sent, the remaining gas is refunded to the sender.
+-   **Gas Limit (in unit):** Gas limit refers to the maximum amount of gas you're willing to spend on a particular transaction. After the transaction is executed, if too much gas (`gasLimit`) was sent, the remaining gas is refunded to the sender.
 
--   **Gas Price (in wei):** Amount of Ether you’re willing to pay for every unit of gas
+-   **Gas Price (in wei):** Amount of Ether you're willing to pay for every unit of gas
 
 ```java
 // A transfer cost 21,000 units of gas
@@ -251,8 +251,8 @@ BigInteger gasPrice = Convert.toWei("1", Unit.GWEI).toBigInteger();
 
 A raw transaction for a transfer of funds contains all the transaction data fields except:
 
--   data: not a smart contract transaction
--   signature: signature not signed yet
+-   **data**: not a smart contract transaction
+-   **signature**: signature not signed yet
 
 ```java
 // Prepare the rawTransaction
@@ -266,7 +266,7 @@ RawTransaction rawTransaction  = RawTransaction.createEtherTransaction(
 
 #### 5. Signature
 
-The signing part requires the rawTransaction as well as the `credentials` (keypair) used to cryptographically sign the transaction.
+The signing part requires the `rawTransaction` as well as the `credentials` (keypair) used to cryptographically sign the transaction.
 
 ```java
 // Sign the transaction
@@ -278,7 +278,7 @@ String hexValue = Numeric.toHexString(signedMessage);
 
 #### 6. Send to the node via JSON-RPC
 
-Final step consists in sending the transaction signed to the node so it can be verified and broadcasted to the network. In case of success, the method returns a response only composed of the transaction hash.
+The final step consists of sending the transaction signed to the node so it can be verified and broadcast to the network. In case of success, the method returns a response composed of the transaction hash.
 
 ```java
 // Send transaction
@@ -290,7 +290,7 @@ String transactionHash = ethSendTransaction.getTransactionHash();
 
 #### 7. Wait for the transaction to be mined.
 
-As explained previously, when the signed transaction is propagated to the network, depending on many factors (gas price, network congestion) it can take some time to see the transaction mined and added to the last block.
+As explained before, when the signed transaction is propagated to the network, depending on many factors (gas price, network congestion) it can take some time to see the transaction mined and added to the last block.
 
 That's why the following code consists of a simple loop to verify every 3 seconds if the transaction is mined by calling the method `web3.ethGetTransactionReceipt(<txhash>).send()`.
 
@@ -400,7 +400,7 @@ public class Transaction {
 
 ![](https://imgur.com/8XU21KA.gif)
 
-Now you understand the core principles behind sending transactions with Web3j, I can tell you a secret. Web3j provides a Utility class called 'Transfer' which takes care of everything (nonce, gas, transaction receipt polling, etc.) in one line of code.
+Now we understand the core principles behind sending transactions with Web3j, I can tell you a secret. Web3j provides a Utility class called 'Transfer' which takes care of everything (nonce, gas, transaction receipt polling, etc.) in one line of code.
 
 ```java
 TransactionReceipt receipt = Transfer.sendFunds(web3, credentials, recipientAddress, BigDecimal.valueOf(1), Unit.ETHER).send();
@@ -408,11 +408,11 @@ TransactionReceipt receipt = Transfer.sendFunds(web3, credentials, recipientAddr
 
 ## Summary
 
-In this article, we learnt that the Ethereum Global State is actually composed of a mapping of all accounts states. Each account state can be queried to get information like the balance and the nonce.
+In this article, we learnt that the Ethereum Global State is composed of a mapping of all accounts states. We can query each account state can be queried to get information like the balance and the nonce.
 
 An account is controlled by the person owning the private key of this account. The private key can have many forms and is usually secured in a wallet. Web3j allows to open a wallet from a JSON encrypted file, a mnemonic phrase or directly from the private key.
 
-To send a transaction between two accounts, Web3j can generate a transaction oject, sign it and propagate it to the network to finally pool the Blockchain in order to get the transaction receipt when it's been mined.
+To send a transaction between two accounts, Web3j can generate a transaction oject, sign it and propagate it to the network to poll the Blockchain to get the transaction receipt when it's been mined.
 
 ## Resources
 
