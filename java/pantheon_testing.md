@@ -11,7 +11,7 @@ In this guide, I'll describe how to start and shutdown a [Pantheon](https://gith
 ## Starting Pantheon
 _ClassRule_
 
-``` java
+```java
 @ClassRule
 public static final GenericContainer pantheonContainer =
         new GenericContainer("pegasyseng/pantheon:1.1.3")
@@ -50,7 +50,7 @@ Finally, we must wait for Pantheon to fully start before running our tests.  Luc
 
 ## Connecting to the Pantheon container using Web3j
 
-```
+```java
 final Integer port = pantheonContainer.getMappedPort(8545);
 Web3j web3j = Web3j.build(new HttpService(
         "http://localhost:" + port), 500, Async.defaultExecutorService());
@@ -70,16 +70,16 @@ By default, Web3j polls the connected Ethereum client every 10 seconds for opera
 
 ### Test Credentials
 
-Sending transactions in the private dev network still requires gas, so we must have access to an account with a positive balance.  This has been thought out, and the development network has a number of accounts that are pre-loaded with more test Ether than you could ever need!  The private keys of these accounts are well known and are documented [here]{https://docs.pantheon.pegasys.tech/en/stable/Configuring-Pantheon/Accounts-for-Testing/), which makes it easy to generate a `Credentials` object for use in your tests.
+Sending transactions in the private dev network still requires gas, so we must have access to an account with a positive balance.  This has been thought out, and the development network has a number of accounts that are pre-loaded with more test Ether than you could ever need!  The private keys of these accounts are well known and are documented [here](https://docs.pantheon.pegasys.tech/en/stable/Configuring-Pantheon/Accounts-for-Testing/), which makes it easy to generate a `Credentials` object for use in your tests.
 
-## Stopping Pantheon
+## Stopping Pantheon / Web3j
 
-Stopping the Pantheon container is a simple one-liner, which is again performed in a static method, with an @AfterClass annotation, so that it is executed after all tests have finished.
+As we're using a `@ClassRule` annotation, the stopping of the Pantheon container will be handled automatically at the end of the test class execution.  Its a good idea to shutdown the web3j instance after each test though:
 
-```
-@AfterClass
-private static void stopPantheon() {
-    pantheonContainer.stop();
+```java
+@After
+public void shutdownWeb3j() {
+    web3j.shutdown();
 }
 ```
 
