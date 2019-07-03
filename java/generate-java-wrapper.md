@@ -87,7 +87,7 @@ Version: 0.5.9+commit.c68bc34e.Linux.g++
 
 **2. Install web3j-cli**
 
-To install web3j-cli, either download a zipfile/tarball from the [releases] (https://github.com/web3j/web3j/releases/latest) page of the project repository, under the **Downloads** section, or for OS X users via [Homebrew] (https://github.com/web3j/homebrew-web3j), or for Arch linux users via the [AUR] (https://aur.archlinux.org/packages/web3j/).
+To install web3j-cli, either download a zipfile/tarball from the [releases](https://github.com/web3j/web3j/releases/latest) page of the project repository, under the **Downloads** section, or for OS X users via [Homebrew](https://github.com/web3j/homebrew-web3j), or for Arch linux users via the [AUR](https://aur.archlinux.org/packages/web3j/).
 
 ```bash
    brew tap web3j/web3j
