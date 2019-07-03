@@ -6,7 +6,7 @@ tags: java, ethereum, web3j, maven, eclipse, json-rpc
 
 [**Ethereum**](https://www.ethereum.org/) is a Blockchain, which means it operates on a [peer-to-peer network](https://en.wikipedia.org/wiki/Peer-to-peer) composed of thousand of nodes where each node agrees on the next state.
 
-In order to interract with the Ethereum global state (distributed database), a program needs to connect to a node that exposes the standard [JSON-RPC API](https://github.com/ethereum/wiki/wiki/JSON-RPC#json-rpc-api) which can be used to execute operations on the Ethereum blockchain.
+In order to interact with the Ethereum global state (distributed database), a program needs to connect to a node that exposes the standard [JSON-RPC API](https://github.com/ethereum/wiki/wiki/JSON-RPC#json-rpc-api) which can be used to execute operations on the Ethereum blockchain.
 
 In this article, we will learn how to start an Ethereum Java project and connect to a node using the Java library **[Web3j](https://web3j.io/)**, a lightweight and modular library implementing all the functionallities required to work with Ethereum (JSON-RPC API client, wallet account management, Java Smart Contract wrapper, support for ENS, ERC20 and ERC721 and much more).
 
@@ -63,11 +63,46 @@ In the _Project Explorer_, You should see the _JRE System library_ changing from
 
 ![](https://imgur.com/7Pvq9hJ.png)
 
-## Add Web3j library to our project
+## Install and add Web3j library to our project
 
-In this step, we import [the latest version](https://github.com/web3j/web3j/releases) of Web3j to our project in order to be able to use it.
+In this step, we first install and then import the latest version of Web3j to our project.
 
-Edit the file `pom.xml` and add the following lines before `</project>`:
+### 1. Install web3j
+
+Command line tools can be obtained as a zipfile/tarball from the [releases] (https://github.com/web3j/web3j/releases/latest) page of the project repository, under the **Downloads** section, or for OS X users via [Homebrew] (https://github.com/web3j/homebrew-web3j), or for Arch linux users via the [AUR] (https://aur.archlinux.org/packages/web3j/).
+
+```bash
+   brew tap web3j/web3j
+   brew install web3j
+   web3j
+```
+To run via the zipfile, simply extract the zipfile and run the binary:
+
+```console 
+
+   $ unzip web3j-4.3.0.zip
+      creating: web3j-4.3.0/lib/
+     inflating: web3j-4.3.0/lib/core-1.0.2-all.jar
+      creating: web3j-4.3.0/bin/
+     inflating: web3j-4.3.0/bin/web3j
+     inflating: web3j-4.3.0/bin/web3j.bat
+   $ ./web3j-<version>/bin/web3j
+
+                 _      _____ _     _
+                | |    |____ (_)   (_)
+   __      _____| |__      / /_     _   ___
+   \ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
+    \ V  V /  __/ |_) |.___/ / | _ | || (_) |
+     \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
+                            _/ |
+                           |__/
+
+   Usage: web3j version|wallet|solidity ...
+```
+
+### 2. Add web3j to our project
+
+In Eclipse, edit the file `pom.xml` and add the following lines before `</project>`:
 
 ```xml
   <dependencies>
@@ -80,6 +115,8 @@ Edit the file `pom.xml` and add the following lines before `</project>`:
 ```
 
 _Full pom.xml file available [here](https://github.com/gjeanmart/kauri-content/blob/master/java-ethereum/pom.xml)_
+
+Update project again, right click on the project name in the _Project Explorer_ and click on _Maven > Update Project_. Click _OK_ in the dialog box that pops up.
 
 ## Create a Main class
 
@@ -144,7 +181,7 @@ If you are running [Ganache](https://www.trufflesuite.com/ganache) on your machi
 Web3j web3 = Web3j.build(new HttpService("http://localhost:7545"));
 ```
 
-_Note: As a test netwrok, Ganache doesn't support all the JSON-RPC API operations specified, for example `net_peercount`._
+_Note: As a test network, Ganache doesn't support all the JSON-RPC API operations specified, for example `net_peercount`._
 
 #### Infura: Hosted nodes for public mainet and testnets
 
