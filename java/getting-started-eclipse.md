@@ -134,17 +134,17 @@ To connect to the node, Web3j requires the JSON-RPC API endpoint:
 Web3j web3 = Web3j.build(new HttpService("<NODE ENDPOINT>"));
 ```
 
-#### Local Ethereum node
+#### Local Ethereum node or ganache-cli
 
-If you are running locally a [Geth](https://geth.ethereum.org/), [Parity](https://www.parity.io/) or [Pantheon](https://github.com/PegaSysEng/pantheon) client. Your node JSON-RPC API endpoint is `http://localhost:8545` by default
+If you are running locally a [Geth](https://geth.ethereum.org/), [Parity](https://www.parity.io/), [Pantheon](https://github.com/PegaSysEng/pantheon) client or [ganache-cli](https://github.com/trufflesuite/ganache-cli). Your node JSON-RPC API endpoint is `http://localhost:8545` by default
 
 ```java
 Web3j web3 = Web3j.build(new HttpService("http://localhost:8545"));
 ```
 
-#### Ganache: Local development blockchain
+#### Ganache application: Local development blockchain
 
-If you are running [Ganache](https://www.trufflesuite.com/ganache) on your machine. Your node JSON-RPC API endpoint is `http://localhost:7545` by default.
+If you are running the [Ganache](https://www.trufflesuite.com/ganache) application on your machine. Your node JSON-RPC API endpoint is `http://localhost:7545` by default. _ganche-cli uses port 8545_
 
 ```java
 Web3j web3 = Web3j.build(new HttpService("http://localhost:7545"));
