@@ -38,6 +38,10 @@ Check the box _Create a simple project (skip archetype selection)_ and click on 
 
 Next screen, enter the _Group ID_ and _Artifact ID_ of our project then click _Finish_.
 
+Group Id: `io.kauri.tutorials.java-ethereum`
+
+Artifact Id: `java-ethereum`
+
 ![](https://imgur.com/IpEZ6gX.png)
 
 It should result of a new project in the _Project Explorer_
