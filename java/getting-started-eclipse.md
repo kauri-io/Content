@@ -67,44 +67,9 @@ In the _Project Explorer_, You should see the _JRE System library_ changing from
 
 ![](https://imgur.com/7Pvq9hJ.png)
 
-## Install and add Web3j library to our project
+## Add Web3j library to our project
 
-In this step, we first install and then import the latest version of Web3j to our project.
-
-### 1. Install web3j
-
-Command line tools can be obtained as a zipfile/tarball from the [releases] (https://github.com/web3j/web3j/releases/latest) page of the project repository, under the **Downloads** section, or for OS X users via [Homebrew] (https://github.com/web3j/homebrew-web3j), or for Arch linux users via the [AUR] (https://aur.archlinux.org/packages/web3j/).
-
-```bash
-   brew tap web3j/web3j
-   brew install web3j
-   web3j
-```
-To run via the zipfile, simply extract the zipfile and run the binary:
-
-```console 
-
-   $ unzip web3j-4.3.0.zip
-      creating: web3j-4.3.0/lib/
-     inflating: web3j-4.3.0/lib/core-1.0.2-all.jar
-      creating: web3j-4.3.0/bin/
-     inflating: web3j-4.3.0/bin/web3j
-     inflating: web3j-4.3.0/bin/web3j.bat
-   $ ./web3j-<version>/bin/web3j
-
-                 _      _____ _     _
-                | |    |____ (_)   (_)
-   __      _____| |__      / /_     _   ___
-   \ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
-    \ V  V /  __/ |_) |.___/ / | _ | || (_) |
-     \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
-                            _/ |
-                           |__/
-
-   Usage: web3j version|wallet|solidity ...
-```
-
-### 2. Add web3j to our project
+In this step, we import the latest version of Web3j to our project via maven.
 
 In Eclipse, edit the file `pom.xml` and add the following lines before `</project>`:
 
@@ -120,7 +85,7 @@ In Eclipse, edit the file `pom.xml` and add the following lines before `</projec
 
 _Full pom.xml file available [here](https://github.com/gjeanmart/kauri-content/blob/master/java-ethereum/pom.xml)_
 
-Update project again, right click on the project name in the _Project Explorer_ and click on _Maven > Update Project_. Click _OK_ in the dialog box that pops up.
+Save file and dependencies will import. In your package explorer you will see a Maven dependencies folder with all the JAR (Java ARchive) packages for web3j and its dependencies.
 
 ## Create a Main class
 
