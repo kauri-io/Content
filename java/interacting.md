@@ -159,10 +159,10 @@ DocumentRegistry documentRegistry = deployDocumentRegistryContract();
 TransactionReceipt receipt = documentRegistry.notarizeDocument(
         "QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco").send();
 
-String txStatus = receipt.getStatus();
+String txHash = receipt.getTransactionHash();
 ```
 
-For a successful transaction, the receipt status will equal `"1"`, whereas a failed transaction will have a `"0"` status. 
+A `TransactionException` is thrown if the transaction fails.
 
 #### Invoking `isNotarized(..)`
 As this function is marked as a `view` function, this indicates that it is read-only and can therefore be called locally.  The generated method signature is:
