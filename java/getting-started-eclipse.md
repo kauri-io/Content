@@ -6,7 +6,7 @@ tags: java, ethereum, web3j, maven, eclipse, json-rpc
 
 [**Ethereum**](https://www.ethereum.org/) is a Blockchain, which means it operates on a [peer-to-peer network](https://en.wikipedia.org/wiki/Peer-to-peer) composed of thousand of nodes where each node agrees on the next state.
 
-In order to interract with the Ethereum global state (distributed database), a program needs to connect to a node that exposes the standard [JSON-RPC API](https://github.com/ethereum/wiki/wiki/JSON-RPC#json-rpc-api) which can be used to execute operations on the Ethereum blockchain.
+In order to interact with the Ethereum global state (distributed database), a program needs to connect to a node that exposes the standard [JSON-RPC API](https://github.com/ethereum/wiki/wiki/JSON-RPC#json-rpc-api) which can be used to execute operations on the Ethereum blockchain.
 
 In this article, we will learn how to start an Ethereum Java project and connect to a node using the Java library **[Web3j](https://web3j.io/)**, a lightweight and modular library implementing all the functionallities required to work with Ethereum (JSON-RPC API client, wallet account management, Java Smart Contract wrapper, support for ENS, ERC20 and ERC721 and much more).
 
@@ -38,6 +38,10 @@ Check the box _Create a simple project (skip archetype selection)_ and click on 
 
 Next screen, enter the _Group ID_ and _Artifact ID_ of our project then click _Finish_.
 
+Group Id: `io.kauri.tutorials.java-ethereum`
+
+Artifact Id: `java-ethereum`
+
 ![](https://imgur.com/IpEZ6gX.png)
 
 It should result of a new project in the _Project Explorer_
@@ -65,9 +69,9 @@ In the _Project Explorer_, You should see the _JRE System library_ changing from
 
 ## Add Web3j library to our project
 
-In this step, we import [the latest version](https://github.com/web3j/web3j/releases) of Web3j to our project in order to be able to use it.
+In this step, we import the latest version of Web3j to our project via maven.
 
-Edit the file `pom.xml` and add the following lines before `</project>`:
+In Eclipse, edit the file `pom.xml` and add the following lines before `</project>`:
 
 ```xml
   <dependencies>
@@ -80,6 +84,8 @@ Edit the file `pom.xml` and add the following lines before `</project>`:
 ```
 
 _Full pom.xml file available [here](https://github.com/gjeanmart/kauri-content/blob/master/java-ethereum/pom.xml)_
+
+Save file and dependencies will import. In your package explorer you will see a Maven dependencies folder with all the JAR (Java ARchive) packages for web3j and its dependencies.
 
 ## Create a Main class
 
@@ -128,23 +134,23 @@ To connect to the node, Web3j requires the JSON-RPC API endpoint:
 Web3j web3 = Web3j.build(new HttpService("<NODE ENDPOINT>"));
 ```
 
-#### Local Ethereum node
+#### Local Ethereum node or ganache-cli
 
-If you are running locally a [Geth](https://geth.ethereum.org/), [Parity](https://www.parity.io/) or [Pantheon](https://github.com/PegaSysEng/pantheon) client. Your node JSON-RPC API endpoint is `http://localhost:8545` by default
+If you are running locally a [Geth](https://geth.ethereum.org/), [Parity](https://www.parity.io/), [Pantheon](https://github.com/PegaSysEng/pantheon) client or [ganache-cli](https://github.com/trufflesuite/ganache-cli). Your node JSON-RPC API endpoint is `http://localhost:8545` by default
 
 ```java
 Web3j web3 = Web3j.build(new HttpService("http://localhost:8545"));
 ```
 
-#### Ganache: Local development blockchain
+#### Ganache application: Local development blockchain
 
-If you are running [Ganache](https://www.trufflesuite.com/ganache) on your machine. Your node JSON-RPC API endpoint is `http://localhost:7545` by default.
+If you are running the [Ganache](https://www.trufflesuite.com/ganache) application on your machine. Your node JSON-RPC API endpoint is `http://localhost:7545` by default. _ganche-cli uses port 8545_
 
 ```java
 Web3j web3 = Web3j.build(new HttpService("http://localhost:7545"));
 ```
 
-_Note: As a test netwrok, Ganache doesn't support all the JSON-RPC API operations specified, for example `net_peercount`._
+_Note: As a test network, Ganache doesn't support all the JSON-RPC API operations specified, for example `net_peercount`._
 
 #### Infura: Hosted nodes for public mainet and testnets
 

@@ -87,37 +87,35 @@ Version: 0.5.9+commit.c68bc34e.Linux.g++
 
 **2. Install web3j-cli**
 
-To install web3j-cli, download the latest release package [here](https://github.com/web3j/web3j/releases).
+To install web3j-cli, either download a zipfile/tarball from the [releases](https://github.com/web3j/web3j/releases/latest) page of the project repository, under the **Downloads** section, or for OS X users via [Homebrew](https://github.com/web3j/homebrew-web3j), or for Arch linux users via the [AUR](https://aur.archlinux.org/packages/web3j/).
 
-Then unzip the package like this:
-
-```shell
-$ unzip web3j-4.3.0.zip
-Archive:  web3j-4.3.0.zip
-   creating: web3j-4.3.0/
-   creating: web3j-4.3.0/lib/
-  inflating: web3j-4.3.0/lib/console-4.3.0-all.jar  
-   creating: web3j-4.3.0/bin/
-  inflating: web3j-4.3.0/bin/web3j   
-  inflating: web3j-4.3.0/bin/web3j.bat
+```bash
+   brew tap web3j/web3j
+   brew install web3j
+   web3j
 ```
+To run via the zipfile, simply extract the zipfile and run the binary:
 
-And run the following command
+```shell 
 
-```shell
-$ ./web3j-4.3.0/bin/web3j version
+   $ unzip web3j-4.3.0.zip
+      creating: web3j-4.3.0/lib/
+     inflating: web3j-4.3.0/lib/core-1.0.2-all.jar
+      creating: web3j-4.3.0/bin/
+     inflating: web3j-4.3.0/bin/web3j
+     inflating: web3j-4.3.0/bin/web3j.bat
+   $ ./web3j-<version>/bin/web3j
 
-              _      _____ _     _        
-             | |    |____ (_)   (_)       
-__      _____| |__      / /_     _   ___  
-\ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
- \ V  V /  __/ |_) |.___/ / | _ | || (_) |
-  \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
-                         _/ |             
-                        |__/              
+                 _      _____ _     _
+                | |    |____ (_)   (_)
+   __      _____| |__      / /_     _   ___
+   \ \ /\ / / _ \ '_ \     \ \ |   | | / _ \
+    \ V  V /  __/ |_) |.___/ / | _ | || (_) |
+     \_/\_/ \___|_.__/ \____/| |(_)|_| \___/
+                            _/ |
+                           |__/
 
-Version: 4.3.0
-Build timestamp: 2019-05-09 06:48:01.876 UTC
+   Usage: web3j version|wallet|solidity ...
 ```
 
 *TODO move into PATH*
