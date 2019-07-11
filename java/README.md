@@ -56,6 +56,13 @@ Reference to Eventeum for more robust and complex usecase
 Junit
 embedded Pantheon
 
+### Installing & Configuring the Pantheon Client
+
+
+### Aikos: Building a dapp in java
+Decentralized Release Management System
+Abdelhamid Bakhta
+Building a JAVA API, release deployment and intergity checks of releases.
 
 
 ------------------------------------------
@@ -71,12 +78,12 @@ embedded Pantheon
 
 ### Run your own node with Pantheon (A Java Enterprise Ethereum client)
 
-Pantheon
+Pantheon overview
 Connect Web3j to Pantheon
 
 
-### Pantehon - Private network
-
+### Creating a Pegasys NFT
+Using web3j and pantheon to create a Pegasys NFToken.
 
 
 ### Eventeum: Event Listener for a microservice architecture
@@ -86,9 +93,8 @@ Eventeum
 ### Working with ERC20 and ERC721 tokens
 
 
-
-### Android development
-I'm talking with the TAUG, an Android development group in Toulouse, to see how they can help out. They seem initially interested- but seems longer term.
+### GraphQL on Pantheon
+graphql-java for interacting with a running Pantheon blockchain
 
 
 ------------------------------------------
@@ -116,7 +122,11 @@ Example of Kauri protocol SDK implementation
 
 ### Mahuta: A Java indexation/caching layer for IPFS
 
-
+### Private network with Orion and Pantheon
+Overview of Privacy concepts
+Introduction to Orion architecture/node
+Privacy groups
+Setting up a private blockchain and making private transactions with Orion.
 
 -------------------------------------------
 
