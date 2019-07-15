@@ -51,14 +51,17 @@ Using `curl` to call `eth_chainId` RPC method:
 
 Two forms of installation are available;
 
-* [Installing the binary distribution](http://docs.pantheon.pegasys.tech/en/stable/Installation/Install-Binaries/)
-* [Building from source](http://docs.pantheon.pegasys.tech/en/stable/Installation/Build-From-Source/)
+* [Installing the binary distribution](http://docs.pantheon.pegasys.tech/en/stable/Installation/Install-Binaries/) (External documentation link)
+For binary installation, [follow along to this section](#binary-install) and skip the next.
+
+* [Building from source](http://docs.pantheon.pegasys.tech/en/stable/Installation/Build-From-Source/)  (External documentation link)
+For Source install, [skip to this section](#build-from-source).
+
+> **Requirements**: For both of these methods, Pantheon needs the Java JDK to be previously installed on your machine. To be prepared for future versions of Pantheon, it is recommended to have Java JDK 11+ installed.
 
 ### Binary install
 
 Remember to have 4GB RAM if running a private network, and 8GB of RAM if running mainnet or a public test network and at least 2TB for the full blockchain mainnet archive sync.
-
-> **Requirements**: Pantheon needs the Java JDK to be previously installed on your machine. To be prepared for future versions of Pantheon, it is recommended to have Java JDK 11+ installed.
 
 1. `[Download the Pantheon binaries](https://bintray.com/consensys/pegasys-repo/pantheon/_latestVersion#files).
 
@@ -70,7 +73,7 @@ Remember to have 4GB RAM if running a private network, and 8GB of RAM if running
   $ wget https://bintray.com/consensys/pegasys-repo/download_file\?file_path\=pantheon-1.1.4.tar.gz -O pantheon-1.1.4.tar.gz
   ```
 
-> `/home/bin/` is the best possible install folder for local user binaries that will be used by a single user. Other options are available such as `/opt/local/` or `/usr/local/bin/` depending on your local setup and preference. [See here for more details](https://unix.stackexchange.com/questions/36871/where-should-a-local-executable-be-placed).
+> `$HOME/bin/` and `$HOME/.local/{bin,opt,usr}` are the best possible install folders for local user binaries that will be used by a single user. Other options are available such as `/opt/local/` or `/usr/local/bin/` depending on your local setup and preference. [See here for more details](https://unix.stackexchange.com/questions/36871/where-should-a-local-executable-be-placed).
 
 2. Unpack the compressed file:
 ```
@@ -90,5 +93,51 @@ The output should return the pantheon and java jdk version.
 ```
 $ bin/pantheon --version
 pantheon/v1.1.4/linux-x86_64/oracle_openjdk-java-11
+$ bin/pantheon --help
+```
+
+### Build from Source
+
+Two options are available here; [installing and running locally](http://docs.pantheon.pegasys.tech/en/stable/Installation/Build-From-Source/#installation-on-linux-unix-mac-os-x) or [on a VM](http://docs.pantheon.pegasys.tech/en/stable/Installation/Build-From-Source/#installation-on-vm).
+This guide will focus on the local running solution.
+
+1. Clone the Pantheon codebase
 
 ```
+$ cd ~/bin/
+$ git clone --recursive https://github.com/PegaSysEng/pantheon.git
+```
+
+2. Build Pantheon
+```
+$ cd pantheon/
+$ ./gradlew build -x test
+```
+
+3. Choose distribution version and check version.
+```
+$ cd build/distributions/
+$ tar -xzf pantheon-1.1.4.tar.gz
+$ cd pantheon-1.1.4/
+$ bin/pantheon --version
+$ bin/pantheon --help
+```
+
+## Config
+
+In reality, no additional configuration is necessary for Pantheon to run correctly.
+Each different network type (including mainnet) determined by command line flags will automatically load the appropriate needed default configuration.
+
+If the config has to be changed, these options are either configured at Node or Network-level.
+
+Network-level settings are defined in the genesis file and will be loaded by very Node connected to that specific network. Whereas Node-level settings are modified either in the node configuration file, or through the command line flags.
+
+For more information on configuration, [check out the corresponding documentation](http://docs.pantheon.pegasys.tech/en/stable/Configuring-Pantheon/Network-vs-Node/).
+
+
+## Starting Pantheon
+
+After the above steps are done, you can continue using this distribution with the [regular Starting Pantheon guide](http://docs.pantheon.pegasys.tech/en/stable/Getting-Started/Starting-Pantheon/).
+
+---
+Be sure to check out our next guide on installing Pantheon on MacOS.
