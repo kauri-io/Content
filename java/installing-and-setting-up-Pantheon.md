@@ -1,5 +1,8 @@
 # Installing & Configuring the Pantheon Client on Linux
 
+Having some powerful tools in your toolbelt is essential for a Java developer, and one of the crucial tools for an Ethereum blockchain  developer is the network client. This is the piece of software that'll, among other things, actually communicate with the mainnet blockchain, with which we create private networks, and act as a peer discovery agent to see who else is participating in the network.
+The following guide is made to help you install and setup this core part of the toolbelt you'll need to programming on Ethereum with Java, and although there are some great networking clients out there- this is the only one that is written in Java.
+
 Pantheon is an open-source, Apache 2.0 licensed Ethereum client written in Java. It is mainnet compatible, has a modular architecture, and has privacy and permissioning features as well as new consensus algorithms.
 
 
