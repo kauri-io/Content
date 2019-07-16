@@ -63,19 +63,20 @@ contract DocumentRegistry {
 
 ### Mining
 
-Any interactions with the Ethereum network that update EVM state, must be triggered by a transaction that is broadcast to the blockchain.  Some example interactions include sending Ether to another account, deploying a smart contract and some smart contract function invocations.
+Any interactions with the Ethereum network that update EVM state must be triggered by a transaction that is broadcast to the blockchain.  Some example interactions include sending Ether to another account, deploying a smart contract and some smart contract function invocations.
 
-Miners are entities that secure the Ethereum network by constantly attempting to find the answer to a complex mathematical puzzle, a mechanism called Proof-of-Work consensus.
+Miners are entities that secure the Ethereum network by constantly attempting to calculate the answer to a complex mathematical puzzle, a mechanism called Proof-of-Work consensus.
 
-It is the job of miners to gather a bundle of pending transactions (from the mempool) and create a block that includes these transactions.  Once a transaction is included within a mined block, they are considered executed, and any related state changes will be applied.
+It is the job of miners to gather a bundle of pending transactions (from the mempool) and create a block that includes these transactions.  Once a transaction is included within a mined block, it is considered executed, and any related state changes will be applied.
 
 ### Gas
 
-Ether, the native cryptocurrency of Ethereum, is paid by the transaction sender to the miner that included the transaction within a block.
+Ether, the native cryptocurrency of Ethereum, is paid by the transaction sender to the miner that included the transaction within a block.  This is one of the ways that miners are incentivized.
 
 Gas is a unit of computational work within the Ethereum network, and the amount of Ether paid whilst executing a transaction depends on how much gas is consumed, along with the `gasPrice` transaction attribute, which defines how much Ether the sender will pay per gas unit consumed.  Its important to understand that different transactions will require differing amounts of gas, depending on the operation, with each transaction costing a minimum of 21,000 gas.
 
 It is also possible to define the absolute maximum amount of gas that a transaction sender is willing to consume in order to execute the transaction, by specifying the `gasLimit` attribute.
+
 ## Deploying
 
 The ability to deploy immutable smart contracts that live indefinitely is the secret sauce of Ethereum!  Smart contracts are pieces of code with functions that can be executed by any interested parties.  They live as bytecode within the network but are usually written in a language such as [Solidity](https://solidity.readthedocs.io/en) or [Vyper](https://vyper.readthedocs.io), then encoded and deployed.
