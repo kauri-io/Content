@@ -68,7 +68,7 @@ Step by step process to install / configure Pantheon client on linux/*mac/*windo
 ## Section 2: Intermediary
 
 ### Web3j: Advanced concepts
-- transaction manager (ClientTransactionManager, RawTransactionManager, FastRawTransactionManager, ReadonlyTransactionManager)
+- [Transaction Managers](https://github.com/kauri-io/Content/blob/master/java/transaction-managers.md) (ClientTransactionManager, RawTransactionManager, FastRawTransactionManager, ReadonlyTransactionManager)
 - Transaction receipt processor
 - ContractGasProvider
 
