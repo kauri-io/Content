@@ -30,16 +30,22 @@ $ mkdir /tmp/pantheon/rinkeby/
 
 Mainnet Node:
 
-`docker run pegasyseng/pantheon:latest`
+```
+$ docker run pegasyseng/pantheon:latest
+```
 
 Local test Node with Websockets and HTTP RPC services enabled:
 
-`docker run -p 8545:8545 -p 8546:8546 --mount type=bind,source=/tmp/pantheon/dev,target=/var/lib/pantheon pegasyseng/pantheon:latest --miner-enabled --miner-coinbase fe3b557e8fb62b89f4916b721be55ceb828dbd73 --rpc-http-cors-origins="all" --rpc-ws-enabled --network=dev`
+```
+$ docker run -p 8545:8545 -p 8546:8546 --mount type=bind,source=/tmp/pantheon/dev,target=/var/lib/pantheon pegasyseng/pantheon:latest --miner-enabled --miner-coinbase fe3b557e8fb62b89f4916b721be55ceb828dbd73 --rpc-http-cors-origins="all" --rpc-ws-enabled --network=dev
+```
 
 
 Rinkeby Node:
 
-`docker run -p 30303:30303 --mount type=bind,source=/tmp/pantheon/rinkeby,target=/var/lib/pantheon pegasyseng/pantheon:latest --network=rinkeby`
+```
+$ docker run -p 30303:30303 --mount type=bind,source=/tmp/pantheon/rinkeby,target=/var/lib/pantheon pegasyseng/pantheon:latest --network=rinkeby
+```
 
 > **Note:** In the above examples, `/tmp/pantheon/dev` must be replaced by the local folder where data will be stored. This must also be an existing folder.
 
