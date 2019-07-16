@@ -1,6 +1,6 @@
 # Installing & Configuring the Pantheon Client on Linux
 
-Having some powerful tools in your toolbelt is essential for a Java developer, and one of the crucial tools for an Ethereum blockchain  developer is the network client. This is the piece of software that'll, among other things, actually communicate with the mainnet blockchain, with which we create private networks, and act as a peer discovery agent to see who else is participating in the network.
+Having some powerful tools in your toolbelt is essential for a Java developer, and one of the crucial tools for an Ethereum blockchain developer is the network client. This is the piece of software that will, among other things, actually communicate data to and from the mainnet blockchain, with which we create private networks, and act as a peer discovery agent to see who else is participating in the network.
 The following guide is made to help you install and setup this core part of the toolbelt you'll need to programming on Ethereum with Java, and although there are some great networking clients out there- this is the only one that is written in Java.
 
 Pantheon is an open-source, Apache 2.0 licensed Ethereum client written in Java. It is mainnet compatible, has a modular architecture, and has privacy and permissioning features as well as new consensus algorithms.
@@ -31,14 +31,14 @@ Mainnet Node:
 
 Local test Node with Websockets and HTTP RPC services enabled:
 
-`docker run -p 8545:8545 -p 8546:8546 --mount type=bind,source=/tmp/pantheon/testnode,target=/var/lib/pantheon pegasyseng/pantheon:latest --miner-enabled --miner-coinbase fe3b557e8fb62b89f4916b721be55ceb828dbd73 --rpc-http-cors-origins="all" --rpc-ws-enabled --network=dev`
+`docker run -p 8545:8545 -p 8546:8546 --mount type=bind,source=/tmp/pantheon/dev,target=/var/lib/pantheon pegasyseng/pantheon:latest --miner-enabled --miner-coinbase fe3b557e8fb62b89f4916b721be55ceb828dbd73 --rpc-http-cors-origins="all" --rpc-ws-enabled --network=dev`
 
 
 Rinkeby Node:
 
 `docker run -p 30303:30303 --mount type=bind,source=/tmp/pantheon/rinkeby,target=/var/lib/pantheon pegasyseng/pantheon:latest --network=rinkeby`
 
-> **Note:** In the above examples, `/tmp/pantheon/testnode` must be replaced by the local folder where data will be stored. This must also be an existing folder.
+> **Note:** In the above examples, `/tmp/pantheon/dev` must be replaced by the local folder where data will be stored. This must also be an existing folder.
 
 While the node is running, another terminal window can be used to interact with the node.
 
