@@ -56,15 +56,11 @@ Reference to Eventeum for more robust and complex usecase
 Junit
 embedded Pantheon
 
-### Installing & Configuring the Pantheon Client - Felipe
+### [Installing & Configuring the Pantheon Client](installing-and-setting-up-Pantheon.md) - Felipe
 Step by step process to install / configure Pantheon client on linux/*mac/*windows
 
 
 
-### Aikos: Building a dapp in java - Abdel
-Decentralized Release Management System
-Abdelhamid Bakhta
-Building a JAVA API, release deployment and intergity checks of releases.
 
 
 ------------------------------------------
@@ -98,6 +94,11 @@ Eventeum
 ### GraphQL on Pantheon - Felipe
 graphql-java for interacting with a running Pantheon blockchain
 
+
+### Aikos: Building a dapp in java - Felipe/Abdel (pegasys)
+Decentralized Release Management System
+Abdelhamid Bakhta
+Building a JAVA API, release deployment and intergity checks of releases.
 
 ------------------------------------------
 

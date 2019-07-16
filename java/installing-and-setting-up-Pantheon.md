@@ -1,7 +1,7 @@
 # Installing & Configuring the Pantheon Client on Linux
 
 ![Toolbelt: pantheon included!](https://i.imgur.com/kxP76k9.jpg)
-Photo by jesse orrico
+Original photo by jesse orrico
 
 Having some powerful tools in your toolbelt is essential for a Java developer, and one of the crucial tools for an Ethereum blockchain developer is the network client. This is the piece of software that will, among other things, actually communicate data to and from the mainnet blockchain, with which we create private networks, and act as a peer discovery agent to see who else is participating in the network.
 The following guide is made to help you install and setup this core part of the toolbelt you'll need to programming on Ethereum with Java, and although there are some great networking clients out there- this is the only one that is written in Java.
@@ -69,7 +69,7 @@ For Source install, [skip to this section](#build-from-source).
 
 Remember to have 4GB RAM if running a private network, and 8GB of RAM if running mainnet or a public test network and at least 2TB for the full blockchain mainnet archive sync.
 
-1. `[Download the Pantheon binaries](https://bintray.com/consensys/pegasys-repo/pantheon/_latestVersion#files).
+1. Download the Pantheon binaries](https://bintray.com/consensys/pegasys-repo/pantheon/_latestVersion#files).
 
   We can use `wget` to do this.
   ```
