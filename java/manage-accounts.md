@@ -1,4 +1,4 @@
-# Manage an Ethereum account with Web3j
+# Manage an Ethereum account with Java and Web3j
 
 The Ethereum blockchain is often compared to a World Computer with a global state. The global state grows after each new block and cosists of many accounts organised in a [Merkle tree](https://en.wikipedia.org/wiki/Merkle_tree).
 
@@ -119,7 +119,7 @@ Credentials credentials = WalletUtils.loadBip39Credentials(password, mnemonic);
 
 ![](https://imgur.com/xN2Ruaj.png)
 
-By default, Web3j uses a derivation path equal to `m/44'/60'/0'/1` (read [this article](https://medium.com/myetherwallet/hd-wallets-and-derivation-paths-explained-865a643c7bf2) to understand *derivation path*). However, it is possible to open another account on a different path:
+By default, Web3j uses a derivation path equal to `m/44'/60'/0'/1` (read [this article](https://medium.com/myetherwallet/hd-wallets-and-derivation-paths-explained-865a643c7bf2) to understand _derivation path_). However, it is possible to open another account on a different path:
 
 ```java
 String password = null; // no encryption
