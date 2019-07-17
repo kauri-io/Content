@@ -3,19 +3,22 @@
 ![Toolbelt: pantheon included!](https://i.imgur.com/kxP76k9.jpg)
 Original photo by jesse orrico
 
-Having some powerful tools in your toolbelt is essential for a Java developer, and one of the crucial tools for an Ethereum blockchain developer is the network client. This is the piece of software that will, among other things, actually communicate data to and from the mainnet blockchain, with which we create private networks, and act as a peer discovery agent to see who else is participating in the network.
-The following guide is made to help you install and setup this core part of the toolbelt you'll need to programming on Ethereum with Java, and although there are some great networking clients out there- this is the only one that is written in Java.
+This is the first article of a 3-part series on Pantheon installation:
+
+1. [Linux](#)
+2. MacOS
+3. Windows
+
+
+Having some powerful tools in your toolbelt is essential for a Java developer, and one of the crucial tools for an Ethereum blockchain developer is the network client. This is the piece of software that will actually communicate data to and from the blockchain. Among other things, the client is used to: spin up nodes, act as a peer discovery agent to see who else is participating in the network and validate and send transactions. The following guide is -will help you install and setup this core part you'll need for programming on Ethereum with Java. Although there are some great networking clients out there- this is the only one that is written in Java.
 
 Pantheon is an open-source, Apache 2.0 licensed Ethereum client written in Java. It is mainnet compatible, has a modular architecture, and has privacy and permissioning features as well as new consensus algorithms.
 
-
-This is the first of a series of step-by-step guides to install and configure the Pantheon client on Linux/Mac/Windows.
-This guide will focus on Linux operating system, but many of the commands and steps can be reproduced on MacOS with some basic modifications.
-
+This is the first of a series of step-by-step guides to install and configure the Pantheon client on Linux/Mac/Windows. This guide will focus on Linux operating system, but many of the commands and steps can be reproduced on MacOS with some basic modifications.
 
 ## Before Getting started
 
-Before even installing, I would suggest anyone wanting to setup and install Pantheon for the first time to try it out without any setup using the [quickstart provided at the Pantheon documentation site](http://docs.pantheon.pegasys.tech/en/stable/Getting-Started/Run-Docker-Image/). The only requirements needed to do so, are having [Docker installed](https://docs.docker.com/v17.12/install/linux/docker-ce/ubuntu/) and using Linux or MacOS.
+Before even installing, I would suggest anyone wanting to setup and install Pantheon for the first time to try it out using the [Docker Images provided at the Pantheon documentation site](http://docs.pantheon.pegasys.tech/en/stable/Getting-Started/Run-Docker-Image/). The only requirements to do so, are having [Docker installed](https://docs.docker.com/v17.12/install/linux/docker-ce/ubuntu/) and using Linux or MacOS.
 A single docker command can be used to run a mainnet, local, rinkeby or websockets version of Pantheon in order to call [`curl`](https://curl.haxx.se/) or other tools to get or send data to the running node.
 
 These are some of the current examples:
@@ -61,7 +64,7 @@ Using `curl` to call `eth_chainId` RPC method:
 
 ## Getting started
 
-Two forms of installation are available;
+Two installation methods are available;
 
 * [Installing the binary distribution](http://docs.pantheon.pegasys.tech/en/stable/Installation/Install-Binaries/) (External documentation link)
 For binary installation, [follow along to this section](#binary-install) and skip the next.
@@ -69,11 +72,11 @@ For binary installation, [follow along to this section](#binary-install) and ski
 * [Building from source](http://docs.pantheon.pegasys.tech/en/stable/Installation/Build-From-Source/)  (External documentation link)
 For Source install, [skip to this section](#build-from-source).
 
-> **Requirements**: For both of these methods, Pantheon needs the Java JDK to be previously installed on your machine. To be prepared for future versions of Pantheon, it is recommended to have Java JDK 11+ installed.
+> **Requirements**: For both of these methods, Pantheon needs the Java JDK to be previously installed on your machine. Current versions of Pantheon require Java JDK 11+ to be installed.
 
 ### Binary install
 
-Remember to have 4GB RAM if running a private network, and 8GB of RAM if running mainnet or a public test network and at least 2TB for the full blockchain mainnet archive sync.
+Remember to have 4GB RAM if running a private network, and [review further requirements](http://docs.pantheon.pegasys.tech/en/stable/Installation/Overview/#disk-space-and-ram-requirements) for other installation types.
 
 1. Download the Pantheon binaries](https://bintray.com/consensys/pegasys-repo/pantheon/_latestVersion#files).
 
@@ -138,10 +141,9 @@ $ bin/pantheon --help
 ## Config
 
 In reality, no additional configuration is necessary for Pantheon to run correctly.
-Each different network type (including mainnet) determined by command line flags will automatically load the appropriate needed default configuration.
+Each different network type (including mainnet) determined by command line flags will automatically load the appropriate default configuration.
 
-If the config has to be changed, these options are either configured at Node or Network-level.
-
+If the settings have to be changed, these options are either configured at Node or Network-level.
 Network-level settings are defined in the genesis file and will be loaded by very Node connected to that specific network. Whereas Node-level settings are modified either in the node configuration file, or through the command line flags.
 
 For more information on configuration, [check out the corresponding documentation](http://docs.pantheon.pegasys.tech/en/stable/Configuring-Pantheon/Network-vs-Node/).
@@ -152,4 +154,5 @@ For more information on configuration, [check out the corresponding documentatio
 After the above steps are done, you can continue using this distribution with the [regular Starting Pantheon guide](http://docs.pantheon.pegasys.tech/en/stable/Getting-Started/Starting-Pantheon/).
 
 ---
+
 Be sure to check out our next guide on installing Pantheon on MacOS.
