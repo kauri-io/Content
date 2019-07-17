@@ -1,14 +1,15 @@
 # Running a Pantheon Node in Java Integration Tests
 
-The first snag you'll come up against when attempting to write integration tests for your java Ethereum application is that you'll need a running node to connect to for sending transactions.  One option to overcome this is to manually run a node yourself in the background, but this becomes hard to manage if you want to run your tests in a CI pipeline, and forcing all contributors to you codebase to run a node manually is not ideal.  Luckily theres a better way!
+The first problem you are likely to meet when attempting to write integration tests for your java Ethereum application is that you need a running node to connect to for sending transactions.  One option to overcome this is to manually run a node yourself in the background, but this becomes hard to manage if you want to run your tests in a CI pipeline, and forcing all contributors to you codebase to run a node manually is not ideal.  Luckily there's a better way!
 
-# Running a Node with Testcontainers
+## Running a Node with Testcontainers
 
-Testcontainers is a super useful library that allows you to fire up a Docker container programmatically within your test code.  Luckily, there are a number of Ethereum clients that have ready-made Docker containers uploaded to Dockerhub, which makes this task even easier.
+[Testcontainers](https://www.testcontainers.org/) is a useful library that allows you to fire up a Docker container programmatically within your test code, and there are a number of Ethereum clients that have ready-made Docker containers uploaded to Dockerhub, which makes this task easier.
 
-In this guide, I'll describe how to start and shutdown a [Pantheon](https://github.com/PegaSysEng/pantheon) node during your integration tests, so that you do not have to be concerned with starting a node manually or within your CI pipeline
+In this guide, I describe how to start and shutdown a [Pantheon](https://github.com/PegaSysEng/pantheon) node during your integration tests, so you don't have to start a node manually or within your CI pipeline
 
 ## Starting Pantheon
+
 _ClassRule_
 
 ```java
@@ -54,7 +55,7 @@ Finally, we must wait for Pantheon to fully start before running our tests.  Luc
 final Integer port = pantheonContainer.getMappedPort(8545);
 Web3j web3j = Web3j.build(new HttpService(
         "http://localhost:" + port), 500, Async.defaultExecutorService());
-        
+
 Credentials credentials = Credentials.create("0x8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63");
 ```
 
@@ -86,4 +87,3 @@ public void shutdownWeb3j() {
 ## Summary
 
 Using the Testcontainers library to start an Pantheon node is a simple and convenient way to ensure that an Ethereum node is accessible to your tests.  This will make running the tests in your continuous integration pipeline less arduous, and also make it easier for other third party contributors to run your tests on their local machine.
-
