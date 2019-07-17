@@ -1,6 +1,6 @@
 # Installing & Configuring the Pantheon Client on Linux
 
-![Toolbelt: pantheon included!](https://i.imgur.com/kxP76k9.jpg)
+![Toolbelt: pantheon included!](https://i.imgur.com/LhdU0DH.jpg)
 Original photo by jesse orrico
 
 This is the first article of a 3-part series on Pantheon installation:
