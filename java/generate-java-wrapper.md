@@ -359,8 +359,6 @@ Finally, build the Maven project by using, for example `mvn clean package` (incl
 
 ## Method 4 - web3j-gradle-plugin
 
-<!-- TODO: Checking for fix -->
-
 The last method is similar to the previous method with Maven, but using Gradle instead.
 
 ### 1. Prerequisites
@@ -393,6 +391,14 @@ Then we can configure the plugin to specify the package name and the target fold
 web3j {
     generatedPackageName = 'me.gjeanmart.tutorials.javaethereum.contracts.generated'
     generatedFilesBaseDir = "$buildDir/contracts"
+}
+```
+
+To use your system installed version of `solc` instead of the version bundled with the plugin, add the following lines to _build.gradle_:
+
+```groovy
+solidity {
+    executable = "solc"
 }
 ```
 
@@ -435,11 +441,15 @@ web3j {
     generatedPackageName = 'me.gjeanmart.tutorials.javaethereum.contracts.generated'
     generatedFilesBaseDir = "$buildDir/contracts"
 }
+
+solidity {
+    executable = "solc"
+}
 ```
 
 ### 4. Execute gradle build
 
-In this last step, we execute the build using `./gradlew tasks --all` and verify that our generated wrapper classes has been generated.
+In this last step, we execute the build using `./gradlew tasks --all` and verify that our generated wrapper classes have been generated.
 
 ![](https://imgur.com/dA0sVy1.png)
 
