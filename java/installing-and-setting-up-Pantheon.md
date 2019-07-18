@@ -26,9 +26,9 @@ These are some of the current examples:
 > For quick, temporary tests this guide uses `/tmp/pantheon/dev/`, `/tmp/pantheon/mainnet/`, `/tmp/pantheon/rinkeby/` as suitable options and will automatically be cleaned at every boot.
 
 ```
-$ mkdir /tmp/pantheon/dev/
-$ mkdir /tmp/pantheon/mainnet/
-$ mkdir /tmp/pantheon/rinkeby/
+$ mkdir -p /tmp/pantheon/dev/
+$ mkdir -p /tmp/pantheon/mainnet/
+$ mkdir -p /tmp/pantheon/rinkeby/
 ```
 
 Mainnet Node:
@@ -152,6 +152,70 @@ For more information on configuration, [check out the corresponding documentatio
 ## Starting Pantheon
 
 After the above steps are done, you can continue using this distribution with the [regular Starting Pantheon guide](http://docs.pantheon.pegasys.tech/en/stable/Getting-Started/Starting-Pantheon/).
+
+For a quick preview, this would be a simple http request on a `dev` network Node running with docker.
+```
+$ docker run -p 8545:8545 --mount type=bind,source=/tmp/pantheon/dev,target=/var/lib/pantheon pegasyseng/pantheon:latest --miner-enabled --miner-coinbase fe3b557e8fb62b89f4916b721be55ceb828dbd73 --rpc-http-cors-origins="all" --rpc-http-enabled --network=dev
+```
+
+
+This is how we would build a request calling the `eth_chainId` method.
+
+```
+String payload='{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}';
+String requestUrl="http://localhost:8545";
+sendRequest(requestUrl, payload);
+```
+
+And the actual method implementation:
+
+```
+public static String sendRequest(String requestUrl, String payload) {
+    try {
+        URL url = new URL(requestUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Accept", "application/json");
+        connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        OutputStreamWriter outputWriter = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
+
+        outputWriter.write(payload);
+        outputWriter.close();
+
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuffer jsonString = new StringBuffer();
+        String line;
+        while ((line = buffer.readLine()) != null) {
+                jsonString.append(line);
+        }
+        buffer.close();
+        
+        connection.disconnect();
+        return jsonString.toString();
+    } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+    }
+}
+```
+
+That request should return the following result:
+
+```
+{
+  "jsonrpc" : "2.0",
+  "id" : 1,
+  "result" : {
+    "startingBlock" : "0x0",
+    "currentBlock" : "0x2d0",
+    "highestBlock" : "0x66c0"
+  }
+}
+```
+
+Check out more at the [Pantheon Documentation site](http://docs.pantheon.pegasys.tech/en/stable/).
 
 ---
 
