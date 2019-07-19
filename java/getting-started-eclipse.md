@@ -1,4 +1,4 @@
-# [Getting started] Connect to an Ethereum node using Web3j and Eclipse
+# Connecting to an Ethereum client with Java, Eclipse and Web3j
 
 tags: java, ethereum, web3j, maven, eclipse, json-rpc
 
