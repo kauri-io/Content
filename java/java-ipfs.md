@@ -1,0 +1,489 @@
+# IPFS and Java
+
+tags: java, ipfs, ipns
+
+====
+
+In this article, we will learn how to interract with **[IPFS](https://ipfs.io/) (InterPlanetary File System)** in Java using the official [**java-ipfs-http-client library**](https://github.com/ipfs/java-ipfs-http-client). This library connects to an IPFS node and wraps in Java most of the operations offered by the [HTTP API](https://docs.ipfs.io/reference/api/http/).
+
+The following diagram describes Java program connected to an IPFS node via the **java-ipfs-http-client** library to the API Server. 
+
+![](https://imgur.com/RRB6chj.png)
+
+- API server (default port: 5001): Full API
+- Gateway server (default port: 8080): Read Only API (access to dat on)
+- P2P (default port: 4001): Peer-to-peer interface
+
+
+
+<br />
+
+## Prerequisite
+
+To run this tutorial, we must have the following installed:
+
+- Java programming language (> 8)
+```shell
+$ java -version
+java version "1.8.0_201"
+```
+
+- A package and dependency manager, for example [Maven](https://maven.apache.org) or [Gradle](https://gradle.org)
+
+- An IDE (Integrated development environment), for this tutorial, we use Eclipse
+
+- A running IPFS node (> 0.4.x)
+*Follow [the following article](https://kauri.io/article/b01b9b7bebcd4ebf80edf021bdd0e232/v2/installing-ipfs) to learn how to install an IPFS node (go-ipfs)*
+```shell
+$ ipfs daemon
+API server listening on /ip4/127.0.0.1/tcp/5001
+WebUI: http://127.0.0.1:5001/webui
+Gateway (readonly) server listening on /ip4/127.0.0.1/tcp/8080
+Daemon is ready
+```
+
+<br />
+
+## Dependencies
+
+To get started, it is required to import the `java-ipfs-http-client` dependency 
+
+### Maven
+
+Using Maven, we first need to configure the repository where the dependency is hosted and then import the dependency.
+
+*[pom.xml](https://github.com/gjeanmart/kauri-content/blob/master/java-ipfs/pom.xml)* 
+```xml
+  <repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.ipfs</groupId>
+      <artifactId>java-ipfs-http-client</artifactId>
+      <version>${java-ipfs-http-client.version}</version>
+    </dependency>
+  </dependencies>
+```
+
+
+### Gradle
+
+The equivalent using Gradle:
+
+```gradle
+dependencies {
+   compile "com.github.ipfs:java-ipfs-http-client:v1.2.3"
+}
+```
+
+
+
+<br />
+
+## Connect to IPFS 
+
+Once *java-ipfs-http-client* is imported, the first step of our application consists in connecting to an IPFS node.
+
+### Connect by host and port
+
+We can connect by host and port like this:
+
+```java
+IPFS ipfs = new IPFS("localhost", 5001);
+```
+
+### Connect by multiaddr
+
+It is also possible to connect by [multiaddr](https://multiformats.io/multiaddr). A multiaddr represents a self-describing network address. 
+
+> Multiaddr is a format for encoding addresses from various well-established network protocols. It is useful to write applications that future-proof their use of addresses, and allow multiple transport protocols and addresses to coexist.
+
+```java
+IPFS ipfs = new IPFS("/ip4/127.0.0.1/tcp/5001");
+```
+
+In the case the IPFS node stands behind a proxy with SSL (like [Infura](https://infura.io/)), it possible to tell *java-ipfs-http-client* to use `https` rather than `http` but a multiaddr is required.
+
+```java
+IPFS ipfs = new IPFS("/dnsaddr/ipfs.infura.io/tcp/5001/https");
+```
+
+
+<br />
+
+## Add content to IPFS
+
+When adding a file on the IPFS network, the file is uploaded to the node we are connected to and stored on the IPFS local datastore. This operation returns the unique identifier called multihash of the file (for example: `Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a`).
+
+![](https://imgur.com/F5U0gHN.png)
+
+The method `ipfs.add(NamedStreamable file): List<MerkleNode>` can be used to store content on the IPFS node *java-ipfs-http-client* is connected to. This method takes a `NamedStreamable` or a `List<NamedStreamable>` as input which has a few different implementations:
+
+- `FileWrapper` wraps a `java.io.File`
+- `InputStreamWrapper` wraps a `java.io.InputStream`
+- `ByteArrayWrapper` wraps a `byte[]`
+- `DirWrapper` wraps a `(String name, List<NamedStreamable> children)` to describe a hierarchical files structure
+
+Optional parameters can also be added to the method:
+
+- `wrap` [boolean]: Wrap files with a directory object.
+- `hashOnly` [boolean]: Only chunk and hash - do not write to the datastore. 
+
+Finaly, the method returns a list of `MerkleNode` which represents the content-addressable objects just added on the IPFS network.
+
+### File (FileWrapper)
+
+`NamedStreamable.FileWrapper` can be used to pass a `java.io.File`  to IPFS.
+
+```java
+NamedStreamable.FileWrapper file = new NamedStreamable.FileWrapper(new File("/home/gjeanmart/Documents/hello.txt"));
+MerkleNode response = ipfs.add(file).get(0);
+System.out.println("Hash (base 58): " + response.hash.toBase58());
+```
+
+
+### InputStream (InputStreamWrapper)
+
+If you are dealing with `java.io.InputStream`, `NamedStreamable.InputStreamWrapper` is what you need.
+
+```java
+NamedStreamable.InputStreamWrapper is = new NamedStreamable.InputStreamWrapper(new FileInputStream("/home/gjeanmart/Documents/hello.txt"));
+MerkleNode response = ipfs.add(is).get(0);
+System.out.println("Hash (base 58): " + response.name.get() + " - " + addResponse.hash.toBase58());
+```
+
+
+### Byte Array (ByteArrayWrapper)
+
+To store a `byte[]`, use `NamedStreamable.ByteArrayWrapper`.
+
+```java
+NamedStreamable.ByteArrayWrapper bytearray = new NamedStreamable.ByteArrayWrapper("hello".getBytes());
+MerkleNode response = ipfs.add(bytearray).get(0);
+System.out.println("Hash (base 58): " + response.hash.toBase58());
+```
+
+### Directory (DirWrapper)
+
+Finaly, to store files wrapped into folders,  use `NamedStreamable.DirWrapper` such as:
+
+```
+folder
+|-- hello.txt
+|-- hello2.txt
+```
+
+```java
+NamedStreamable.FileWrapper file1 = new NamedStreamable.FileWrapper(new File("/home/gjeanmart/Documents/hello.txt"));
+NamedStreamable.FileWrapper file2 = new NamedStreamable.FileWrapper(new File("/home/gjeanmart/Documents/hello2.txt"));
+
+NamedStreamable.DirWrapper directory = new NamedStreamable.DirWrapper("folder", Arrays.asList(file1, file2));
+List<MerkleNode> response = localIPFS.add(directory);
+response.forEach(merkleNode -> 
+    System.out.println("Hash (base 58): " + merkleNode.name.get() + " - " + merkleNode.hash.toBase58()));
+```
+
+![](https://i.imgur.com/OWF5ppv.png)
+
+
+### MerkleNode
+
+IPFS is a peer-to-peer network essentially used to share linked Objects from a giant Merkle tree. When adding one file or a directory to IPFS, this operation returns the new dedicated branch of the Merkle tree composed of one or more linked Objects. These branch is characterise in Java into a `List<MerkleNode>`.
+
+A `MerkleNode` is composed of severals information:
+- **hash** (multihash): a unique identifier of the Object within IPFS
+- **name** (optional): Name of the object (usually the folder or file name) 
+- **size** (optional): Size of the object
+- **links** (zero or more): A list of child Objects 
+
+
+### MultiHash
+
+[Multihash](https://multiformats.io/multihash/) ([github](https://github.com/multiformats/multihash)) is a self-describing hash to uniquely identify and locate an object into the IPFS Merkle tree. It is usually represented in Base58 but can also be represented in hexadecimal.
+
+A multihash is composed of different parts:
+
+![](https://i.imgur.com/NQNmMcU.png)
+
+For example (in hexadecimal)
+
+![](https://i.imgur.com/Vik04Ap.png)
+
+#### Read a Base58 hash to Multihash
+
+```java
+Multihash multihash = Multihash.fromBase58("QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o");
+```
+
+#### Read a Base16 (hexadecinal) hash to Multihash
+
+```java
+Multihash multihash = Multihash.fromHex("122046d44814b9c5af141c3aaab7c05dc5e844ead5f91f12858b21eba45768b4ce");
+```
+
+#### Convert a Multihash to Base58
+
+```java
+String hash = multihash.toBase58();
+```
+
+#### Convert a Multihash to Base16
+
+```java
+String hash = multihash.toHex();
+```
+
+#### Convert a Multihash to a byte array
+
+```java
+byte[] hash = multihash.toBytes();
+```
+
+
+<br />
+
+## Read content out of IPFS
+
+In order to read a file on the IPFS network, we need to pass the hash (multihash) of the Object we want to retrieve. Then IPFS automatically finds and retrieves the file from the closest peer hosting the file via the peer-to-peer network and a [Distributed Hash Table](https://en.wikipedia.org/wiki/Distributed_hash_table).
+
+![](https://imgur.com/ormQrVT.png)
+
+Using *java-ipfs-http-client*, there is two ways to read content from the IPFS network:
+
+###  Read content into a Byte array
+
+The most common way to find and read content from IPFS for a given hash is to use the method `ipfs.cat(<hash>): byte[]`
+
+```java
+String hash = "QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"; // Hash of a file
+Multihash multihash = Multihash.fromBase58(hash);
+byte[] content = ipfs.cat(multihash);
+System.out.println("Content of " + hash + ": " + new String(content));
+```
+
+![](https://i.imgur.com/QD6fx2R.png)
+
+It's also possible to retrieve a file from a directory structure by passing the path of the file:
+
+```java
+String hash = "QmNoQbeckeCN7FWt6mVcxTf7CAyyHUMsqtCWtMLFdsUayN"; // Hash of a directory
+Multihash multihash = Multihash.fromBase58(hash);
+byte[] content = ipfs.cat(multihash, "/hello2.txt");
+System.out.println("Content of " + hash + "/hello2.txt : " + new String(content));
+```
+
+![](https://i.imgur.com/LpwsU4P.png)
+
+###  Read content into a stream
+
+The second way consists in using the method `ipfs.catStream(<hash>): InputStream` to write the response to a Stream.
+
+```java
+String hash = "QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"; // Hash of a file
+Multihash multihash = Multihash.fromBase58(hash);
+InputStream inputStream = infuraIPFS.catStream(filePoinhashter2);
+Files.copy(inputStream, Paths.get("/home/gjeanmart/Documents/helloResult.txt"));
+```
+
+
+<br />
+
+## Pin/Unpin content 
+
+Adding a file on IPFS only creates a copy of the file in one location (your node) so the file is readable from any node unless your node goes offline. Pinning is the action to replicate a file (already available somewhere) to our local node. 
+
+This method can be very useful to bring speed and high availibility to a file.
+
+![](https://imgur.com/nkf28QP.png)
+
+### Pin
+
+The method `ipfs.pin.add(<hash>): void` is available to pin a file by hash on our node.
+
+```java
+String hash = "QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"; // Hash of a file
+Multihash multihash = Multihash.fromBase58(hash);
+ipfs.pin.add(multihash)
+```
+
+*Pinning an Object linked to others Objects (children) such as a directory is automatically pinning all th subsequent children.*
+
+### Unpin
+
+The reverse operation is also possible with the method  `ipfs.pin.rm(<hash>, <recursive>): void` which removes a file from our node.
+
+```java
+String hash = "QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"; // Hash of a file
+Multihash multihash = Multihash.fromBase58(hash);
+ipfs.pin.rm(multihash)
+```
+
+The flag `recursive [boolean]` can be used to remove (unpin) all the subsequent linked Objects to the Object identified by the hash (default true).
+
+
+### List
+
+Finaly, it is possible to list all the content hosted on our local node with the method `ipfs.pin.ls(PinType): Map<Multihash, Object> `
+
+```java
+Map<Multihash, Object> list = ipfs.pin.ls(PinType.all);
+list.forEach((hash, type) 
+    -> System.out.println("Multihash: " + hash + " - type: " + type));
+```
+
+![](https://i.imgur.com/bNBgYtk.png)
+
+You can request different types of pinned keys to list:
+- `all`: All Objects
+- `direct`: Objects pinned directly
+- `indirect`: Objects referenced by recursive pins
+- `recursive`: Roots of recursive pins (like direct, but also pin the children of the object)
+
+
+
+<br />
+
+## IPNS
+
+IPNS stands for InterPlanetary Naning System and is a global mutable namespace accessible from anywhere on the IPFS network to assign a name against a hash (similar to a DNS server assigning a name against a server IP). This can be useful when we want to share a link of a mutable object.
+
+Let's say for example, we want to host an article on IPFS, the article (version 1) will have a unique hash, but if we decide to update this article and host it on IPFS, the hash will be competely different and we will have to reshare the new hash. IPNS can be used to prevent this issue, it is possible to link a name to a hash and update the hash a much as we want so we only have to assign the hash of the article to a name, and share the name, if we update the article, we only have to update the name resolution to point to the latest version.
+
+*Note: IPNS is still very much work in progress and is very slow in practice, it will take approxmitly 1-2 min to publish a name.*
+
+### Keys
+
+IPNS is a based on a distributed Public Key Infrastructure (PKI). So to get started, it is required to have a keypair available on our IPFS node.
+
+A Keypair can be used to store one key/value pair where key represents the "name" and "value" the hash to resolve.
+
+#### Generate a key
+
+First of all, we ned to generate a keypair using the method `ipfs.key.gen(name, type, size): KeyInfo`.
+
+```java
+String keyName ="myarticle";
+Optional<String> keyType = Optional.of("rsa");
+Optional<String> keySize = Optional.of("2048");
+			
+KeyInfo key = ipfs.key.gen(keyName, keyType, keySize);
+System.out.println("key name: " + key.name);
+System.out.println("key.hash: " + key.id);
+```
+
+![](https://i.imgur.com/KQUKhk2.png)
+
+The following function returns a `KeyInfo` object composed of the name and the id (multihash) of the key representing the name which can be used to resolve a hash. 
+
+#### Delete a key
+
+Alternatively, it is possible to remove a key using `ipfs.key.rm(keyName): void`.
+
+```java
+ipfs.key.rm(keyName);
+```            
+
+#### List all keys
+
+The method `ipfs.key.list()` allows to list all keys available on our node.
+
+```java
+List<KeyInfo> keys = ipfs.key.list();
+keys.forEach(key -> 
+    System.out.println("keyInfo: name=" + key.name + ", hash=" + key.id));			
+```
+
+![](https://i.imgur.com/3TefgpL.png)
+
+The `self` key represents the default key generated when we launch IPFS for the first time.
+
+
+### Publish
+
+Once we have a special keypair available, we can use it to publish a hash against it using the method `ipfs.name.publish(hash, keyName)`:
+
+```java
+String hash = "QmWfVY9y3xjsixTgbd9AorQxH7VtMpzfx2HaWtsoUYecaX" // Hash of "hello
+Map response = ipfs.name.publish(hash, Optional.of(keyName));
+System.out.println("publish(hash="+hash+", key="+keyName+"): " + response);
+```      
+
+![](https://i.imgur.com/vRIeeWF.png)
+
+*Note: this operation is particularly slow and can take up to two minutes to execute*
+
+
+### Resolve
+
+Just like a DNS, reading an Object from an IPNS name is a two step process:
+1. Resolve the hash against the name
+2. Read the content from the hash
+
+```java
+String resolveResponse = localIPFS.name.resolve(key.id);
+System.out.println("resolve(key="+key.id+"): " + resolveResponse);
+			
+byte[] content = localIPFS.cat(Multihash.fromBase58(resolveResponse.substring(6)));
+System.out.println("Content: " + new String(content));
+```
+
+![](https://i.imgur.com/AtD5wxv.png)
+
+
+<br />
+
+## Other operations
+
+The *java-ipfs-http-client* library wraps many other API operations available on the node.
+
+### Node version
+
+If you'd like to get the Node version you are connected to, the library provides the method `ipfs.version(): String`
+
+```java
+String version = ipfs.version();
+System.out.println("Node version: " + version);
+```
+
+![](https://i.imgur.com/OCwJtk2.png)
+
+
+### Node peers 
+
+To retrieve the list of Peers connected to your local node:
+
+
+```java
+List<Multihash> peers = ipfs.refs.local()
+peers.refs.local().forEach(multihash ->
+    System.out.println("Peer ID: " + multihash));
+```
+
+![](https://i.imgur.com/vuRKfVF.png)
+
+
+<br />
+
+## Conclusion
+
+In conclusion, we can see that despite IPFS nodes being written in Go and JavaScript, the Java library *java-ipfs-http-client* provides an easy-to-use wraper to the HTTP API to use most of the features offered by IPFS in Java.
+
+
+
+<br />
+
+## References
+
+- [GitHub Repository](https://github.com/gjeanmart/kauri-content/tree/master/java-ipfs)
+- [API Server documentation](https://docs.ipfs.io/reference/api/http/)
+- [Introduction to IPFS (by Consensys)](https://medium.com/@ConsenSys/an-introduction-to-ipfs-9bba4860abd0)
+- [IPFS Introduction by Example (by Christian Lundkvist)](http://whatdoesthequantsay.com/2015/09/13/ipfs-introduction-by-example)
+- [The definitive guide to publishing content on the decentralized web (by Textile)](https://medium.com/textileio/the-definitive-guide-to-publishing-content-on-ipfs-ipns-dfe751f1e8d0)
+
+
+
