@@ -4,14 +4,14 @@ tags: java, ipfs, ipns
 
 ====
 
-In this article, we will learn how to interract with **[IPFS](https://ipfs.io/) (InterPlanetary File System)** in Java using the official [**java-ipfs-http-client library**](https://github.com/ipfs/java-ipfs-http-client). This library connects to an IPFS node and wraps in Java most of the operations offered by the [HTTP API](https://docs.ipfs.io/reference/api/http/).
+In this article, we will learn how to interract with **[IPFS](https://ipfs.io/) (InterPlanetary File System)** in Java using the official [**java-ipfs-http-client library**](https://github.com/ipfs/java-ipfs-http-client). This library connects to an IPFS node and wraps most of the operations offered by the [HTTP API](https://docs.ipfs.io/reference/api/http/).
 
 The following diagram describes Java program connected to an IPFS node via the **java-ipfs-http-client** library to the API Server. 
 
 ![](https://imgur.com/RRB6chj.png)
 
 - API server (default port: 5001): Full API
-- Gateway server (default port: 8080): Read Only API (access to dat on)
+- Gateway server (default port: 8080): Read Only API (access to data only)
 - P2P (default port: 4001): Peer-to-peer interface
 
 
