@@ -96,7 +96,7 @@ Enterprise usecase?
 
 Example of Kauri protocol SDK implementation
 
-### IPFS Java
+### [IPFS Java](java-ipfs.md) - Greg
 
 ### Mahuta: A Java indexation/caching layer for IPFS
 
