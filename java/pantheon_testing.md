@@ -29,7 +29,7 @@ public static final GenericContainer pantheonContainer =
 
 Its preferential and more performant to start Pantheon once before all tests execute, rather than before every test, which is why the container is static with the `@ClassRule` JUnit annotation.
 
-A `GenericContainer` is instantiated, which takes a docker image name as an argument.  We're using the 1.1.3 version of Pantheon in this instance.  The standard default ports for http and websocket RPC are exposed with the `withExposedPorts(..)` method.
+A `GenericContainer` is instantiated, which takes a docker image name as an argument.  We're using the 1.1.3 version of Pantheon in this instance.  The `withExposedPorts(..)` method exposes the standard default ports for HTTP and websocket RPC.
 
 A number of runtime command arguments are set, which configure the node in a way that is suitable for testing:
 
@@ -37,9 +37,9 @@ A number of runtime command arguments are set, which configure the node in a way
 
 **--miner-coinbase:** Set the coinbase to be an account that you have a private key for.  This is mandatory when mining is enabled, so here we set the account to be the well known Pantheon dev account, which is automatically loaded with Ether when in dev mode.
 
-**--rpc-http-enabled:** Enable the http RPC endpoint, so Web3j can connect.
+**--rpc-http-enabled:** Enable the HTTP RPC endpoint, so Web3j can connect.
 
-**--rpc-ws-enabled:** Enable the websocket RPC endpoint.  This is not required if only http is being tested.
+**--rpc-ws-enabled:** Enable the websocket RPC endpoint.  This is not required if you are only testing HTTP.
 
 **--network=dev:** The network type is set to `dev`.  This starts a private development node, with a pre-defined configuration to make mining very easy, to be easier on CPU usage.
 
