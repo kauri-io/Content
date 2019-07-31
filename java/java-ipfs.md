@@ -43,7 +43,7 @@ To get started, it is required to import the `java-ipfs-http-client` dependency
 
 ### Maven
 
-Using Maven, we first need to configure the repository where the dependency is hosted and then import the dependency.
+Using Maven, we first need to configure a few properties, the repository where the dependency is hosted and then import the dependency.
 
 *[pom.xml](https://github.com/gjeanmart/kauri-content/blob/master/java-ipfs/pom.xml)*
 ```xml
@@ -117,11 +117,11 @@ IPFS ipfs = new IPFS("/dnsaddr/ipfs.infura.io/tcp/5001/https");
 
 ## Add content to IPFS
 
-When adding a file on the IPFS network, the file is uploaded to the node we are connected to and stored on the IPFS local datastore. This operation returns the unique identifier called multihash of the file (for example: `Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a`).
+When adding a file on the IPFS network, the file is uploaded to the IPF node we are connected to and stored on it local datastore. This operation returns a unique identifier of the file called multihash (for example: `Qmaisz6NMhDB51cCvNWa1GMS7LU1pAxdF4Ld6Ft9kZEP2a`).
 
 ![](https://imgur.com/F5U0gHN.png)
 
-The method `ipfs.add(NamedStreamable file): List<MerkleNode>` can be used to store content on the IPFS node *java-ipfs-http-client* is connected to. This method takes a `NamedStreamable` or a `List<NamedStreamable>` as input which has a few different implementations:
+The method `ipfs.add(NamedStreamable file): List<MerkleNode>` can be used to store content on the IPFS node we are connected to. This method takes a `NamedStreamable` or a `List<NamedStreamable>` as input. `NamedStreamable` has a few different implementations:
 
 - `FileWrapper` wraps a `java.io.File`
 - `InputStreamWrapper` wraps a `java.io.InputStream`
@@ -130,7 +130,7 @@ The method `ipfs.add(NamedStreamable file): List<MerkleNode>` can be used to sto
 
 Optional parameters can also be added to the method:
 
-- `wrap` [boolean]: Wrap files with a directory object.
+- `wrap` [boolean]: Wrap files into a directory.
 - `hashOnly` [boolean]: Only chunk and hash - do not write to the datastore.
 
 Finaly, the method returns a list of `MerkleNode` which represents the content-addressable objects just added on the IPFS network.
@@ -192,7 +192,7 @@ response.forEach(merkleNode ->
 
 ### MerkleNode
 
-IPFS is a peer-to-peer network essentially used to share linked Objects from a giant Merkle tree. When adding one file or a directory to IPFS, this operation returns the new dedicated branch of the Merkle tree composed of one or more linked Objects. These branch is characterise in Java into a `List<MerkleNode>`.
+IPFS is a peer-to-peer network essentially used to share linked Objects from a giant Merkle tree. When adding one file or a directory to IPFS, this operation returns the new dedicated branch of the Merkle tree composed of one or more linked Objects. These branch is characterised in Java into a `List<MerkleNode>`.
 
 A `MerkleNode` is composed of severals information:
 - **hash** (multihash): a unique identifier of the Object within IPFS
@@ -267,7 +267,7 @@ System.out.println("Content of " + hash + ": " + new String(content));
 
 ![](https://i.imgur.com/QD6fx2R.png)
 
-It's also possible to retrieve a file from a directory structure by passing the path of the file:
+It's also possible to retrieve a file from a directory structure by passing the path of the file like this  `ipfs.cat(<hash>, <path>): byte[]`:
 
 ```java
 String hash = "QmNoQbeckeCN7FWt6mVcxTf7CAyyHUMsqtCWtMLFdsUayN"; // Hash of a directory
@@ -280,7 +280,7 @@ System.out.println("Content of " + hash + "/hello2.txt : " + new String(content)
 
 ###  Read content into a stream
 
-The second way consists in using the method `ipfs.catStream(<hash>): InputStream` to write the response to a Stream.
+The second way consists in using the method `ipfs.catStream(<hash>): InputStream` to write the response in a Stream.
 
 ```java
 String hash = "QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"; // Hash of a file
@@ -294,7 +294,7 @@ Files.copy(inputStream, Paths.get("/home/gjeanmart/Documents/helloResult.txt"));
 
 ## Pin/Unpin content
 
-Adding a file on IPFS only creates a copy of the file in one location (your node) so the file is readable from any node unless your node goes offline. Pinning is the action to replicate a file (already available somewhere) to our local node.
+Adding a file on IPFS only creates a copy of the file in one location (your node) so the file is readable from any node unless your node goes offline. Pinning is the action to replicate a file (already available somewhere on the network) to our local node.
 
 This method can be very useful to bring speed and high availibility to a file.
 
@@ -302,7 +302,7 @@ This method can be very useful to bring speed and high availibility to a file.
 
 ### Pin
 
-The method `ipfs.pin.add(<hash>): void` is available to pin a file by hash on our node.
+The method `ipfs.pin.add(<hash>): void` offers to pin a file by hash on our node.
 
 ```java
 String hash = "QmT78zSuBmuS4z925WZfrqQ1qHaJ56DQaTfyMUF7F8ff5o"; // Hash of a file
@@ -327,7 +327,7 @@ The flag `recursive [boolean]` can be used to remove (unpin) all the subsequent 
 
 ### List
 
-Finaly, it is possible to list all the content hosted on our local node with the method `ipfs.pin.ls(PinType): Map<Multihash, Object> `
+Finaly, it is possible to list all the content hosted on our local node with the method `ipfs.pin.ls(<pinType>): Map<Multihash, Object> `
 
 ```java
 Map<Multihash, Object> list = ipfs.pin.ls(PinType.all);
@@ -349,9 +349,9 @@ You can request different types of pinned keys to list:
 
 ## IPNS
 
-IPNS stands for InterPlanetary Naning System and is a global mutable namespace accessible from anywhere on the IPFS network to assign a name against a hash (similar to a DNS server assigning a name against a server IP). This can be useful when we want to share a link of a mutable object.
+IPNS stands for InterPlanetary Naning System and represents a global mutable namespace accessible from anywhere on the IPFS network to assign a name against a hash (similar to a DNS server assigning a name against a server IP). This can be useful when we want to share a link of a mutable object.
 
-Let's say for example, we want to host an article on IPFS, the article (version 1) will have a unique hash, but if we decide to update this article and host it on IPFS, the hash will be competely different and we will have to reshare the new hash. IPNS can be used to prevent this issue, it is possible to link a name to a hash and update the hash a much as we want so we only have to assign the hash of the article to a name, and share the name, if we update the article, we only have to update the name resolution to point to the latest version.
+Let's say for example we want to host an article on IPFS, the article (version 1) will have a unique hash, but if we decide to update this article and host it on IPFS, the hash will be competely different and we will have to reshare the new hash. IPNS can be used to prevent this issue, it is possible to link a name to a hash and update the hash a much as we want so we only have to reassign the hash of the article to a name, and share the name, if we update the article, we only have to update the name resolution to point to the latest version.
 
 *Note: IPNS is still very much work in progress and is very slow in practice, it will take approxmitly 1-2 min to publish a name.*
 
@@ -359,11 +359,11 @@ Let's say for example, we want to host an article on IPFS, the article (version 
 
 IPNS is a based on a distributed Public Key Infrastructure (PKI). So to get started, it is required to have a keypair available on our IPFS node.
 
-A Keypair can be used to store one key/value pair where key represents the "name" and "value" the hash to resolve.
+A Keypair can be used to store one key/value pair where the key represents the "name" and "value" the hash to resolve.
 
 #### Generate a key
 
-First of all, we ned to generate a keypair using the method `ipfs.key.gen(name, type, size): KeyInfo`.
+First of all, we need to generate a keypair using the method `ipfs.key.gen(name, type, size): KeyInfo`.
 
 ```java
 String keyName ="myarticle";
@@ -404,7 +404,7 @@ The `self` key represents the default key generated when we launch IPFS for the 
 
 ### Publish
 
-Once we have a special keypair available, we can use it to publish a hash against it using the method `ipfs.name.publish(hash, keyName)`:
+Once we have a exclusive keypair available, we can use it to publish a hash against it using the method `ipfs.name.publish(hash, keyName)`:
 
 ```java
 String hash = "QmWfVY9y3xjsixTgbd9AorQxH7VtMpzfx2HaWtsoUYecaX" // Hash of "hello
@@ -419,15 +419,15 @@ System.out.println("publish(hash="+hash+", key="+keyName+"): " + response);
 
 ### Resolve
 
-Just like a DNS, reading an Object from an IPNS name is a two step process:
+Just like a DNS, reading an Object from an IPNS name is a two steps process:
 1. Resolve the hash against the name
 2. Read the content from the hash
 
 ```java
-String resolveResponse = localIPFS.name.resolve(key.id);
+String resolveResponse = ipfs.name.resolve(key.id);
 System.out.println("resolve(key="+key.id+"): " + resolveResponse);
 
-byte[] content = localIPFS.cat(Multihash.fromBase58(resolveResponse.substring(6)));
+byte[] content = ipfs.cat(Multihash.fromBase58(resolveResponse.substring(6)));
 System.out.println("Content: " + new String(content));
 ```
 
