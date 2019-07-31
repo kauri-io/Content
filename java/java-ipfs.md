@@ -1,4 +1,4 @@
-# IPFS and Java
+# Managing storage in a Java application with IPFS
 
 tags: java, ipfs, ipns
 
