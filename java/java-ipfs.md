@@ -6,7 +6,7 @@ tags: java, ipfs, ipns
 
 In this article, we will learn how to interract with **[IPFS](https://ipfs.io/) (InterPlanetary File System)** in Java using the official [**java-ipfs-http-client library**](https://github.com/ipfs/java-ipfs-http-client). This library connects to an IPFS node and wraps most of the operations offered by the [HTTP API](https://docs.ipfs.io/reference/api/http/).
 
-The following diagram describes Java program connected to an IPFS node via the **java-ipfs-http-client** library to the API Server. 
+The following diagram describes Java program connected to an IPFS node via the **java-ipfs-http-client** library to the API Server.
 
 ![](https://imgur.com/RRB6chj.png)
 
@@ -34,26 +34,25 @@ java version "1.8.0_201"
 
 - A running IPFS node (> 0.4.x)
 *Follow [the following article](https://kauri.io/article/b01b9b7bebcd4ebf80edf021bdd0e232/v2/installing-ipfs) to learn how to install an IPFS node (go-ipfs)*
-```shell
-$ ipfs daemon
-API server listening on /ip4/127.0.0.1/tcp/5001
-WebUI: http://127.0.0.1:5001/webui
-Gateway (readonly) server listening on /ip4/127.0.0.1/tcp/8080
-Daemon is ready
-```
 
 <br />
 
 ## Dependencies
 
-To get started, it is required to import the `java-ipfs-http-client` dependency 
+To get started, it is required to import the `java-ipfs-http-client` dependency
 
 ### Maven
 
 Using Maven, we first need to configure the repository where the dependency is hosted and then import the dependency.
 
-*[pom.xml](https://github.com/gjeanmart/kauri-content/blob/master/java-ipfs/pom.xml)* 
+*[pom.xml](https://github.com/gjeanmart/kauri-content/blob/master/java-ipfs/pom.xml)*
 ```xml
+  <properties>
+     <maven.compiler.target>1.8</maven.compiler.target>
+     <maven.compiler.source>1.8</maven.compiler.source>
+     <java-ipfs-http-client.version>v1.2.3</java-ipfs-http-client.version>
+   </properties>
+
   <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -85,7 +84,7 @@ dependencies {
 
 <br />
 
-## Connect to IPFS 
+## Connect to IPFS
 
 Once *java-ipfs-http-client* is imported, the first step of our application consists in connecting to an IPFS node.
 
@@ -99,7 +98,7 @@ IPFS ipfs = new IPFS("localhost", 5001);
 
 ### Connect by multiaddr
 
-It is also possible to connect by [multiaddr](https://multiformats.io/multiaddr). A multiaddr represents a self-describing network address. 
+It is also possible to connect by [multiaddr](https://multiformats.io/multiaddr). A multiaddr represents a self-describing network address.
 
 > Multiaddr is a format for encoding addresses from various well-established network protocols. It is useful to write applications that future-proof their use of addresses, and allow multiple transport protocols and addresses to coexist.
 
@@ -132,7 +131,7 @@ The method `ipfs.add(NamedStreamable file): List<MerkleNode>` can be used to sto
 Optional parameters can also be added to the method:
 
 - `wrap` [boolean]: Wrap files with a directory object.
-- `hashOnly` [boolean]: Only chunk and hash - do not write to the datastore. 
+- `hashOnly` [boolean]: Only chunk and hash - do not write to the datastore.
 
 Finaly, the method returns a list of `MerkleNode` which represents the content-addressable objects just added on the IPFS network.
 
@@ -184,7 +183,7 @@ NamedStreamable.FileWrapper file2 = new NamedStreamable.FileWrapper(new File("/h
 
 NamedStreamable.DirWrapper directory = new NamedStreamable.DirWrapper("folder", Arrays.asList(file1, file2));
 List<MerkleNode> response = localIPFS.add(directory);
-response.forEach(merkleNode -> 
+response.forEach(merkleNode ->
     System.out.println("Hash (base 58): " + merkleNode.name.get() + " - " + merkleNode.hash.toBase58()));
 ```
 
@@ -197,9 +196,9 @@ IPFS is a peer-to-peer network essentially used to share linked Objects from a g
 
 A `MerkleNode` is composed of severals information:
 - **hash** (multihash): a unique identifier of the Object within IPFS
-- **name** (optional): Name of the object (usually the folder or file name) 
+- **name** (optional): Name of the object (usually the folder or file name)
 - **size** (optional): Size of the object
-- **links** (zero or more): A list of child Objects 
+- **links** (zero or more): A list of child Objects
 
 
 ### MultiHash
@@ -293,9 +292,9 @@ Files.copy(inputStream, Paths.get("/home/gjeanmart/Documents/helloResult.txt"));
 
 <br />
 
-## Pin/Unpin content 
+## Pin/Unpin content
 
-Adding a file on IPFS only creates a copy of the file in one location (your node) so the file is readable from any node unless your node goes offline. Pinning is the action to replicate a file (already available somewhere) to our local node. 
+Adding a file on IPFS only creates a copy of the file in one location (your node) so the file is readable from any node unless your node goes offline. Pinning is the action to replicate a file (already available somewhere) to our local node.
 
 This method can be very useful to bring speed and high availibility to a file.
 
@@ -332,7 +331,7 @@ Finaly, it is possible to list all the content hosted on our local node with the
 
 ```java
 Map<Multihash, Object> list = ipfs.pin.ls(PinType.all);
-list.forEach((hash, type) 
+list.forEach((hash, type)
     -> System.out.println("Multihash: " + hash + " - type: " + type));
 ```
 
@@ -370,7 +369,7 @@ First of all, we ned to generate a keypair using the method `ipfs.key.gen(name, 
 String keyName ="myarticle";
 Optional<String> keyType = Optional.of("rsa");
 Optional<String> keySize = Optional.of("2048");
-			
+
 KeyInfo key = ipfs.key.gen(keyName, keyType, keySize);
 System.out.println("key name: " + key.name);
 System.out.println("key.hash: " + key.id);
@@ -378,7 +377,7 @@ System.out.println("key.hash: " + key.id);
 
 ![](https://i.imgur.com/KQUKhk2.png)
 
-The following function returns a `KeyInfo` object composed of the name and the id (multihash) of the key representing the name which can be used to resolve a hash. 
+The following function returns a `KeyInfo` object composed of the name and the id (multihash) of the key representing the name which can be used to resolve a hash.
 
 #### Delete a key
 
@@ -394,7 +393,7 @@ The method `ipfs.key.list()` allows to list all keys available on our node.
 
 ```java
 List<KeyInfo> keys = ipfs.key.list();
-keys.forEach(key -> 
+keys.forEach(key ->
     System.out.println("keyInfo: name=" + key.name + ", hash=" + key.id));			
 ```
 
@@ -427,7 +426,7 @@ Just like a DNS, reading an Object from an IPNS name is a two step process:
 ```java
 String resolveResponse = localIPFS.name.resolve(key.id);
 System.out.println("resolve(key="+key.id+"): " + resolveResponse);
-			
+
 byte[] content = localIPFS.cat(Multihash.fromBase58(resolveResponse.substring(6)));
 System.out.println("Content: " + new String(content));
 ```
@@ -453,7 +452,7 @@ System.out.println("Node version: " + version);
 ![](https://i.imgur.com/OCwJtk2.png)
 
 
-### Node peers 
+### Node peers
 
 To retrieve the list of Peers connected to your local node:
 
@@ -484,6 +483,3 @@ In conclusion, we can see that despite IPFS nodes being written in Go and JavaSc
 - [Introduction to IPFS (by Consensys)](https://medium.com/@ConsenSys/an-introduction-to-ipfs-9bba4860abd0)
 - [IPFS Introduction by Example (by Christian Lundkvist)](http://whatdoesthequantsay.com/2015/09/13/ipfs-introduction-by-example)
 - [The definitive guide to publishing content on the decentralized web (by Textile)](https://medium.com/textileio/the-definitive-guide-to-publishing-content-on-ipfs-ipns-dfe751f1e8d0)
-
-
-
