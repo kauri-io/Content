@@ -1,6 +1,6 @@
 # Running a Pantheon Node in Java Integration Tests
 
-The first problem you are likely to meet when attempting to write integration tests for your java Ethereum application is that you need a running node to connect to for sending transactions.  One option to overcome this is to manually run a node yourself in the background, but this becomes hard to manage if you want to run your tests in a CI pipeline, and forcing all contributors to you codebase to run a node manually is not ideal.  Luckily there's a better way!
+The first problem you are likely to meet when attempting to write integration tests for your Java Ethereum application is that you need a running node to connect to for sending transactions.  One option to overcome this is to manually run a node yourself in the background, but this becomes hard to manage if you want to run your tests in a CI pipeline, and forcing all contributors to you codebase to run a node manually is not ideal.  Luckily there's a better way!
 
 ## Running a Node with Testcontainers
 
@@ -10,7 +10,7 @@ In this guide, I describe how to start and shutdown a [Pantheon](https://github.
 
 ## Including the Testcontainers library
 
-The Testcontainers library dependency can be obtained via maven central, so to include the library, add the following dependency to your `pom.xml` (or equivalent in Gradle):
+We get the Testcontainers library dependency via maven central, so to include the library, add the following dependency to your _pom.xml_ (or equivalent in Gradle):
 
 ```xml
 <dependency>
@@ -20,9 +20,12 @@ The Testcontainers library dependency can be obtained via maven central, so to i
     <scope>test</scope>
 </dependency>
 ```
+
 ## Starting Pantheon
 
-Its preferential and more performant to start Pantheon once before all tests execute, rather than before every test.  To acheive this behaviour we will instantiate a static `GenericContainer` annotated with a `@ClassRule` JUnit annotation.
+It's better and more performant to start Pantheon once, before all tests execute, rather than before every test.  To achieve this behaviour we instantiate a static `GenericContainer` annotated with a `@ClassRule` JUnit annotation.
+
+Create a new class in the project _test_ folder, and add the code below to it:
 
 _ClassRule_
 
@@ -41,31 +44,21 @@ public static final GenericContainer pantheonContainer =
 }
 ```
 
-<<<<<<< HEAD
-Its preferential and more performant to start Pantheon once before all tests execute, rather than before every test, which is why the container is static with the `@ClassRule` JUnit annotation.
+When you run the code, a `GenericContainer` is instantiated, with a docker image name as an argument.  We're using the 1.1.3 version of Pantheon in this instance, we expose the standard default ports for HTTP and websocket RPC with the `withExposedPorts(..)` method.
 
-A `GenericContainer` is instantiated, which takes a docker image name as an argument.  We're using the 1.1.3 version of Pantheon in this instance.  The `withExposedPorts(..)` method exposes the standard default ports for HTTP and websocket RPC.
-=======
-The `GenericContainer` is instantiated, with a docker image name as an argument.  We're using the 1.1.3 version of Pantheon in this instance.  The standard default ports for http and websocket RPC are exposed with the `withExposedPorts(..)` method.
->>>>>>> 8a208eefed4911ae3ffd3ff085f348677e25b06d
+We set a number of runtime command arguments which configure the node in a way that is suitable for testing the following:
 
-A number of runtime command arguments are set, which configure the node in a way that is suitable for testing:
+-   `--miner-enabled`: Enables mining so that the transactions we send within our tests are included within blocks.
+-   `--miner-coinbase`: Set the coinbase to an account that you have a private key for.  This is mandatory when mining is enabled. Here we set the account to be the well known Pantheon dev account, which is automatically loaded with Ether when in dev mode.
+-   `--rpc-http-enabled`:Enable the HTTP RPC endpoint, so Web3j can connect.
+-   `--rpc-ws-enabled`: Enable the websocket RPC endpoint.  This is not required if you are only testing HTTP.
+-   `--network=dev`: Sets the network type to `dev`.  This starts a private development node, with a pre-defined configuration to make mining easier on CPU usage.
 
-**--miner-enabled:** We need to enable mining so that the transactions that we send within our tests are actually included within blocks.
-
-**--miner-coinbase:** Set the coinbase to be an account that you have a private key for.  This is mandatory when mining is enabled, so here we set the account to be the well known Pantheon dev account, which is automatically loaded with Ether when in dev mode.
-
-**--rpc-http-enabled:** Enable the HTTP RPC endpoint, so Web3j can connect.
-
-**--rpc-ws-enabled:** Enable the websocket RPC endpoint.  This is not required if you are only testing HTTP.
-
-**--network=dev:** The network type is set to `dev`.  This starts a private development node, with a pre-defined configuration to make mining very easy, to be easier on CPU usage.
-
-For a full list of all available Pantheon commands, see the official documentation [here](https://docs.pantheon.pegasys.tech/en/stable/Reference/Pantheon-CLI-Syntax/).
+For a full list of all available Pantheon commands, [read the official documentation](https://docs.pantheon.pegasys.tech/en/stable/Reference/Pantheon-CLI-Syntax/).
 
 ### Waiting for Pantheon to Start
 
-Finally, we must wait for Pantheon to fully start before running our tests.  Luckily, Pantheon comes autoconfigured with a liveness endpoint out of the box, so testcontainers is instructed to automatically poll the `/liveness` endpoint on port `8545` until a 200 response is returned.  We can then be confident that Pantheon is running correctly.
+We must wait for Pantheon to fully start before running our tests.  Pantheon comes autoconfigured with a liveness endpoint, so testcontainers automatically polls the `/liveness` endpoint on port `8545` until it returns a 200 response.  We can then be confident that Pantheon is running.
 
 ## Connecting to the Pantheon container using Web3j
 
@@ -109,4 +102,3 @@ public void shutdownWeb3j() {
 Using the Testcontainers library to start an Pantheon node is a simple and convenient way to ensure that an Ethereum node is accessible to your tests.  This makes running the tests in your continuous integration pipeline less arduous, and also means that other third party contributors can run your tests on their local machine more easily.
 
 An example test class demonstrating the code described in this tutorial can be found [here](https://github.com/kauri-io/java-web3j-pantheon-testing/blob/master/src/test/java/io/kauri/java/test/TestWeb3jPantheon.java), from the [java-web3j-pantheon-testing](https://github.com/kauri-io/java-web3j-pantheon-testing) project.
-
