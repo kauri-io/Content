@@ -8,7 +8,21 @@ The first problem you are likely to meet when attempting to write integration te
 
 In this guide, I describe how to start and shutdown a [Pantheon](https://github.com/PegaSysEng/pantheon) node during your integration tests, so you don't have to start a node manually or within your CI pipeline
 
+## Including the Testcontainers library
+
+The Testcontainers library dependency can be obtained via maven central, so to include the library, add the following dependency to your `pom.xml` (or equivalent in Gradle):
+
+```xml
+<dependency>
+    <groupId>org.testcontainers</groupId>
+    <artifactId>testcontainers</artifactId>
+    <version>1.12.0</version>
+    <scope>test</scope>
+</dependency>
+```
 ## Starting Pantheon
+
+Its preferential and more performant to start Pantheon once before all tests execute, rather than before every test.  To acheive this behaviour we will instantiate a static `GenericContainer` annotated with a `@ClassRule` JUnit annotation.
 
 _ClassRule_
 
@@ -27,9 +41,13 @@ public static final GenericContainer pantheonContainer =
 }
 ```
 
+<<<<<<< HEAD
 Its preferential and more performant to start Pantheon once before all tests execute, rather than before every test, which is why the container is static with the `@ClassRule` JUnit annotation.
 
 A `GenericContainer` is instantiated, which takes a docker image name as an argument.  We're using the 1.1.3 version of Pantheon in this instance.  The `withExposedPorts(..)` method exposes the standard default ports for HTTP and websocket RPC.
+=======
+The `GenericContainer` is instantiated, with a docker image name as an argument.  We're using the 1.1.3 version of Pantheon in this instance.  The standard default ports for http and websocket RPC are exposed with the `withExposedPorts(..)` method.
+>>>>>>> 8a208eefed4911ae3ffd3ff085f348677e25b06d
 
 A number of runtime command arguments are set, which configure the node in a way that is suitable for testing:
 
@@ -50,6 +68,8 @@ For a full list of all available Pantheon commands, see the official documentati
 Finally, we must wait for Pantheon to fully start before running our tests.  Luckily, Pantheon comes autoconfigured with a liveness endpoint out of the box, so testcontainers is instructed to automatically poll the `/liveness` endpoint on port `8545` until a 200 response is returned.  We can then be confident that Pantheon is running correctly.
 
 ## Connecting to the Pantheon container using Web3j
+
+Pantheon should now be up and running on `localhost`.  You can now connect to the Pantheon node within your test classes, and perform Ethereum operations such as sending transactions by using Web3j:
 
 ```java
 final Integer port = pantheonContainer.getMappedPort(8545);
@@ -86,4 +106,7 @@ public void shutdownWeb3j() {
 
 ## Summary
 
-Using the Testcontainers library to start an Pantheon node is a simple and convenient way to ensure that an Ethereum node is accessible to your tests.  This will make running the tests in your continuous integration pipeline less arduous, and also make it easier for other third party contributors to run your tests on their local machine.
+Using the Testcontainers library to start an Pantheon node is a simple and convenient way to ensure that an Ethereum node is accessible to your tests.  This makes running the tests in your continuous integration pipeline less arduous, and also means that other third party contributors can run your tests on their local machine more easily.
+
+An example test class demonstrating the code described in this tutorial can be found [here](https://github.com/kauri-io/java-web3j-pantheon-testing/blob/master/src/test/java/io/kauri/java/test/TestWeb3jPantheon.java), from the [java-web3j-pantheon-testing](https://github.com/kauri-io/java-web3j-pantheon-testing) project.
+
