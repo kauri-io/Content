@@ -454,11 +454,22 @@ Just like a DNS, reading an object from an IPNS name is a two steps process:
 2.  Read the content from the hash
 
 ```java
-String resolveResponse = ipfs.name.resolve(key.id);
-System.out.println("resolve(key="+key.id+"): " + resolveResponse);
+try {
+  KeyInfo key = localIPFS.key.list().stream()
+    .filter(k -> k.name.equals(keyName))
+    .findAny()
+    .orElseThrow(() -> new RuntimeException("Key " + keyName + " not found"));
 
-byte[] content = ipfs.cat(Multihash.fromBase58(resolveResponse.substring(6)));
-System.out.println("Content: " + new String(content));
+  String resolveResponse = ipfs.name.resolve(key.id);
+  System.out.println("resolve(key="+key.id+"): " + resolveResponse);
+
+  byte[] content = ipfs.cat(Multihash.fromBase58(resolveResponse.substring(6)));
+  System.out.println("Content: " + new String(content));
+} catch (IOException ex) {
+} catch (IOException ex) {
+  throw new RuntimeException("Error whilst communicating with the IPFS node", ex);
+}
+}
 ```
 
 ![](https://i.imgur.com/AtD5wxv.png)
@@ -488,7 +499,7 @@ To retrieve the list of Peers connected to our local node:
 
 ```java
 List<Multihash> peers = ipfs.refs.local()
-peers.refs.local().forEach(multihash ->
+peers.forEach(multihash ->
  System.out.println("Peer ID: " + multihash));
 ```
 
