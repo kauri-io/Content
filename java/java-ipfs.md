@@ -466,7 +466,6 @@ try {
   byte[] content = ipfs.cat(Multihash.fromBase58(resolveResponse.substring(6)));
   System.out.println("Content: " + new String(content));
 } catch (IOException ex) {
-} catch (IOException ex) {
   throw new RuntimeException("Error whilst communicating with the IPFS node", ex);
 }
 }
