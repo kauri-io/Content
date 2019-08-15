@@ -95,8 +95,11 @@ git subtree push --prefix client heroku master
 
 Note, the second command can be used exclusively, but occassionally draws issues when the Heroku remote gets out of sync with another remote (for example an origin remote on GitHub).
 
-Note, if you are working out of the root directory of this series, you can 
-Login to your account or create a new one at [https://www.heroku.com](https://www.heroku.com). From your dashboard, click the `new` button to create a new application.
+Note, if you are working out of the root directory of this series code, you will have to push from the top level of your working tree. That is, navigate to the `/kauri-fullstack-dapp-tutorial-series` directory. From there, change the prefix to push only the code in `/truffle-react-box-frontent/client`.
+
+```bash
+`git push heroku `git subtree split --prefix kauri-fullstack-dapp-tutorial-series/client [branch (optional)]`:master --force`
+```
 
 ## Run the App
 
