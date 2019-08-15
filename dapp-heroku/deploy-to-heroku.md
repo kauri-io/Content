@@ -138,3 +138,7 @@ Good reference here: https://brettdewoody.com/deploying-a-heroku-app-from-a-subd
 You should now see a URL to access your application. It should look like your-app-name.herokuapp.com. You can also run `heroku open` from the command line to open a browser to the appropriate url.
 
 Once you navigate to the right webpage, you'll be able to configure metamask. Be sure to set MetaMask to use the right Ethereum network to interface with your deployed contract. Now you'll be able to interact with your smart contract through the browser anywhere with an internet connection.
+
+Here's an example of the application running remotely in the browser.
+
+![Running Remotely](/Deployed-to-Heroku.png)
