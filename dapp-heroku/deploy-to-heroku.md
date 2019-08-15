@@ -50,7 +50,7 @@ If you don't see a remote named 'remote', you can add it manually.
 git remote add heroku [your heroku git remote url here]
 ```
 
-## Define a Procfile
+## Create a Procfile
 
 The only change required to the codebase to deploy your app is a Procfile. A Procfile specifies commands to be executed by the app upon startup. In this case, we use the Procfile to mimic the local deployment process, but on the Heroku server.
 
