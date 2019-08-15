@@ -98,41 +98,6 @@ Note, the second command can be used exclusively, but occassionally draws issues
 Note, if you are working out of the root directory of this series, you can 
 Login to your account or create a new one at [https://www.heroku.com](https://www.heroku.com). From your dashboard, click the `new` button to create a new application.
 
-![Create New Application](/Create-New-App.png)
-
-Give your application a name. This name will be publicly facing as part of your Heroku-issued URL. For example, using the app name `full-stack-dapp-tutorial`, our application will be available at full-stack-dapp-tutorial.herokuapp.com. You can mask this later with your own URL.
-
-![Name Your App](/Name-New-App.png)
-
-## Deploy to Heroku
-
-Add Procfile to existing codebase
-
-git init first so that heroku create will automatically set the remote.
-
-heroku create --buildpack heroku/nodejs
-
-Note, cannot have both package-lock.json and yarn.lock. If you have a yarn.lock file, Yarn will be used by Heroku instead of npm.
-
-If alone, use git subtree push --prefix client heroku master
-
-REFERNCE:
-After working on our project for about a week we came across an issue. We started getting fast-forward issues after others team members deployed to Heroku. Once another team member deployed to Heroku are usual deployment command of:
-
-git subtree push --prefix client heroku master
-
-no longer worked.
-
-The reason being our local branch was behind the Heroku remote. Even after attempting a pull from the Heroku remote we were still having issues. The solution was this:
-
-git push heroku 'git subtree split --prefix web branch':master --force
-
-where web is the subdirectory where you Heroku app lives.
-
-Use `git push heroku `git subtree split --prefix client`:master --force` instead if on a team
-
-Good reference here: https://brettdewoody.com/deploying-a-heroku-app-from-a-subdirectory/
-
 ## Run the App
 
 You should now see a URL to access your application. It should look like your-app-name.herokuapp.com. You can also run `heroku open` from the command line to open a browser to the appropriate url.
