@@ -1,4 +1,4 @@
-# Truffle: Deploying Your App to Heroku
+# Deploying Your App to Heroku
 
 Earlier in the series, we deployed our Bounties.sol smart contract using Truffle, and added a react.js front end to interact with the contract through a web browser. In this tutorial we will deploy our application to [Heroku](https://www.heroku.com).
 
