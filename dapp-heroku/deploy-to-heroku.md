@@ -31,10 +31,10 @@ If you haven't already, initialize your project as a git repository. Git is used
 git init
 ```
 
-Here we create a new Heroku app and indicate we want to use the standard nodejs buildpack by Heroku.
+Here we create a new Heroku app and indicate we want to use the [create-react-app buildpack](https://github.com/mars/create-react-app-buildpack). This buildpack will deploy the React UI as a static site. 
 
 ```bash
-heroku create --buildpack heroku/nodejs
+heroku create --buildpack mars/create-react-app
 ```
 
 Heroku will automatically asign your application a random name. Alternatively, you may give you application a memorable name that will be accessible at your-app-name.herokuapp.com.
@@ -50,17 +50,15 @@ If you don't see a remote named 'remote', you can add it manually.
 git remote add heroku [your heroku git remote url here]
 ```
 
-## Create a Procfile
+## Create a Procfile (Optional)
 
-The only change required to the codebase to deploy your app is a Procfile. A Procfile specifies commands to be executed by the app upon startup. In this case, we use the Procfile to mimic the local deployment process, but on the Heroku server.
-
-Add a file called `Procfile` (no file extension) to the /client directory. The Procfile is specific to the React application, not the rest of the repository. Add a single line to the Procfile.
+When using the create-react-app buildpack, you don't need to include a Procfile, but you can if you'd like to customize the app's processes. The implicit Procfile from the buildpack contains the following:
 
 ```
-web: npm start
+web: bin/boot.
 ```
 
-This defines a web worker to execute `npm start`. You can read more about Procfiles [here](https://devcenter.heroku.com/articles/procfile).
+You can read more about Procfiles [here](https://devcenter.heroku.com/articles/procfile).
 
 ## Configure and Deploy the Smart Contract
 
