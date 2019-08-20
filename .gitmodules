@@ -1,0 +1,3 @@
+[submodule "style-guide"]
+	path = style-guide
+	url = git@github.com:ConsenSys/Style-Guide.git
