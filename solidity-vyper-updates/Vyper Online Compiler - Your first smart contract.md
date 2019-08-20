@@ -1,13 +1,16 @@
+# Remix IDE - Your first Vyper smart contract
+
 The easiest place to start writing smart contracts in Vyper in with the online [Remix IDE](https://remix.ethereum.org/).
 
-Given it is an online IDE, no installation or development environment setup is required, you can open the site and get started!
+As it's an online IDE, there's no need for installation or development environment setup, you can open the site and get started!
 
-Remix also provides tools for debugging, static analysis, and deployment all within the online environment. To use Remix with Vyper, you first need to enable the Vyper plugin from the _Plugin Manager_ tab.
+Remix provides tools for debugging, static analysis, and deployment all within the online environment. To use Remix with Vyper, you first need to enable the Vyper plugin from the _Plugin Manager_ tab.
 
 [You can find the source code used in this tutorial on GitHub.](https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract)
 
-Before we get started, a quick reminder of what we are building: A dapp which allows any user to issue a bounty in ETH
+Before we get started, a quick reminder of what we are building:
 
+-   A dapp which allows any user to issue a bounty in ETH
 -   Any user with an Ethereum account can issue a bounty in ETH along with some requirements
 -   Any user can submit a fulfilment of the bounty along with some evidence
 -   The bounty issuer can accept a fulfilment which would result in the fulfiller being paid out
@@ -36,7 +39,7 @@ struct Fulfillment:
     data: bytes32
 ```
 
-To test if everything is working at any time of writing the contract, click the _Compile_ button to compile the contract.
+To test if everything is working, click the _Compile_ button to compile the contract.
 
 ![](https://api.kauri.io:443/ipfs/QmNQH4ytWiWeHSRgLTQofbnkzYRRuiRtmwLguVTWXHCKoS)
 
@@ -56,7 +59,7 @@ Now that we have the basic skeleton of our smart contract, we can start adding f
 
 Just like in Solidity, Vyper has state variables. State variables are values which are permanently stored in a contract storage.
 
-[You can see a full list of Vyper types in the documentation ](https://vyper.readthedocs.io/en/latest/types.html)
+[You can read a full list of Vyper types in the documentation ](https://vyper.readthedocs.io/en/latest/types.html)
 
 Next we define events for the contract. Vyper can log events caught during runtime and display it for the user.
 
@@ -67,9 +70,9 @@ BountyFulfilled: event({ _bountyId: int128, _issuer: indexed(address), _fulfille
 FulfillmentAccepted: event({ _bountyId: int128, _issuer: indexed(address), _fulfiller: indexed(address), _fulfillmentId: int128, _amount: uint256 })
 ```
 
-We have four events that have different fields. The user may want to listen to the events for changes on the contract.
+We have four events that have different fields. A client may want to listen to the events for changes on the contract.
 
-Declare an constant values which we use to keep track of a bounties state:
+Declare constant values which we use to keep track of a bounties state:
 
 ```vyper
 CREATED: constant(uint256) = 0
@@ -77,18 +80,25 @@ ACCEPTED: constant(uint256) = 1
 CANCELLED: constant(uint256) = 2
 ```
 
-Define 2 arrays where we store data about each issued bounty and the fulfillments:
+Define 2 arrays where we store data about each issued bounty and the fulfillment:
 
 ```vyper
 bounties: map(int128, Bounty)
 fulfillments: map(int128, Fulfillment)
 ```
 
+Define indexes for each fulfillment and bounty. We need this to get the current position of the fulfillment and bounty that exists.
+
+```vyper
+nextBountyIndex: int128
+nextFulfillmentIndex: int128
+```
+
 ### Issue Bounty Function
 
 Now that we have declared our state variables we can add functions to allow users to interact with our smart contract
 
-We add the `public` decorator to the function so that it can be called from the contract. In order to send ETH to our contract we need to add the `payable` keyword to our function. Without this payable keyword the contract rejects all attempts to send ETH to it via this function. Read more about [decorators](https://vyper.readthedocs.io/en/latest/structure-of-a-contract.html#functions).
+Add the `public` decorator to the function so that external users can call it from the contract. In order to send ETH to our contract we need to add the `payable` keyword to the function. Without this `payable` keyword the contract rejects all attempts to send ETH to it via this function. Read more about [decorators](https://vyper.readthedocs.io/en/latest/structure-of-a-contract.html#functions).
 
 ```vyper
 @public
@@ -105,14 +115,14 @@ def issueBounty(_data: bytes32, _deadline: timestamp):
     log.BountyIssued(bIndex, msg.sender, msg.value, _data)
 ```
 
-The function `issueBounty` receives a bytes32 `_data` and an integer `_deadline` as arguments (the requirements as a bytes32, and the deadline as a unix timestamp)
+The function `issueBounty` receives a `bytes32` variable called `_data` and a `timestamp` `_deadline` as arguments.
 
 ```vyper
 assert msg.value > 0
 assert _deadline > block.timestamp
 ```
 
-Since vyper does not support modifiers, we use the `assert` keyword check to ensure that the every condition is met. The function returns an error if any of the conditions are not met.
+Since Vyper does not support modifiers, we use the `assert` keyword check to ensure that the every condition is met. The function returns an error if any of the conditions are not met.
 
 ```vyper
 bIndex: int128 = self.nextBountyIndex
@@ -129,7 +139,7 @@ self.nextBountyIndex = bIndex + 1
 
 First we insert a new `Bounty` into our `bounties` array using the `bIndex`, setting the `BountyStatus` to `CREATED`.
 
-In vyper, `msg.sender` is automatically set as the address of the sender, and `msg.value` is set to the amount of Weis (1 ETH = 1000000000000000000 Weis).
+In Vyper, `msg.sender` is automatically set as the address of the sender, and `msg.value` is set to the amount of Wei (1 ETH = 1000000000000000000 Wei).
 
 We set the `msg.sender` as the issuer and the `msg.value` as the bounty amount.
 
@@ -137,7 +147,7 @@ We set the `msg.sender` as the issuer and the `msg.value` as the bounty amount.
 log.BountyIssued(bIndex, msg.sender, msg.value, _data)
 ```
 
-Next, we log the event `BountyIssued` for the user to subscribe to.
+Finally, we log the event `BountyIssued` for the user to subscribe to.
 
 ### Try it yourself
 
@@ -153,9 +163,11 @@ You can find the [complete Bounties.vy file here for reference](https://github.c
 
 ## Next Steps
 
+<!-- TODO: Update -->
+
 -   Read the next guide: [Understanding smart contract compilation and deployment](https://kauri.io/article/973c5f54c4434bb1b0160cff8c695369/understanding-smart-contract-compilation-and-deployment)
 -   Learn more about Remix-IDE from the [documentation](https://remix.readthedocs.io/en/latest/) and [github](https://github.com/ethereum/remix-ide)
 
 > If you enjoyed this guide, or have any suggestions or questions, let me know in the comments.
 >
-> If you have found any errors, feel free to update this guide by selecting the **'Update Article'** option in the right hand menu, and/or [update the code](https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract)
+> If you found any errors, feel free to update this guide by selecting the **'Update Article'** option in the right hand menu, and/or [update the code](https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series/tree/master/remix-bounties-smartcontract)
