@@ -14,12 +14,18 @@ You'll need to configure the application, as defined in an earlier tutorial, [Tr
 
 Additionally, you'll need to install the Heroku CLI.
 
-More information on the Heroku CLI can be found [here](https://devcenter.heroku.com/articles/heroku-cli).
-
-The Heroku CLI is available through Homebrew:
+The Heroku CLI is available on Mac through Homebrew:
 ```bash
 brew tap heroku/brew && brew install heroku
 ```
+
+Also available through Snap for Ubuntu:
+
+```bash
+sudo snap install --classic heroku
+```
+
+Heroku provides a graphical installer for Windows and Mac as well as additional ways of installing for various operating systems which can be found in the [Heroku Dev Center](https://devcenter.heroku.com/articles/heroku-cli).
 
 ## Setup Heroku
 
