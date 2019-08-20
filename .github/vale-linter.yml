@@ -12,7 +12,7 @@ Vale:
 
     # Path to the folder of Vale docstyles to use/copy
     # NOTE: If you update the styles path in _vale.ini remember to update this path too
-    Styles: "style-guide/consensys"
+    Styles: "style-guide"
 
   Success:
     Header: "YAY you done it"
