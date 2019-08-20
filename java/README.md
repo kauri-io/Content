@@ -68,7 +68,9 @@ Using web3j and pantheon to create a Pegasys NFToken.
 
 Eventeum
 
-### Working with ERC20 and ERC721 tokens
+### [Manage ERC20 tokens in Java with web3j](java-erc20.md)
+
+### Manage ERC721/NFT tokens in Java with web3j
 
 ### GraphQL on Pantheon - Felipe
 
