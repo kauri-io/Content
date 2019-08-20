@@ -8,7 +8,7 @@ Vale:
 
   Paths:
     # Path to the vale configuration file
-    Configuration: "style-guide/.vale.ini"
+    Configuration: ".vale.ini"
 
     # Path to the folder of Vale docstyles to use/copy
     # NOTE: If you update the styles path in _vale.ini remember to update this path too
