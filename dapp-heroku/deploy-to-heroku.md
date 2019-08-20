@@ -89,7 +89,7 @@ In order to avoid restructuring the application folders, you can instead just pu
 `git push heroku `git subtree split --prefix client [branch (optional)]`:master --force`
 ```
 
-Here we are pushing the local repository to the remote called heroku, using the a local branch programmatically defined using `git subtree split --prefix client`, to a remote branch called master, and force the push. You can get a better sense of what is occuring by first just running `git subtree split --prefix client master`. This returns a hash associated with the branch and directory being pushed, for example `206ac9684c0e8e169121198ee6d1d19d0e4a06a7`. You may specify a local branch to push. In this example, the branch called master was used but you can change that to any local branch.
+Here we are pushing the local repository to the remote called heroku, using the local branch programmatically defined using `git subtree split --prefix client`, to a remote branch called master, and force the push. You can get a better sense of what is occuring by first just running `git subtree split --prefix client master`. This returns a hash associated with the branch and directory being pushed, for example `206ac9684c0e8e169121198ee6d1d19d0e4a06a7`. You may specify a local branch to push. In this example, the branch called master was used but you can change that to any local branch.
 
 This command only works once the master branch has been established on the remote. If this is your first commit being pushed to Heroku, run this instead.
 
