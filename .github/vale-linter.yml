@@ -8,19 +8,19 @@ Vale:
 
   Paths:
     # Path to the vale configuration file
-    Configuration: "_vale.ini"
+    Configuration: "style-guide/.vale.ini"
 
     # Path to the folder of Vale docstyles to use/copy
     # NOTE: If you update the styles path in _vale.ini remember to update this path too
-    Styles: "vale/DocsStyles/"
+    Styles: "style-guide/consensys"
 
-  Success: 
+  Success:
     Header: "YAY you done it"
     Message: "The Vale Docs linter did not find any issues WARREN!"
     ShowImage: true
     ImageUrl: "https://media.giphy.com/media/6nuiJjOOQBBn2/giphy.gif"
 
-  Error: 
+  Error:
     Header: "BOOOO it failed"
     Message: "Try again"
     ShowImage: true
