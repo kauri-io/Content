@@ -64,7 +64,7 @@ Just like in Solidity, Vyper has state variables. State variables are values whi
 Next we define events for the contract. Vyper can log events caught during runtime and display it for the user.
 
 ```vyper
-BountyIssued: event({_id: int128, _issuer: indexed(address), _amount: uint256, data: bytes32 })
+BountyIssued: event({_id: int128, _issuer: indexed(address), _amount: wei_value, data: bytes32 })
 BountyCancelled: event({ _id: int128, _issuer: indexed(address), _amount: uint256 })
 BountyFulfilled: event({ _bountyId: int128, _issuer: indexed(address), _fulfiller: indexed(address), _fulfillmentId: int128, _amount: uint256})
 FulfillmentAccepted: event({ _bountyId: int128, _issuer: indexed(address), _fulfiller: indexed(address), _fulfillmentId: int128, _amount: uint256 })
