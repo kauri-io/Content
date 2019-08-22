@@ -27,19 +27,11 @@ In order to test our _Bounties.vy_ smart contract we need to have a truffle proj
 <!-- TODO: Update -->
 
 ```shell
-$ git clone https://github.com/kauri-io/kauri-fullstack-dapp-tutorial-series.git
-$ cd kauri-fullstack-dapp-tutorial-series
-$ cp -R truffle-compilation-and-deploy dapp-series-bounties
-$ cd dapp-series-bounties
+$ git clone https://github.com/iamonuwa/Bounties.git
+$ cd Bounties
 ```
 
 <!-- TODO: No package.json at this time -->
-
-We also need to install the [truffle-hdwallet-provider](https://github.com/trufflesuite/truffle-hdwallet-provider) dependency, to ensure the project compiles:
-
-```shell
-npm install truffle-hdwallet-provider@web3-one --save
-```
 
 ### Development Blockchain: Ganache-CLI
 
@@ -96,7 +88,7 @@ Your _bounties.js_ file should look as follows:
 
 <!-- TODO: Code better -->
 
-![](https://api.kauri.io:443/ipfs/Qmd143ArHecm8xE5dtYLbsxaUoLQJ4dcXA8aKxy2QA44AP)
+![](https://api.kauri.io:443/ipfs/QmbcpryjzGpp6pVT7J8iw8VxqNvKyQk3e4gwpUrDZHENQh)
 
 At this point, we have the basic skeleton of our test file and we can test everything is set up correctly by executing the following.
 

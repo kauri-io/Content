@@ -545,7 +545,7 @@ Later in the series, we’ll cover how to write tests within the Truffle framewo
 
 <!-- TODO: Update -->
 
--   Read the next guide: [Truffle: Testing Your Smart Contract](https://kauri.io/article/f95f956261494090be1aaa8227464773/truffle:-testing-your-smart-contract)
+-   Read the next guide: [Truffle: Testing Your Smart Contract](https://kauri.io/article/f95f956261494090be1aaa8227464773/v9/truffle:-testing-your-smart-contract)
 -   Learn more about the Truffle suite of tools from the [website](https://truffleframework.com/)
 
 > If you enjoyed this guide, or have any suggestions or questions, let me know in the comments.

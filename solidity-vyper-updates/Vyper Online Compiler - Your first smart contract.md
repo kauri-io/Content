@@ -19,7 +19,7 @@ Clear the content of the editor, and name the file _Bounty.vy_.
 
 <!-- TODO: Update -->
 
-![](https://api.kauri.io:443/ipfs/QmNWQaemeZhPL4cqEHgqU3Qsktp3XBEydcA9e8vfkQVKLW)
+![](https://api.kauri.io:443/ipfs/QmYMV1Xu841fpMpyqSaVYQAvnJ5xuXHKmpn9DjeUtsXpac)
 
 We first define structs for the contract.
 
@@ -176,7 +176,7 @@ You can find the [complete Bounties.vy file here for reference](https://github.c
 
 <!-- TODO: Update -->
 
--   Read the next guide: [Understanding smart contract compilation and deployment](https://kauri.io/article/973c5f54c4434bb1b0160cff8c695369/understanding-smart-contract-compilation-and-deployment)
+-   Read the next guide: [Understanding smart contract compilation and deployment](https://kauri.io/article/973c5f54c4434bb1b0160cff8c695369/v7/understanding-smart-contract-compilation-and-deployment)
 -   Learn more about Remix-IDE from the [documentation](https://remix.readthedocs.io/en/latest/) and [github](https://github.com/ethereum/remix-ide)
 
 > If you enjoyed this guide, or have any suggestions or questions, let me know in the comments.
