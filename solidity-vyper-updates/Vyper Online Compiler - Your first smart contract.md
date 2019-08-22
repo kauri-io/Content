@@ -86,6 +86,17 @@ Define 2 arrays where we store data about each issued bounty and the fulfillment
 bounties: map(int128, Bounty)
 fulfillments: map(int128, Fulfillment)
 ```
+Define indexes for each fulfillment and bounty. We need this to get the current position of the fulfillment and bounty that exists.
+
+```
+nextBountyIndex: int128
+nextFulfillmentIndex: int128
+```
+
+**Note**: If you fail to define the indexes, you'll encounter this error at the end when you attempt test the contract.
+
+`Persistent variable undeclared: nextBountyIndex`
+
 
 Define indexes for each fulfillment and bounty. We need this to get the current position of the fulfillment and bounty that exists.
 
