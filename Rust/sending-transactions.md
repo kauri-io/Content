@@ -4,7 +4,7 @@ This tutorial will walk you through the code required to send an Ethereum transa
 
 ## Prequisites
 
-This tutorial assumes that you already have a Rust IDE available.  It also assumes some basic knowledge of Ethereum and does not cover concepts such as the contents of an Ethereum transaction.  
+We assume that you already have a Rust IDE available, and have a reasonable proficiency in Rust programming.  It also assumes some basic knowledge of Ethereum and does not cover concepts such as the contents of an Ethereum transaction.  
 
 ## Libraries Used
 
