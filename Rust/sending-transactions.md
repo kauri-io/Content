@@ -73,7 +73,7 @@ let web3 = web3::Web3::new(transport);
 
 First we create a transport object used to connect to the node. In this example we connect via `http`, to `localhost` on port `8545`, which is the default port for Ganache, and most, if not all Ethereum clients.
 
-**Note:** The code above also adds an [EventLoop](https://docs.rs/iui/0.3.0/iui/struct.EventLoop.html), but that is out of the scope of this guide.
+**Note:** An [EventLoop](https://tomusdrw.github.io/rust-web3/web3/transports/struct.EventLoopHandle.html) is also returned, but that is out of the scope of this guide.
 
 Next we construct a web3 object, passing in the previously created transport variable, and that's it!  We have now have a connection to the Ethereum node!
 
