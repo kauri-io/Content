@@ -335,6 +335,6 @@ fn to_array(bytes: &[u8]) -> [u8; 32] {
 ## Summary
 In this tutorial you have learnt how to send a basic Ether value transfer transaction from one account to another using Rust.  Two signing approaches were explained; signing on a node by an unlocked account, and signing a transaction on the Rust side.  
 
-The full source code that has been covered in this guide is available on GitHub [here](TODO).
+The full source code that has been covered in this guide is available on GitHub [here](https://github.com/craigwilliams84/rust-ethereum/tree/master).
 
 This is just scratching the surface of Ethereum transaction sending, and in a future tutorial I will walk you through sending transactions that manipulate data within an Ethereum smart contract.  Watch this space!
