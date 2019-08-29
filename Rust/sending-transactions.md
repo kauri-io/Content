@@ -149,7 +149,7 @@ fn main() {
 }
 ```
 
-Run this code, and you should see that the `accounts[1]` balance is 10000 wei greater after the transaction was sent… a successful ether transfer!
+We use the `web3.eth().balance(..)` function to obtain the balance of the recipient account before and after the transfer to prove that the transfer occured.  Run this code, and you should see that the `accounts[1]` balance is 10000 wei greater after the transaction was sent… a successful ether transfer!
 
 ## Sending a Raw Transaction
 
