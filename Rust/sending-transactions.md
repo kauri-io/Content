@@ -63,8 +63,6 @@ use web3::types::{TransactionRequest, U256};
 
 ### Connecting to the Node
 
-Add the lines below inside the `fn main()` function:
-
 ```rust
 let (_eloop, transport) = web3::transports::Http::new("http://localhost:8545").unwrap();
 
