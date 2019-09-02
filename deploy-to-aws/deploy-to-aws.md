@@ -246,4 +246,4 @@ const ipfs = new IPFS({ provider: 'username:password@kaleidoIPFSUrl', protocol: 
 
 ## Conclusion
 
-With AWS EC2 and Kaleido we can setup robust private ethereum blockchain nodes, todeploy private dApps and scale these node's as needed to support the dApp without having to worry about the privacy and also security issues that come with deploying dApps in the main and test ethereum networks.
+With AWS EC2 and Kaleido we can setup robust private ethereum blockchain nodes, to deploy private dApps and scale these node's as needed to support the dApp without having to worry about the privacy and also security issues that come with deploying dApps in the main and test ethereum networks.
