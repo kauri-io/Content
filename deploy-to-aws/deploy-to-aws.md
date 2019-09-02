@@ -45,7 +45,7 @@ To create a private ethereum blockchain node in kaleido, please do the following
 - Click `NEXT` in the `CLOUD CONFIGURATION` tab and leave the settings in default mode.  Please note under the free plan, you won't be able to change any of the settings available unless you upgrade your account.
 - Finally in the `SIZE` tab, select the `Node Size` you want. Please note under the free plan, only the small node size will be available. Also click on `FINISH` to complete setting up the node.
 
-After completing the above steps, give the newly created node about 3 minutes to finish initializing and starting up. Also please note the `RPC ENDPOINT` url of the node, we'll need it later in this tutorial. You can copy it by clicking on the name of the newly create node, which will take you to the node details. And then finally click on the `Copy` link that is next to the URL.
+After completing the above steps, give the newly created node about 3 minutes to finish initializing and starting up. 
 
 In order to be able to connect to the newly created node above, we also need to add new app credentials in Kaleido, by doing the following:-
 
@@ -62,7 +62,7 @@ Because the dApp we are going to deploy also needs to connect to an IPFS node, w
 1. Navigate to an existing environment, and click the +ADD dropdown in the top right portion of the screen.
 2. Select the `Add Services` option. This will open a new panel exposing the currently available Kaleido Services.
 3. Click the `ADD` button beneath IPFS File Store.
-4. Supply an arbitrary name for the node and click ADD. Click DONE to finish the deployment.
+4. Supply an arbitrary name for the node and click ADD. Click `DONE` to finish the deployment.
 5. The newly created IPFS node will appear at the bottom of your environment panel under `MEMBER SERVICES`.
 
 Finally we need to save the IPFS gateway URL created in a safe place because we'll need it later in the tutorial by doing the following:-
