@@ -2,7 +2,7 @@
 
 In the previous [tutorial in this series](https://kauri.io/collection/5b8e401ee727370001c942e3), we saw how to develop a full-stack ethereum blockchain dApp. 
 
-In this tutorial therefore, we will see how to deploy the dApp to an Amazon web services (AWS) elastic cloud computing (EC2) instance. We will also create a private ethereum blockchain node using [kaleido](https://kaleido.io/) and finally configure the dApp to work with this blockchain node.
+In this tutorial therefore, we will learn how to deploy the dApp to an Amazon web services (AWS) elastic cloud computing (EC2) instance. We will also create a private ethereum blockchain node using [kaleido](https://kaleido.io/) and finally configure the dApp to work with this blockchain node.
 
 ## Prerequisites
 
@@ -10,7 +10,7 @@ In order to successfully complete this tutorial, you'll need a good understandin
 
 - Connecting to a remote server via SSH.
 - Basic linux Command Line Interface (CLI) knowledge.
-- Finally a good understanding on how the blockchain works would also be recommended but not necessary for completing this tutorial.
+- Finally a good understanding of how the blockchain works would also be recommended but its not necessary for completing this tutorial.
 
 ## Launch and Connect to an EC2 Instance
 
@@ -40,12 +40,12 @@ To create a private ethereum blockchain node in kaleido, please do the following
 - In the `Protocol` tab, select `Geth` under PROVIDER. This is very important because we need to create an ethereum blockchain node, the other 2 options will create blockchain nodes for other providers not covered by this tutorial.
 - Also by default, `PoA` should be selected under CONSENSUS ALGORITHM
 - Finally click on `FINISH` to complete setting up the environment
-4. Finally add the ethereum node by clicking on the `ADD NODE` and doing the following:-
+4. Next, add the ethereum node by clicking on the `ADD NODE` and doing the following:-
 - Select the correct `OWNING MEMBER` for the node and the enter the name of the node and click on `NEXT`
 - Click `NEXT` in the `CLOUD CONFIGURATION` tab and leave the settings in default mode.  Please note under the free plan, you won't be able to change any of the settings available unless you upgrade your account.
-- Finally in the `SIZE` tab, select the `Node Size` you want. Please note under the free plan, only the small node size will be available. Also click on `FINISH` to complete setting up the node.
+- Finally in the `SIZE` tab, select the `Node Size` you want. Please note again under the free plan, only the small node size will be available. Afterwards click on `FINISH` to complete setting up the node.
 
-After completing the above steps, give the newly created node about 3 minutes to finish initializing and starting up. 
+On completing the above steps, give the newly created node about 3 minutes to finish initializing and starting up. 
 
 In order to be able to connect to the newly created node above, we also need to add new app credentials in Kaleido, by doing the following:-
 
@@ -59,13 +59,13 @@ In order to be able to connect to the newly created node above, we also need to 
 
 Because the dApp we are going to deploy also needs to connect to an IPFS node, we'll need to create a new node by doing the following:-
 
-1. Navigate to an existing environment, and click the +ADD dropdown in the top right portion of the screen.
+1. Navigate to an existing environment, and click the `+ADD` dropdown in the top right portion of the screen.
 2. Select the `Add Services` option. This will open a new panel exposing the currently available Kaleido Services.
-3. Click the `ADD` button beneath IPFS File Store.
+3. Click the `ADD` button beneath `IPFS File Store` option.
 4. Supply an arbitrary name for the node and click ADD. Click `DONE` to finish the deployment.
 5. The newly created IPFS node will appear at the bottom of your environment panel under `MEMBER SERVICES`.
 
-Finally we need to save the IPFS gateway URL created in a safe place because we'll need it later in the tutorial by doing the following:-
+Finally we need to save the IPFS URL created in a safe place because we'll need it later in the tutorial by doing the following:-
 - In the kaleido dashboard `environment`, click on the newly ipfs node created under `MEMBER SERVICES` 
 - A new page `Application Credentials` will appear, and so select the `App Credentials` created above under `CREDENTIAL NAME` and under `SECRET KEY`  enter the passoword saved from above and click on `SUBMIT`.
 - Copy the URL under `MY COMPANY ORGANIZATION - IPFS GATEWAY ENDPOINT` and append the `APPLICATION CREDENTIALS` displayed to this URL i.e. if the url is `https://u0b2fvaghe-u0kzkqcb5x-ipfs.us0-aws.kaleido.io/ipfs` and the credentials are `u0hnyi99nm:8abPcEHO1ioxo7pckJKcxw3VzKl8D19TsFp5o7pE-cj4` the new url will be `u0hnyi99nm:8abPcEHO1ioxo7pckJKcxw3VzKl8D19TsFp5o7pE-cj4@u0b2fvaghe-u0kzkqcb5x-ipfs.us0-aws.kaleido.io`
@@ -137,7 +137,7 @@ Once metamask is up and running in your browser or if you had already installed 
 - Click on the metamask extension/add-on in your browser to open it.
 - Then click on the `Import using account seed phrase` link displayed on the extension before you login.
 - In the new page enter `mnemonic` phrase copied from above and then also enter a new password for the account. 
-	- Be very careful with this step as it will overwrite any existing accounts you had in metamask. So please make sure you BACKUP the seed phrases of any existing accounts before importing the above phrase, otherwise you WILL LOSE access to your accounts FOREVER if they are not backed up anywhere else.
+	- Be very careful with this step as it will overwrite any existing accounts you had in metamask. So please make sure you BACKUP the seed phrases of any existing accounts before importing the above phrase, otherwise you WILL LOSE access to your account(s) FOREVER if they are not backed up anywhere else.
 - Then login into metamask using the password you created in the above step and copy the address of the wallet by clicking on the account name.
 	- This address should match the address derived when creating the new `mnemonic` phrase above.
 
@@ -186,7 +186,7 @@ const ipfsBaseUrl = "username:password@kaleidoIPFSUrl/ipfs";
 ```
 You can get the `consortiumId` and `environmentId` variables by manually opening the kaleido block explorer in your browser and then copy and pasting the url generated.
 
-Also the `kaleidoIPFSUrl` is the IPFS Url we generated when setting up an IPFS node above.
+The `kaleidoIPFSUrl` is the IPFS Url we generated when setting up an IPFS node above.
 
 Also change the file `/truffle-react-box-frontend/client/src/utils/IPFS.js` and replace the line
 ```js
