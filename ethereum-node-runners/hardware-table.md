@@ -2,7 +2,7 @@
 
 
 | Name | Total cost | Spec | Tested | Review | Time to sync mainnet | 
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| -------- | -------- | -------- | -------- | -------- | -------- | 
 | [NanoPi-M4](https://www.friendlyarm.com/index.php?route=product/product&product_id=234) + SanDisk SSD PLUS | $150 | CPU: Rockchip RK3399<br />RAM: 4GB DDR3<br />USB 3.0<br />Ethernet/Wifi | Y | [here]() | 50 days (on going)     |
 | [Jetson-nano](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-nano/) |  |  | Y | [here]() | 4 days |
 | [RockPi](http://rockpi.org/) |  |  | N | [here]() |  |
