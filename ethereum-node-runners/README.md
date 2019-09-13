@@ -31,7 +31,7 @@
 - [Review NanoPi M4](review-nanopi-m4.md) [greg WIP]
 
 ## Extra
-- [Use CronJob and Google Sheet to monitor your Geth node](monitor_geth_with_cronjob_googlesheet.md)
+- [Use CronJob and Google Sheet to monitor your Geth node](monitor_geth_with_cronjob_googlesheet.md) [greg WIP]
 - Configure Prometheus and Grafana to monitor your node
 - Secure your node (firewall, SSH)
 - Connect Metamask to your node
