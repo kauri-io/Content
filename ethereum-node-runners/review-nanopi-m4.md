@@ -599,7 +599,7 @@ $ geth attach  --datadir /mnt/ssd/ethereum/
 
 ## Benchmark
 
-Based on the following [monitoring solution](), we have monitoring the following metrics over time:
+Based on the following [monitoring solution](monitor_geth_with_cronjob_googlesheet.md), we have monitoring the following metrics over time:
 - Block sync
 - States download
 - Peers connected
