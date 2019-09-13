@@ -2,7 +2,7 @@
 
 ## Introduction
 - The rise of decentralisation
-- [Hardware table](hardware-table.md)
+- [Hardware table](hardware-table.md) [greg WIP]
   - name (e.g nanopi-m4 + Samsung Sata SSD 250GB)
   - description
   - cost
@@ -13,14 +13,14 @@
 
 
 ## Installation guides
+
 ### Full nodes
-- [Linux](installation-guide-linux.md)
-- Single Board / ARM (see [Build, install and configure your own Ethereum full-node for less than $150](https://kauri.io/draft/b1cbb143c98b4a87adc1b322cade5bd1/1/build-install-and-configure-your-own-ethereum-full-node-for-less-than-dollar150)
-  - Parity
-  - Geth
-  - Pantheon/Besu (?)
+- [Geth / Linux Debian](installation-guide-linux.md) [greg WIP]
+- Cloud
 - Old PC - Installation Guide
 - Others hardware (e.g Nintendo Switch)
+- Parity
+- Pantheon/Besu
 
 ### Light nodes
 *TBD*
@@ -28,8 +28,10 @@
 ## Reviews
 *In-depth reviews (detailed specifications, pictures, benchmarks, cost): nanopi-m4, jetson-nano*
 
+- [Review NanoPi M4](review-nanopi-m4.md) [greg WIP]
 
 ## Extra
+- [Use CronJob and Google Sheet to monitor your Geth node](monitor_geth_with_cronjob_googlesheet.md)
 - Configure Prometheus and Grafana to monitor your node
 - Secure your node (firewall, SSH)
 - Connect Metamask to your node
