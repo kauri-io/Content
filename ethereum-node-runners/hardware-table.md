@@ -5,7 +5,7 @@ In the article, we have grouped a list of tested and worth considering hardware 
 ## Some examples
 
 | Board | Storage | Total cost | Tested | Review | Time to sync mainnet |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| -------- | -------- | -------- | -------- | -------- | -------- | 
 | [NanoPi-M4](https://www.friendlyarm.com/index.php?route=product/product&product_id=234) | [SSD SanDisk PLUS](https://www.amazon.com/SanDisk-480GB-Solid-State-SDSSDA-480G-G26/dp/B01F9G46Q8/ref=sr_1_1?keywords=SanDisk+SSD+PLUS+480+GB+Sata+III+2.5+Inch+Internal+SSD%2C+Up+to+535+MB%2Fs&qid=1568379405&s=gateway&sr=8-1) | $130 | Y | [here]() | 50 days (on going) |
 | [Jetson-nano](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-nano/) |  |  | Y | [here]() | 4 days |
 | [RockPi](http://rockpi.org/) |  |  | N | [here]() |  |
