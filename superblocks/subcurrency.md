@@ -44,8 +44,6 @@ Anyone can use the `send` (who already has some of these coins) to send coins to
 
 This tutorial doesn't cover the HTML or CSS as it's not web3 specific, aside from the element IDs that the JavaScript manipulates. A lot of the JavaScript code follows standard patterns for object-oriented JavaScript, so this tutorial focuses on the web3js specific parts.
 
-Before we have the object to interact with, we first create it, and
-
 First create an instance of the smart contract, [passing it as a property](https://web3js.readthedocs.io/en/v1.2.0/web3-eth-contract.html), which allows web3js to interact with it.
 
 ```javascript
@@ -56,7 +54,7 @@ function Coin(Contract) {
 }
 ```
 
-Initialize the Coin object and create an instance of the web3js library, passing Metamask as a provider for the contract, or any other network endpoint you can configure in the IDE settings. The initialization function then defines the interface for the contract using [the web3js contract object](https://web3js.readthedocs.io/en/v1.2.1/web3-eth-contract.html#new-contract) and then defines the address of the instance of the contract for the `Coin` object.
+Initialize the `Coin` object and create an instance of the web3js library, passing Metamask as a provider for the contract, or any other network endpoint you can configure in the IDE settings. The initialization function then defines the interface for the contract using [the web3js contract object](https://web3js.readthedocs.io/en/v1.2.1/web3-eth-contract.html#new-contract) and then defines the address of the instance of the contract for the `Coin` object.
 
 ```javascript
 Coin.prototype.init = function() {
@@ -71,7 +69,7 @@ Coin.prototype.init = function() {
 };
 ```
 
-Add other JavaScript boilerplate to create the instance of the coin object defined above, and bind the functions for interacting with the contract to the buttons defined in the HTML:
+Add other JavaScript boilerplate to create the instance of the `Coin` object defined above, and bind the functions for interacting with the contract to the buttons defined in the HTML:
 
 ```javascript
 Coin.prototype.bindButtons = function() {
