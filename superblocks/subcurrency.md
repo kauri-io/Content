@@ -1,6 +1,8 @@
 # Introduction to dapps - Creating a subcurrency
 
-This dapp implements the simplest form of a cryptocurrency.
+This dapp implements the simplest form of a cryptocurrency that uses the ERC-20 standard to define a token you can create and send to others. This tutorial is intended to be followed using the online IDE available at [studio.ethereum.org](https://studio.ethereum.org), and selecting the "Coin" template.
+
+![Select Coin template](./coin-template.png)
 
 ## The smart contract
 

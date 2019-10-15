@@ -1,16 +1,18 @@
 # Introduction to dapps - Hello World
 
-This dapp implements a "Hello World" style application, that echoes a message passed to the contract to the front end.
+This dapp implements a "Hello World" style application that echoes a message passed to the contract to the front end. This tutorial is intended to be followed using the online IDE available at [studio.ethereum.org](https://studio.ethereum.org), and selecting the "Hello World" template.
+
+![Select Hello World template](./hello-world-template.png)
 
 ## The smart contract
 
-The first line, `pragma solidity ^0.5.10` specifies that the source code is written for a Solidity version greater than 0.5.10. [Pragmas](https://solidity.readthedocs.io/en/latest/layout-of-source-files.html#pragma) are common instructions for compilers about how to treat the source code (e.g. pragma once).
+The first line, `pragma solidity ^0.5.10` specifies that the source code is for a Solidity version greater than 0.5.10. [Pragmas](https://solidity.readthedocs.io/en/latest/layout-of-source-files.html#pragma) are common instructions for compilers about how to treat the source code (e.g., pragma once).
 
 A contract in the sense of Solidity is a collection of code (its functions) and data (its state) that resides at a specific address on the Ethereum blockchain. The line `string public message` declares a public state variable called `message` of type `string`. You can think of it as a single slot in a database that you can query and alter by calling functions of the code that manages the database. The keyword public automatically generates a function that allows you to access the current value of the state variable from outside of the contract. Without this keyword, other contracts have no way to access the variable.
 
-The [`constructor`](https://solidity.readthedocs.io/en/latest/contracts.html#constructor) is a special function run during the creation of the contract and cannot be called afterwards. In this case, it takes a string value `initMessage`, stores the value in the `[memory](https://solidity.readthedocs.io/en/latest/introduction-to-smart-contracts.html#storage-memory-and-the-stack)` data storage area, and sets `message` to that value.
+The [`constructor`](https://solidity.readthedocs.io/en/latest/contracts.html#constructor) is a special function run during the creation of the contract and cannot be called afterward. In this case, it takes a string value `initMessage`, stores the value in the `[memory](https://solidity.readthedocs.io/en/latest/introduction-to-smart-contracts.html#storage-memory-and-the-stack)` data storage area, and sets `message` to that value.
 
-The `update` function is another public function that is similar to the constructor, taking a string as a parameter and updating the `message` variable.
+The `update` function is another public function that is similar to the constructor, taking a string as a parameter, and updating the `message` variable.
 
 ## The Web app
 
@@ -62,9 +64,9 @@ $(document).ready(function() {
 });
 ```
 
-The `getMessage` function gets the message value passed to the instance of the contract. With the IDE, you pass this value from the _Configure_ option found under the disclosure triangle of the contract file, but outside of the IDE you could pass the value in a variety of ways.
+The `getMessage` function gets the message value passed to the instance of the contract. With the IDE, you pass this value from the _Configure_ option found under the disclosure triangle of the contract file, but outside of the IDE, you could pass the value in a variety of ways.
 
-The `getBlockNumber` works in a similar way, but uses the web3js `[getBlockNumber](https://web3js.readthedocs.io/en/v1.2.1/web3-eth.html?highlight=getBlockNumber#getblocknumber)` function to return the value of the latest block in the configured endpoint.
+The `getBlockNumber` works similarly but uses the web3js `[getBlockNumber](https://web3js.readthedocs.io/en/v1.2.1/web3-eth.html?highlight=getBlockNumber#getblocknumber)` function to return the value of the latest block in the configured endpoint.
 
 ```javascript
 HelloWorld.prototype.getMessage = function(cb) {
@@ -80,7 +82,7 @@ HelloWorld.prototype.getBlockNumber = function(cb) {
 };
 ```
 
-The `update` function ties everything together, calling the two functions defined above, and setting the `H2` tags to the values they return, or showing an error message.
+The `update` function ties everything together, calling the two functions defined above, and setting the `H2` tags to the values they return or showing an error message.
 
 ```javascript
 HelloWorld.prototype.update = function() {
