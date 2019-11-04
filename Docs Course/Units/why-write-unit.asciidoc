@@ -1,0 +1,11 @@
+In this module we cover:
+
+- Why documentation is important
+- Who reads documentation
+- Removing assumptions
+
+include::../posts/why-write.asciidoc[]
+
+== Test
+
+- TBD
