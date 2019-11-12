@@ -1,5 +1,5 @@
-name: CI
-on: [pull_request]
+name: Lint
+on: [pull_request, push]
 
 jobs:
   lint:
@@ -8,7 +8,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Vale
-        uses: ./ # Uses an action in the root directory
+        uses: errata-ai/vale-action@v1.0.1
         with:
           styles: |
             https://github.com/errata-ai/write-good/releases/latest/download/write-good.zip
