@@ -10,8 +10,7 @@ jobs:
       - name: Vale
         uses: errata-ai/vale-action@v1.0.1
         with:
-          styles: |
-            https://github.com/errata-ai/write-good/releases/latest/download/write-good.zip
-          config: https://gist.githubusercontent.com/jdkato/171186055d382c6065273fe5a7eeeb61/raw/af83f7c389414e824765b67b6b13f1dd418185e4/.vale.ini
+          styles: https://github.com/ConsenSys/Style-Guide/raw/master/consensys.zip
+          config: https://raw.githubusercontent.com/ConsenSys/Style-Guide/master/.vale.ini
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
