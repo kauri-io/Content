@@ -1,5 +1,5 @@
 name: Lint
-on: [pull_request, push]
+on: [pull_request]
 
 jobs:
   lint:
@@ -10,7 +10,8 @@ jobs:
       - name: Vale
         uses: errata-ai/vale-action@v1.0.1
         with:
-          styles: https://github.com/ConsenSys/Style-Guide/raw/master/consensys.zip
+          styles: |
+            https://github.com/ConsenSys/Style-Guide/raw/master/consensys.zip
           config: https://raw.githubusercontent.com/ConsenSys/Style-Guide/master/.vale.ini
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
