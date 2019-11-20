@@ -4,7 +4,7 @@ In this module we cover:
 - Who reads documentation
 - Removing assumptions
 
-include::../posts/why-write.asciidoc[]
+include::../posts/why-write.md[]
 
 == Test
 
