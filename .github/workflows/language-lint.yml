@@ -11,6 +11,7 @@ jobs:
         uses: errata-ai/vale-action@v1.0.1
         with:
           styles: |
+            https://github.com/errata-ai/write-good/releases/latest/download/write-good.zip
             https://github.com/ConsenSys/Style-Guide/raw/master/consensys.zip
           config: https://raw.githubusercontent.com/ConsenSys/Style-Guide/master/.vale.ini
         env:
