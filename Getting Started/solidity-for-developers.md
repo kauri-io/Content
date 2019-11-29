@@ -22,9 +22,72 @@ A function or variable declared as `private` is only visible to the contract tha
 
 A function or variable declared as `internal` is only visible to the contract that defines it, or any contracts derived from that contract.
 
-A function or variable declared as `public` is part of the contract interface, and are accessible to all other contracts. The EVM also generates a getter function for public state variables automatically.
+For example with `data` of the `C` contract marked as `internal` or `private`:
+
+```solidity
+pragma solidity >=0.4.0 <0.7.0;
+
+contract C {
+ uint internal data = 42;
+}
+
+contract Caller {
+ C c = new C();
+ function f() public view returns (uint) {
+ return c.data();
+ }
+}
+```
+
+An attempt to call it from contract `Caller` results in a compiler error:
+
+```shell
+TypeError: Member "data" not found or not visible after argument-dependent lookup in contract C.
+return c.data();
+^----^
+```
+
+A function or variable declared as `public` is part of the contract interface, and are accessible to all other contracts. The EVM also generates a getter function for public state variables automatically. For example, by marking `data` as `public`, the `Caller` contract can "get" the value via a conveniennce function:
+
+```solidity
+pragma solidity >=0.4.0 <0.7.0;
+
+contract C {
+    uint public data = 42;
+}
+
+contract Caller {
+    C c = new C();
+    function f() public view returns (uint) {
+        return c.data();
+    }
+}
+```
 
 A function (not variable) declared as `external` is only part of the contract interface, and can be called by external contracts, but not internal ones.
+
+For example, assigning `get()` to `localData` results in an error, usig it within `Caller` does not:
+
+```solidity
+pragma solidity >=0.4.0 <0.7.0;
+
+contract SimpleStorage {
+    uint storedData;
+
+    function get() external view returns (uint) {
+        return storedData;
+    }
+
+    uint localData = get();
+}
+
+contract Caller {
+    SimpleStorage c = new SimpleStorage();
+    function f() public view returns (uint) {
+        return c.get();
+    }
+}
+```
 
 _Read more details about visibility [in the documentation](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#visibility-and-getters)._
 
