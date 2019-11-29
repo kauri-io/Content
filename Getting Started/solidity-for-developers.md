@@ -112,7 +112,27 @@ Like other languages, Solidity doesn't provide any special functionality for set
 
 ### View and Pure
 
-A function declared `view` promises not to modify state. A function declared `pure` promises not to modify or read from state. When compiling the contract, the compiler throws an error if a function marked `view` or `pure` does not meet this promise.
+A function declared `view` promises not to modify state. A function declared `pure` promises not to modify or read from state. When compiling the contract, the compiler throws an error if a function marked `view` or `pure` does not meet this promise. For example:
+
+```solidity
+pragma solidity >=0.5.0 <0.7.0;
+
+contract C {
+    uint c;
+    function f(uint a, uint b) public view returns (uint) {
+        c = a * (b + 42) + now;
+    }
+}
+```
+
+Results in the following error (and similar for `pure`):
+
+```shell
+TypeError: Function declared as view, but this expression (potentially) modifies the state and thus requires non-payable (the default) or payable.
+
+        c = a * (b + 42) + now;
+        ^
+```
 
 ## Interfaces and abstract contracts
 
