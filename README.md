@@ -1,6 +1,6 @@
 # Content
 
-A peer reviewed repository of content for [kauri.io](https://www.kauri.io). This will be creating very much much spulling errors.
+A peer reviewed repository of content for [kauri.io](https://www.kauri.io). This will be creating very much much spulling errors. This may be generating some, I very much hupe so.
 
 [![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
 
