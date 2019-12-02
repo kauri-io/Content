@@ -1,0 +1,18 @@
+## Introduction
+
+1. What's new with the Metamask plugin
+2. How this improves the extension.
+3. Break down of the new Plugin APIs of Metamask. (Writeup)
+4. Explain Approach, and suggest concepts.
+
+## POC
+
+5. POC Demo (Walkthrough)
+5.1. Abstract level code description.
+5.2. Plugin APIs
+5.3. Creating a Simple Plugin (Code and Description with Images)
+
+6. Future Developments and Current status
+
+- Resources Link (Eg. Wiki and Discussion Groups)
+- References
