@@ -18,10 +18,26 @@ somewhat depends on your project, but it should be simple enough for
 anyone to complete, but complicated enough that it shows a semi-realistic
 use case that highlights the potential of your project.
 
+Let's take a hypothetical example of an SDK that allows a dapp developer to add the activity of a user from another site (say, a blog for example) to their dapp via an Ethereum address. The key components of this are a function that calls an API endpoint that returns activity based on an Ethereum address supplied as a parameter.
+
+With this in mind, a getting started guide might cover:
+
+-   Installing the SDK package (let's say it's available for JavaScript and Ruby)
+-   Including the library in an application
+-   The function that returns activity from the other application, with the address as a parameter
+-   Outputting that data
+-   Next steps
+
 ### Guides
 
 Guides are a collection of documentation pages that take a user from getting
 started to the next steps. These are typically more in-depth around a particular topic or common use case.
+
+For the example above guides might include topics such as:
+
+-   Authenticating API calls
+-   Filtering the results from the API call
+-   Using the SDK without JavaScript or Python
 
 ### Reference
 
@@ -32,6 +48,12 @@ is the place where you explain what individual tools do. Often you can
 autogenerate these docs from code or other sources, and that's fine.
 Anyone digging into this section knows what they are looking for and is
 looking for specifics on how to use it.
+
+For the example above reference might include topics such as:
+
+-   Potential error messages
+-   All other API calls
+-   Full function and parameter reference
 
 ### Explanation
 
