@@ -1,6 +1,6 @@
 # Why Write Documentation
 
-** What's one of the first things you look at when you look at using a new project?**
+**What's one of the first things you look at when you look at using a new project?**
 
 It's likely some form of documentation. Whether it is official
 documentation, or external blog posts, videos, books, or even code
@@ -47,19 +47,21 @@ specific packages fix the nightmare.
 When writing documentation, test all your assumptions. This takes
 longer, but like many things, in the long run, it saves you and your
 users time. Use tools such as virtual environments (if the language supports them), Docker or virtual machines to test fresh setups, and follow the same process for any operating systems
-you intend to release for. You can automate much of this work, which you
+you intend to release for. You can automate much of this work (covered later), which you
 can also use for testing your code, but there's no reason not to tie this code testing and documentation together.
+
+For example I have frequently encountered NPM packages that have Python packages as a dependency, meaning that even if a developer is attempting to install a JavaScript project they might need Python installed. This seems counter intuitive, but thorough testing on vanilla machines can highlight such issues.
 
 ## About your reader
 
-The next assumption is around who your reader is, and what they may know. We'll cover writing inclusive language later, but in summary, not every reader is like you. 'Developers don't all learn their craft in the same ways. Not all spent 3-4 years studying
+The next assumption is around who your reader is, and what they may know. We'll cover writing inclusive language later, but in summary, not every reader is like you. Developers don't all learn their craft in the same ways. Not all spent 3-4 years studying
 computer science. Many (possibly like you reading this) learnt through
 short, intense coding courses or boot camps. These shorter courses often
 teach students how to code practically, but not so much theory
 on topics such as design patterns, assembly language, or underlying principles.
 
 Documentation is not the place to show off how smart you are and how
-much you know. It is the place to explain to users how to use your
+much you know. Documentation is not the place to make your reader feel inferior for not understanding an academic reference. Documentation is the place to explain to users how to use your
 project. If you need to explain complex theory because it is essential
 to understanding your project, then include it, and supply explanations
 and background to these concepts. You don't have to write these (unless
