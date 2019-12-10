@@ -1,11 +1,12 @@
 # Content
-A tutorial on how to create a 3Box chatbox plugin
+ A tutorial on how to create a 3Box chatbox plugin
 
-Outline 
+ Updated Outline 
 
-1). An overview of 3box chatbox plugin
-2). Introduction to 3Box chatbox plugin
-3). Use cases of 3Box chatbox plugin
-4). How 3box chatbox works
-(i) example of 3box chatbox plugin
-5). How to build a 3box chatbox plugin.
+ 1.Introduction to 3box chatbox plugin.
+ 2.Use cases of 3box chatbox plugin.
+ 3.How 3box chatbox works.
+ 4.Example of 3box chatbox plugin
+ 5.How to build with 3box chatbox plugins
+ 6.Reasons for using 3box chatbox plugins
+
