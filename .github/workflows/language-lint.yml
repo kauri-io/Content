@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: Vale
-        uses: errata-ai/vale-action@v1.0.2
+        uses: errata-ai/vale-action@v1.0.3
         with:
           styles: |
             https://github.com/errata-ai/write-good/releases/latest/download/write-good.zip
