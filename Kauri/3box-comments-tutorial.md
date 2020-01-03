@@ -1,10 +1,10 @@
 # Tutorial: Add the 3Box Comments Plugin to Your React App
 
-User comments are an important part of any content-driven application. Traditional web applications will usually pair commenting systems with a corresponding user profile system. When we're creating commenting systems for the decentralized web we're also going to need decentralized user profiles. Luckily, the [3Box Comments Plugin](https://docs.3box.io/build/plugins/comments) has us covered.
+User comments are an important part of any content-driven application. Traditional web applications usually pair commenting systems with a corresponding user profile system. When we create commenting systems for the decentralized web we also need decentralized user profiles. Luckily, the [3Box Comments Plugin](https://docs.3box.io/build/plugins/comments) has us covered.
 
 The 3Box Comments Plugin is an easy to use [React](https://reactjs.org/) component that adds a decentralized commenting system to your app. It connects directly to your users' Ethereum wallets, so there's no need to implement yet another profile system. It also integrates with [3Box](https://3box.io/) to upload comments to a database that your users have control over. If you're looking for the ultimate decentralized commenting system, look no further.
 
-In this tutorial, we're going to build a small React app that implements the 3Box Comments Plugin. We're going cover all the steps you'll need to take in order to get a decentralized commenting system running. If you're feeling adventurous, you're more than welcome to follow along while adding the plugin to an existing project.
+In this tutorial, we build a small React app that implements the 3Box Comments Plugin. We cover all the steps you need to take in order to get a decentralized commenting system running. If you're feeling adventurous, you're more than welcome to follow along while adding the plugin to an existing project.
 
 ## About 3Box
 
@@ -12,7 +12,7 @@ In this tutorial, we're going to build a small React app that implements the 3Bo
 
 ## Setup
 
-The [3Box Comments Plugin](https://docs.3box.io/build/plugins/comments) is a [React](https://reactjs.org/) component. We'll need to create a React project base first. We're going to use React's [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) tool to set everything up, so make sure you've got [Node.js](https://nodejs.org/en/) and [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed on your machine.
+The [3Box Comments Plugin](https://docs.3box.io/build/plugins/comments) is a [React](https://reactjs.org/) component. We need to create a React project base first. We use React's [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) tool to set everything up, so make sure you've got [Node.js](https://nodejs.org/en/) and [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed on your machine.
 
 ### Creating the Project Base
 
@@ -29,7 +29,7 @@ You can check that everything's working as expected by starting the app and head
 npm start
 ```
 
-You should a placeholder page with some basic information about React:
+You should see a placeholder page with some basic information about React:
 
 ![Initial React app screenshot]()
 
@@ -37,7 +37,7 @@ You should a placeholder page with some basic information about React:
 
 ### Installing 3Box
 
-Next, we're going to install the 3Box Comments Plugin and the [3Box.js SDK](https://github.com/3box/3box-js). 3Box.js will connect our plugin to the 3Box data storage system that gives users control over their comments. In your terminal:
+Next, we install the 3Box Comments Plugin and the [3Box.js SDK](https://github.com/3box/3box-js). 3Box.js connects our plugin to the 3Box data storage system that gives users control over their comments. In your terminal:
 
 ```sh
 npm install 3box 3box-comments-react --save
@@ -45,7 +45,7 @@ npm install 3box 3box-comments-react --save
 
 ### Installing an Ethereum Wallet
 
-Finally, make sure you've got an Ethereum wallet (like [MetaMask](https://metamask.io/)) installed in your browser. You'll need this in order to get an instance of [`ethereum`](https://metamask.github.io/metamask-docs/API_Reference/Ethereum_Provider) injected into your webpage. You can also easily use a tool like [Web3](https://github.com/ethereum/web3.js) to create an `ethereum` instance, but we'll use a browser wallet to keep things focused.
+Finally, make sure you've got an Ethereum wallet (like [MetaMask](https://metamask.io/)) installed in your browser. You need this in order to get an instance of [`ethereum`](https://metamask.github.io/metamask-docs/API_Reference/Ethereum_Provider) injected into your webpage. You can also easily use a tool like [Web3](https://github.com/ethereum/web3.js) to create an `ethereum` instance, but we'll use a browser wallet to keep things focused.
 
 Once you've installed everything, you're all set to start experimenting with decentralized comments!
 
@@ -53,17 +53,17 @@ Once you've installed everything, you're all set to start experimenting with dec
 
 Before we continue, let's take a quick look at how the 3Box Comments Plugin actually works. 
 
-The plugin handles two key features, user profile generation and comment storage. It connects to a [`3box`](https://metamask.github.io/metamask-docs/API_Reference/Ethereum_Provider) instance and an [`ethereum`](https://metamask.github.io/metamask-docs/API_Reference/Ethereum_Provider) instance (either injected by a browser wallet like [MetaMask](https://metamask.io/) or created by a tool like [Web3](https://github.com/ethereum/web3.js)) to automatically create a [3Box Profile](https://docs.3box.io/build/web-apps/profiles) linked to the user's Ethereum wallet. The `3box` and `ethereum` instances should exist globally within your application, so your users will only need to authenticate once. The plugin then opens a websocket connection via `3box` to stream comments to/from a 3Box database. Users can manage and control all of their comments and data on the [3Box Hub](https://3box.io/hub).
+The plugin handles two key features, user profile generation and comment storage. It connects to a [`3box`](https://metamask.github.io/metamask-docs/API_Reference/Ethereum_Provider) instance and an [`ethereum`](https://metamask.github.io/metamask-docs/API_Reference/Ethereum_Provider) instance (either injected by a browser wallet like [MetaMask](https://metamask.io/) or created by a tool like [Web3](https://github.com/ethereum/web3.js)) to automatically create a [3Box Profile](https://docs.3box.io/build/web-apps/profiles) linked to the user's Ethereum wallet. The `3box` and `ethereum` instances should exist globally within your application, so your users only need to authenticate once. The plugin then opens a websocket connection via `3box` to stream comments to/from a 3Box database. Users can manage and control all of their comments and data on the [3Box Hub](https://3box.io/hub).
 
-The Comments Plugin can be created in [a few different ways](https://docs.3box.io/build/plugins/comments#2-choose-your-authentication-pattern), depending on when and how your instances of `ethereum` and `3box` are initialized. For the best possible user experience, `ethereum` and `3box` should both be initialized either before or after the Comments component is [mounted](https://docs.3box.io/build/plugins/comments#2-choose-your-authentication-pattern). It's possible to use the component without initializing an instance of `3box`, but users will have to re-authenticate on each page using the plugin. More information about the different initialization and authentication flows is available on the [documentation page](https://docs.3box.io/build/plugins/comments) for the plugin.
+The Comments Plugin can be created in [a few different ways](https://docs.3box.io/build/plugins/comments#2-choose-your-authentication-pattern), depending on when and how your instances of `ethereum` and `3box` are initialized. For the best possible user experience, `ethereum` and `3box` should both be initialized either before or after the Comments component is [mounted](https://docs.3box.io/build/plugins/comments#2-choose-your-authentication-pattern). It's possible to use the component without initializing an instance of `3box`, but users have to re-authenticate on each page using the plugin. More information about the different initialization and authentication flows is available on the [documentation page](https://docs.3box.io/build/plugins/comments) for the plugin.
 
 ## Let's Get Down to Business
 
-Now that we've covered the internals, let's get started with our demo application. We're going to start by modifying `src/App.js`. We don't need of React's demo code in `src/App.js`, so go ahead and delete the file's contents.
+Now that we've covered the internals, let's get started with our demo application. We start by modifying `src/App.js`. We don't need of React's demo code in `src/App.js`, so go ahead and delete the file's contents.
 
 ### Creating an App Component
 
-First, we'll create a basic [React component](https://reactjs.org/docs/react-component.html) to hold the contents of our app. There's nothing special here, we're just setting things up:
+First, we create a basic [React component](https://reactjs.org/docs/react-component.html) to hold the contents of our app. There's nothing special here, we're just setting things up:
 
 ```js
 // src/App.js
@@ -94,7 +94,7 @@ Your development server should automatically compile the app again once you've m
 
 ### Importing 3Box
 
-Now we're going to start setting up our `3box` instance. We'll import `3box` and `3box-comments-react` at the top of `src/App.js` file:
+Now we start setting up our `3box` instance. We import `3box` and `3box-comments-react` at the top of `src/App.js` file:
 
 ```js
 // src/App.js
@@ -107,7 +107,7 @@ import BoxComments from '3box-comments-react';
 
 ### Adding Component State
 
-Our `App` component will need to [store some state](https://reactjs.org/docs/state-and-lifecycle.html#adding-local-state-to-a-class) for later. Particularly, we'll need to store a `3box` instance, the user's Ethereum address, the user's 3Box profile (if any), and a readiness flag:
+Our `App` component needs to [store some state](https://reactjs.org/docs/state-and-lifecycle.html#adding-local-state-to-a-class) for later. Particularly, we need to store a `3box` instance, the user's Ethereum address, the user's 3Box profile (if any), and a readiness flag:
 
 ```js
 // src/App.js
@@ -133,13 +133,13 @@ class App extends React.Component {
 
 ### Initializing 3Box
 
-We're ready to initialize 3Box. We're going create our `3box` instance after the component is mounted by listening for the [`componentDidMount`](https://reactjs.org/docs/react-component.html#componentdidmount) lifecycle hook. We'll need to create a function `login()` that actually handles the `3box` initialization logic.
+We're ready to initialize 3Box. We create our `3box` instance after the component is mounted by listening for the [`componentDidMount`](https://reactjs.org/docs/react-component.html#componentdidmount) lifecycle hook. We need to create a function `login()` that handles the `3box` initialization logic.
 
-Note here that we need access to an `ethereum` instance in order to initialize `3box`. Again, you can create an `ethereum` instance with a library like Web3, but our browser wallet will automatically inject an `etherum` instance on our behalf.
+**Note** We need access to an `ethereum` instance in order to initialize `3box`. Again, you can create an `ethereum` instance with a library like Web3, but our browser wallet automatically injects an `ethereum` instance on our behalf.
 
-Our `login()` function is going to pull the user's address from `ethereum` and then use that address to connect to `3box`. We'll be ready to create the component once this first step is complete. Our `3box` instance will do some light synchronization in the background, so we'll also update the component once synchronization has finished.
+Our `login()` function pulls the user's address from `ethereum` and then uses that address to connect to `3box`. We'll be ready to create the component once this first step is complete. Our `3box` instance does some light synchronization in the background, so we also update the component once synchronization has finished.
 
-Adding these new functions:
+Add these new functions:
 
 ```js
 // src/App.js
@@ -185,14 +185,14 @@ class App extends React.Component {
 
 ### Creating the Component
 
-We're finally ready to create our component. We're going to update our [`render()`](https://reactjs.org/docs/react-component.html#render) function so that it renders the component we imported from `3box-comments-react`. Once we're finished with this step, we'll have have a working comment section!
+We're finally ready to create our component. We update our [`render()`](https://reactjs.org/docs/react-component.html#render) function so that it renders the component we imported from `3box-comments-react`. Once we're finished with this step, we have have a working comment section!
 
 The Comments component takes a few required parameters. These parameters are:
 
 | Property          | Type     | Description                                                                                                                        |
 |-------------------|----------|------------------------------------------------------------------------------------------------------------------------------------|
-| `spaceName`       | `string` | Some [3Box Space](https://docs.3box.io/api/storage) name for your application. You'll usually want to use a single `spaceName` throughout your entire application. |
-| `threadName`      | `string` | Some [3Box Thread](https://docs.3box.io/api/messaging) name for this specific component. Each component typically has its own `threadName`.                          |
+| `spaceName`       | `string` | A [3Box Space](https://docs.3box.io/api/storage) name for your application. You usually want to use a single `spaceName` throughout your entire application. |
+| `threadName`      | `string` | A [3Box Thread](https://docs.3box.io/api/messaging) name for this specific component. Each component typically has its own `threadName`.                          |
 | `adminEthAddr`    | `string` | An Ethereum address for the admin of your application. Admins are able to moderate comments in the comment thread.                 |
 | `box`             | `Object` | A `3box` instance. In our case, the one we initialized and added to our `state`.                                                   |
 | `currentUserAddr` | `string` | The address of the user viewing the component. We pulled this from the `ethereum` instance earlier.
