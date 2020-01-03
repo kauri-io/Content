@@ -197,7 +197,7 @@ The Comments component takes a few required parameters. These parameters are:
 | `box`             | `Object` | A `3box` instance. In our case, the one we initialized and added to our `state`.                                                   |
 | `currentUserAddr` | `string` | The address of the user viewing the component. We pulled this from the `ethereum` instance earlier.
 
-Let's go ahead and create the component using the values we initialized in `login()`. Make sure to replace `spaceName`, `threadName`, and `adminEthAddr` with your own values:
+Let's go ahead and create the component using the values we initialized in `login()` by modifying our existing `render()` function. Make sure to replace `spaceName`, `threadName`, and `adminEthAddr` with your own values:
 
 ```js
 // src/App.js
