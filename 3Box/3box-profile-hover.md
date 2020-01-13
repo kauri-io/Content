@@ -60,8 +60,10 @@ profile hovers.
 
 Afterward, let's install the `profile-hover` component.
 
-```cd profile-demo
- npm i -S profile-hover```
+```
+cd profile-demo
+npm i -S profile-hover
+```
 
 Let's open the `App.js` and import the package:
 
@@ -72,7 +74,7 @@ ways with which we can customize how to display it.
 
 Let's modify the `App.js` in order to see how easy it is to use this feature.
 
-```react
+```javascript
 import React from 'react';
 import "./App.css";
 import ProfileHover from 'profile-hover';
