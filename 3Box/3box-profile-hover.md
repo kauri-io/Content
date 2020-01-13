@@ -3,6 +3,7 @@
 
 
 One of the biggest frictions with onboarding users to Web3 is overcoming a lot of the technical issues that are required by design from decentralized networks and one of them are public addresses which are represented by a 40 character hexadecimal hash which is very unappealing for users.
+
 This issue can be solved using profile hovers which instead of displaying a user's Ethereum address you can display a basic social identity, think of it like using ENS domains but more sociable.
 In this tutorial, we will expand on what 3Box offers and how to use profile hovers in React and HTML/CSS apps.
 
@@ -11,6 +12,7 @@ In this tutorial, we will expand on what 3Box offers and how to use profile hove
 
 
 3Box allows front-end web developers to keep user data on an open storage network instead of a centralized database server, browser localStorage, or the blockchain. With 3Box, developers are able to quickly build more secure, lightweight, and powerful applications.
+
 All the data is publicly available but only private data can be decrypted by the user given explicit permission.
 
 3Box provides a JS SDK and various APIs. The profile hover uses the profiles API to get basic data of the user such as the name.
@@ -29,15 +31,22 @@ Take a look at all the available APIs [here](https://docs.3box.io/api/index).
 
 
 Profile hovers are a quick and easy way to make your decentralized application more sociable, useable and interactive with a basic social identity that works natively with Ethereum.
+
 If you have a decentralized application and you want to replace user's hex addresses with human-readable names, images, descriptions and other social metadata in their application's UI then you're in the right place!
+
 The `profile-hover` component consists of two elements: `tile` and `hover`, they both have different functionalities.
+
 The `tile` element appears when you need to display an Ethereum address. It has a default style associated with it but you can also decide not to use it.
-![Tile](/images/tile.png)
+
+![Tile](https://github.com/Solexplorer/Content/blob/master/3Box/images/tile.png)
+
 The `hover` element appears once the `tile` element is hovered and it pulls the data from the user's 3Box profile such as name, image, and description.
-![Hover](/images/hover.png)
+
+![Hover](https://github.com/Solexplorer/Content/blob/master/3Box/images/hover.png)
 
 As outlined in the previous section the profile-hover uses the profiles API to get the data but if the user didn't sign up with 3Box it shows the shortened address and a blocky identicon like this:
-![No_account](/images/no_account.png)
+
+![No_account](https://github.com/Solexplorer/Content/blob/master/3Box/images/no_account.png)
 
 ## Using profile hovers in a React app
 
@@ -60,6 +69,7 @@ Let's open the `App.js` and import the package:
 
 At this point, we can use the imported component to our liking. There are various
 ways with which we can customize how to display it.
+
 Let's modify the `App.js` in order to see how easy it is to use this feature.
 
 ```
@@ -121,7 +131,7 @@ Now you can run the React app.
 
 `npm start`
 
-![App](/images/app.png)
+![App](https://github.com/Solexplorer/Content/blob/master/3Box/images/app.png)
 
 
 # Using the HTML element
@@ -137,6 +147,7 @@ To display and address, you just need to add the following tag.
 
 There are few other ways to customize your profile hover, you can add `data-display='full'`
 to show the entire address instead of the shortened one.
+
 You can also decide to not use the default styling using `data-theme='none'`.
 
 This is an example of how you can use profile hovers in a HTML App.
@@ -189,7 +200,9 @@ check them out [here](https://github.com/3box/profile-hover#prop-types).
 ## Conclusion
 
 We have seen how to use this feature, now I hope you will use it to improve your
-UI . If you have any questions regarding profile hovers head over to the official
+UI. 
+If you have any questions regarding profile hovers head over to the official
 documentation here: https://docs.3box.io/ and if you want to discuss something
 there is an apposite [Discord](https://discordapp.com/invite/TAefehN) for that.
+
 See you next time.
