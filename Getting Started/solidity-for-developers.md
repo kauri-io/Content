@@ -1,4 +1,6 @@
-# Understanding Solidity
+# An Introduction to Solidity for Experienced Developers
+
+**This post applies to Solidity 0.5.x, I am working on an update for 0.6.x**.
 
 You're an experienced JavaScript/Java/Python/Go/Ruby/Rust/COBOL/somethingelse developer and have heard about this Ethereum thing. You took a quick look at Solidity, and it looked familiar, but you saw some terms that were new and confusing. Maybe you even tried running an Ethereum node or two locally, and it looked a bit like some other distributed systems you tried before, but all that accounts and addresses stuff was new.
 
@@ -14,7 +16,7 @@ Just when you thought it was all starting to make sense, it's worth pointing out
 
 ## Functions and variables
 
-Similar to Java function methods, Solidity function modifiers change the way that code interacts with them, and how the compiler deals with them.
+Like Java function methods, Solidity function modifiers change the way that code interacts with them, and how the compiler deals with them.
 
 ### Visibility
 
@@ -89,7 +91,7 @@ contract Caller {
 }
 ```
 
-_Read more details about visibility [in the documentation](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#visibility-and-getters)._
+_Read more details about visibility [in the documentation](https://solidity.readthedocs.io/v0.5.15/v0.5.12/contracts.html#visibility-and-getters)._
 
 Getter functions operate similarly to other programming languages and provide a convenience function to access the value of a public state variable. You access the value from the getter function by creating an instance of the contract that provides the variable in the calling contract. For example:
 
@@ -110,7 +112,7 @@ contract Caller {
 
 Like other languages, Solidity doesn't provide any special functionality for setter functions, and it is up to you to implement them based on your needs.
 
-### View and Pure
+### Protecting state with `view` and `pure`
 
 A function declared `view` promises not to modify state. A function declared `pure` promises not to modify or read from state. When compiling the contract, the compiler throws an error if a function marked `view` or `pure` does not meet this promise. For example:
 
@@ -136,11 +138,11 @@ TypeError: Function declared as view, but this expression (potentially) modifies
 
 ## Interfaces and abstract contracts
 
-Similar to classes in C++ or Java, interfaces and abstract contracts in Solidity are a way of implementing inheritance.
+Similar to classes in C++ or Java, interfaces, and abstract contracts in Solidity are a way of implementing inheritance.
 
-[An abstract contract](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#abstract-contracts) is a contract with at least one function that lacks an implementation. An abstract contract is not compiled, but other contracts can use it as a base contract. Interestingly, if the contract inherits from an abstract contract, but doesn't implement all the non-implemented functions, then it is also an abstract contract.
+[An abstract contract](https://solidity.readthedocs.io/v0.5.15/v0.5.12/contracts.html#abstract-contracts) is a contract with at least one function that lacks an implementation. An abstract contract is not compiled, but other contracts can use it as a base contract. If the contract inherits from an abstract contract, but doesn't implement all the non-implemented functions, then it is also an abstract contract.
 
-[Interfaces](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#interfaces) are similar, but are more restricted:
+[Interfaces](https://solidity.readthedocs.io/v0.5.15/v0.5.12/contracts.html#interfaces) are similar, but are more restricted:
 
 -   They cannot implement any functions.
 -   They cannot inherit other contracts or interfaces.
@@ -150,7 +152,7 @@ Similar to classes in C++ or Java, interfaces and abstract contracts in Solidity
 
 ## Error handling
 
-Solidity does not have the concept of `try/catch` common in other programming languages. Instead, it provides 3 convenience functions to check if conditions are met before performing an operation. If the conditions are not met, all changes made to state in the current function call (and sub-calls) are reverted, and an error message generated. The three functions work in slightly different ways, and to serve different potential error flows. Read more about the details and how to use them [in the documentation](https://solidity.readthedocs.io/en/latest/control-structures.html#error-handling-assert-require-revert-and-exceptions).
+Solidity does not have the concept of `try/catch` common in other programming languages. Instead, it provides 3 convenience functions to check if conditions are met before performing an operation. If the conditions are not met, all changes made to state in the current function call (and sub-calls) are reverted, and an error message generated. The three functions work in slightly different ways, and to serve different potential error flows. Read more about the details and how to use them [in the documentation](https://solidity.readthedocs.io/v0.5.15/latest/control-structures.html#error-handling-assert-require-revert-and-exceptions).
 
 ## Subscribing to events
 
@@ -174,7 +176,7 @@ contract ClientReceipt {
 }
 ```
 
-_Read the documentation for more details on [events](https://solidity.readthedocs.io/en/latest/contracts.html#events)._
+_Read the documentation for more details on [events](https://solidity.readthedocs.io/v0.5.15/latest/contracts.html#events)._
 
 ## Storage locations
 
@@ -186,11 +188,11 @@ These are:
 -   "Memory", where every call to the contract creates a cleared instance of the variable.
 -   "Stack", is similar to the register, but has limited access options.
 
-Find more details [in the documentation](https://solidity.readthedocs.io/en/latest/introduction-to-smart-contracts.html#storage-memory-and-the-stack).
+Find more details [in the documentation](https://solidity.readthedocs.io/v0.5.15/latest/introduction-to-smart-contracts.html#storage-memory-and-the-stack).
 
-## Libraries and using
+## Modularity
 
-You can think of [libraries](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#libraries) as something like an `include`, `import` or `require` statement for using any public functions and variables from other contracts. The `[using A for B](https://solidity.readthedocs.io/en/v0.5.12/contracts.html#using-for)` statement lets you take this a step further, by attaching library `A` to type `B`. This means that the functions in the library receive the object they are called on as their first parameter. This effectively lets you override or replace functions with library functions, and there are common patterns in Solidity for doing this, such as using the `[SafeMath](https://docs.openzeppelin.com/contracts/2.x/api/math#SafeMath)` library to improve arithmetic operations.
+You can think of [libraries](https://solidity.readthedocs.io/v0.5.15/v0.5.12/contracts.html#libraries) as something like an `include`, `import` or `require` statement for using any public functions and variables from other contracts. The `[using A for B](https://solidity.readthedocs.io/v0.5.15/v0.5.12/contracts.html#using-for)` statement lets you take this a step further, by attaching library `A` to type `B`. This means that the functions in the library receive the object they are called on as their first parameter. This effectively lets you override or replace functions with library functions, and there are common patterns in Solidity for doing this, such as using the `[SafeMath](https://docs.openzeppelin.com/contracts/2.x/api/math#SafeMath)` library to improve arithmetic operations.
 
 Here's an abstracted example of a library definition, and a contract that uses it:
 
@@ -253,4 +255,4 @@ contract C {
 }
 ```
 
-Read the documentation for more on [libraries](https://solidity.readthedocs.io/en/latest/contracts.html#libraries) and [using for](https://solidity.readthedocs.io/en/latest/contracts.html#using-for).
+Read the documentation for more on [libraries](https://solidity.readthedocs.io/v0.5.15/latest/contracts.html#libraries) and [using for](https://solidity.readthedocs.io/v0.5.15/latest/contracts.html#using-for).
