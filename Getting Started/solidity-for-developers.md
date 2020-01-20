@@ -47,7 +47,7 @@ return c.data();
 ^----^
 ```
 
-A function or variable declared as `public` is part of the contract interface, and are accessible to all other contracts. The EVM also generates a getter function for public state variables automatically. For example, by marking `data` as `public`, the `Caller` contract can "get" the value via a conveniennce function:
+A function or variable declared as `public` is part of the contract interface, and are accessible to all other contracts. The EVM also generates a getter function for public state variables automatically. For example, by marking `data` as `public`, the `Caller` contract can "get" the value via a convenience function:
 
 ```solidity
 pragma solidity >=0.4.0 <0.7.0;
@@ -66,7 +66,7 @@ contract Caller {
 
 A function (not variable) declared as `external` is only part of the contract interface, and can be called by external contracts, but not internal ones.
 
-For example, assigning `get()` to `localData` results in an error, usig it within `Caller` does not:
+For example, assigning `get()` to `localData` results in an error, using it within `Caller` does not:
 
 ```solidity
 pragma solidity >=0.4.0 <0.7.0;
