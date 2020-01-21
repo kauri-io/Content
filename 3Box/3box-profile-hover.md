@@ -14,15 +14,15 @@ In this tutorial, we expand on what 3Box offers and how to use the profile hover
 
 All the data is publicly available but only private data can be decrypted by the user giving explicit permission.
 
-3Box provides a JS SDK and various APIs. The profile hover uses the profiles API to get basic data of the user such as the name.
+3Box provides a JS SDK and various APIs. The profile hover uses the [profiles API](https://docs.3box.io/api/index#profiles) to get basic data of the user such as the name.
 
 There are different APIs available and these are the most important ones:
 
-Identity API: This one allows developers to perform various actions such as getting the decentralized identity (DID) from a user address or linking new addresses to the DID
+[Identity API](https://docs.3box.io/api/index#identity): This one allows developers to perform various actions such as getting the decentralized identity (DID) from a user address or linking new addresses to the DID
 
-Auth API: This API allows developers to request access to a user's 3box profile and spaces.
+[Auth API](https://docs.3box.io/api/index#auth): This API allows developers to request access to a user's 3box profile and spaces.
 
-Profiles API: This API allows developers to perform various actions such as getting public and private information from the user profile.
+[Profiles API](https://docs.3box.io/api/index#profiles): This API allows developers to perform various actions such as getting public and private information from the user profile.
 
 Take a look at all the available APIs [here](https://docs.3box.io/api/index).
 
