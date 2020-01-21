@@ -3,7 +3,7 @@
 
 One of the biggest frictions with onboarding users to Web3 is overcoming a lot of the technical issues that are required by design from decentralized networks and one of them are public addresses which are represented by a 40 character hexadecimal hash which is very unappealing for users.
 
-This issue can be solved using profile hovers which instead of displaying a user's Ethereum address you can display a basic social identity, think of it like using ENS domains but more sociable.
+This issue can be solved using profile hovers which instead of displaying a user's Ethereum address you can display a basic social identity, think of it like using [ENS domains](https://kauri.io/ens:-beginner's-guide/e7f098b57fd24afe9b70506517dd5a63/a) but more sociable.
 In this tutorial, we expand on what 3Box offers and how to use the profile hovers it offers in React and HTML/CSS apps.
 
 
@@ -28,14 +28,12 @@ Take a look at all the available APIs [here](https://docs.3box.io/api/index).
 
 ## Overview on profile hovers
 
+Integrating profile hovers into an application not only is a good way to associate hex addresses to 3Box profiles but it also increases social verification of other users in the network.
 
-Profile hovers are a quick and easy way to make your decentralized application more sociable, useable and interactive with a basic social identity that works natively with Ethereum.
-
-If you have a decentralized application and you want to replace user's hex addresses with human-readable names, images, descriptions and other social metadata in their application's UI then you're in the right place!
-
+If you have a decentralized application and you want to replace user's hex addresses with human-readable names, images, descriptions and other social metadata in their application's UI then you're in the right place! 
 The `profile-hover` component consists of two elements: `tile` and `hover`, they both have different functionalities.
 
-The `tile` element appears when you need to display an Ethereum address. It has a default style associated with it but you can also decide not to use it.
+The `tile` element appears when we need to display an Ethereum address. It has a default style associated with it but you can also decide not to use it.
 
 ![Tile](https://github.com/Solexplorer/Content/blob/master/3Box/images/tile.png)
 
@@ -49,10 +47,10 @@ As outlined in the previous section the profile-hover uses the profiles API to g
 
 ## Using profile hovers in a React app
 
-Before diving in, you need to have NodeJS installed, follow the guide
+Before diving in, we need to have NodeJS installed, follow the guide
 [here](https://nodejs.org/en/download/package-manager/)
 
-As a first step, you will need to create a React application in which we will use
+As a first step, we will need to create a React application in which we will use
 profile hovers.
 
 ```shell
@@ -140,23 +138,23 @@ npm start
 
 ## Using the HTML element
 
-In order to use the profile hover with a HTML app, we need to add the script at
-the end of the page.
+
+Create a new HTML file named `index.html` and add the script at the end of the HTML file.
 
 ```html
 <script type="text/javascript" src="https://unpkg.com/profile-hover"></script>
 
-To display an address, you need to add the following tag.
+To display an address, we need to add the following tag in the `body` section.
 
 ```html
 <threebox-address data-address='0x442dccee68425828c106a3662014b4f131e3bd9b'></threebox-address>
 
-There are few other ways to customize your profile hover, you can add `data-display='full'`
+There are few other ways to customize our profile hover, we can add `data-display='full'`
 to show the entire address instead of the shortened one.
 
-You can also decide to not use the default styling using `data-theme='none'`.
+We can also decide to not use the default styling using `data-theme='none'`.
 
-This is an example of how you can use profile hovers in a HTML App.
+This is an example of how we can use profile hovers in a HTML App.
 
 ```html
 <html>
@@ -191,13 +189,13 @@ The `address` property is required in order to display the profile hover since e
 profile is associated with an address.
 
 The `showName` property makes it possible to show the user's name from their 3Box profile,
-if you don't use the property it shows the address shortened. If a user didn't add a
+if we don't use the property it shows the address shortened. If a user didn't add a
 name to the profile, it will show the shortened address.
 
 The `url` property allows redirecting to a specific link when clicking on the `Tile`.
 
 The `displayFull` property shows the entire address instead of the shortened address.
-Remember that if you add the `showName` property after, it will override it (look
+Remember that if we add the `showName` property after, it will override it (look
 at the penultimate profile in the example above ).
 
 These are the most important properties, if you want to take a look at all of them,
@@ -208,7 +206,5 @@ These are the most important properties, if you want to take a look at all of th
 We have seen how to use this feature, now I hope you will use it to improve your
 UI. 
 If you have any questions regarding profile hovers head over to the official
-documentation here: https://docs.3box.io/ and if you want to discuss something
-there is an apposite [Discord](https://discordapp.com/invite/TAefehN) for that.
-
-See you next time.
+documentation [here](https://docs.3box.io) and if you want to discuss something
+there is a [Discord Server](https://discordapp.com/invite/TAefehN) for that.
