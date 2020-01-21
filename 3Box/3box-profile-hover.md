@@ -1,5 +1,4 @@
 
-### Summary
 
 
 One of the biggest frictions with onboarding users to Web3 is overcoming a lot of the technical issues that are required by design from decentralized networks and one of them are public addresses which are represented by a 40 character hexadecimal hash which is very unappealing for users.
