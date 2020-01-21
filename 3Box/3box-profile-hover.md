@@ -24,7 +24,7 @@ There are different APIs available and these are the most important ones:
 
 [Profiles API](https://docs.3box.io/api/index#profiles): This API allows developers to perform various actions such as getting public and private information from the user profile.
 
-Take a look at all the available APIs [here](https://docs.3box.io/api/index).
+[Read more about all the available APIs](https://docs.3box.io/api/index).
 
 ## Overview on profile hovers
 
