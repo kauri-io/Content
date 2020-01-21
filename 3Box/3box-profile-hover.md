@@ -1,9 +1,11 @@
 
 
 
-One of the biggest frictions with onboarding users to Web3 is overcoming a lot of the technical issues that are required by design from decentralized networks and one of them are public addresses which are represented by a 40 character hexadecimal hash which is very unappealing for users.
+By design public addresses in Ethereum are represented by a 40 character hexadecimal hash which is very unappealing for users. This problem can be solved using profile hovers which instead of displaying a user's Ethereum address, we can display a basic social identity, think of it like using [ENS domains](https://kauri.io/ens:-beginner's-guide/e7f098b57fd24afe9b70506517dd5a63/a) but more sociable.
+Here  is what a profile hover looks like:
 
-This issue can be solved using profile hovers which instead of displaying a user's Ethereum address you can display a basic social identity, think of it like using [ENS domains](https://kauri.io/ens:-beginner's-guide/e7f098b57fd24afe9b70506517dd5a63/a) but more sociable.
+![Profile hover](https://i.imgur.com/nSgxd9a.png)
+
 In this tutorial, we expand on what 3Box offers and how to use the profile hovers it offers in React and HTML/CSS apps.
 
 
