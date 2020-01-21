@@ -4,15 +4,15 @@
 One of the biggest frictions with onboarding users to Web3 is overcoming a lot of the technical issues that are required by design from decentralized networks and one of them are public addresses which are represented by a 40 character hexadecimal hash which is very unappealing for users.
 
 This issue can be solved using profile hovers which instead of displaying a user's Ethereum address you can display a basic social identity, think of it like using ENS domains but more sociable.
-In this tutorial, we will expand on what 3Box offers and how to use profile hovers in React and HTML/CSS apps.
+In this tutorial, we expand on what 3Box offers and how to use the profile hovers it offers in React and HTML/CSS apps.
 
 
 ## Introducing the 3Box SDK and APIs
 
 
-3Box allows front-end web developers to keep user data on an open storage network instead of a centralized database server, browser localStorage, or the blockchain. With 3Box, developers are able to quickly build more secure, lightweight, and powerful applications.
+3Box helps front-end web developers to keep user data on an open storage network instead of a centralized database server, browser localStorage, or the blockchain. With 3Box, developers are able to quickly build more secure, lightweight, and powerful applications.
 
-All the data is publicly available but only private data can be decrypted by the user given explicit permission.
+All the data is publicly available but only private data can be decrypted by the user giving explicit permission.
 
 3Box provides a JS SDK and various APIs. The profile hover uses the profiles API to get basic data of the user such as the name.
 
@@ -49,29 +49,31 @@ As outlined in the previous section the profile-hover uses the profiles API to g
 
 ## Using profile hovers in a React app
 
-Before diving in, you will need to have NodeJS installed, follow the guide
+Before diving in, you need to have NodeJS installed, follow the guide
 [here](https://nodejs.org/en/download/package-manager/)
 
 As a first step, you will need to create a React application in which we will use
 profile hovers.
 
-`npx create-react-app profile-demo`
+```shell
+npx create-react-app profile-demo
 
-Afterward, let's install the `profile-hover` component.
+Afterward, install the `profile-hover` component.
 
-```
+```shell
 cd profile-demo
 npm i -S profile-hover
 ```
 
-Let's open the `App.js` and import the package:
+Open `App.js` and import the package:
 
-`import ProfileHover from 'profile-hover';`
+```javascript
+import ProfileHover from 'profile-hover';
 
 At this point, we can use the imported component to our liking. There are various
 ways with which we can customize how to display it.
 
-Let's modify the `App.js` in order to see how easy it is to use this feature.
+Let's modify the `App.js` in order to see how to use this feature.
 
 ```javascript
 import React from 'react';
@@ -115,36 +117,39 @@ export default App;
 
 Let me explain the example above, `ProfileHover` is the React component used to
 define various profiles, there are multiple properties associated with it for example
-you can use a custom theme for the `Tile` instead of using the default one by using
-the `noTheme` property or you can also specify the location of the hover.
+we can use a custom theme for the `Tile` instead of using the default one by using
+the `noTheme` property or we can also specify the location of the hover.
 
 Last but not least thing, let's also modify `App.css` so we can visualize the
 profiles in a smooth way adding the following lines:
 
-```
+```css
 .ethAddress {
         padding: 20px 0px 0px 40px;
         height: 80px;
 }
 ```
 
-Now you can run the React app.
+Now we can run the React app.
 
-`npm start`
+```shell
+npm start
 
 ![App](https://github.com/Solexplorer/Content/blob/master/3Box/images/app.png)
 
 
-# Using the HTML element
+## Using the HTML element
 
 In order to use the profile hover with a HTML app, we need to add the script at
 the end of the page.
 
-``<script type="text/javascript" src="https://unpkg.com/profile-hover"></script>``
+```html
+<script type="text/javascript" src="https://unpkg.com/profile-hover"></script>
 
-To display and address, you just need to add the following tag.
+To display an address, you need to add the following tag.
 
-` <threebox-address data-address='0x442dccee68425828c106a3662014b4f131e3bd9b'></threebox-address>`
+```html
+<threebox-address data-address='0x442dccee68425828c106a3662014b4f131e3bd9b'></threebox-address>
 
 There are few other ways to customize your profile hover, you can add `data-display='full'`
 to show the entire address instead of the shortened one.
@@ -180,7 +185,7 @@ This is an example of how you can use profile hovers in a HTML App.
 ## Customize the profile hover
 
 Imagine if you like the hover but you want to modify how they are visualized,
-this is in fact possible. Let's take a look at the important properties.
+this is possible. Let's take a look at the important properties.
 
 The `address` property is required in order to display the profile hover since every 3Box
 profile is associated with an address.
@@ -196,7 +201,7 @@ Remember that if you add the `showName` property after, it will override it (loo
 at the penultimate profile in the example above ).
 
 These are the most important properties, if you want to take a look at all of them,
-check them out [here](https://github.com/3box/profile-hover#prop-types).
+[read more in the documentation](https://github.com/3box/profile-hover#prop-types).
 
 ## Conclusion
 
