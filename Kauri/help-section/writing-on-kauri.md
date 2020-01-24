@@ -12,7 +12,7 @@ Now on to the good stuff.
 
 Kauri uses Metamask to associate your posts with an Ethereum address and allow for bounties to be paid for your posts. Click the _Sign In_ button beneath the profile picture in the top right, and click _Sign_ on the MetaMask popup to complete the process (this is not a transaction, and doesn't cost you any ETH).
 
-![Sign in to Kauri](https://i.imgur.com/EH85DMm.gif)
+![Sign in to Kauri](https://i.imgur.com/1m9JyZ6.gif)
 
 ## Edit Your Profile
 
@@ -41,7 +41,7 @@ Clicking this button takes you to the editor interface. The editor supports Mark
 
 You can upload PNG, GIF or JPEG images of up to 10 MB in size from the editor toolbar using the image button. This uploads the image to [IPFS](https://IPFS.io) and creates a markdown image tag with the URL auto-filled.
 
-<!-- INSERT image -->
+![Adding images with the Kauri editor](https://api.kauri.io:443/ipfs/QmdUK89Fd11kDtaMLJS5DfC7CCMg7J2u7Ckkg9JgdpbpsM)
 
 If you have an image already hosted elsewhere you want to use, create the markdown image tag manually.
 
@@ -49,7 +49,7 @@ If you have an image already hosted elsewhere you want to use, create the markdo
 
 You can't upload videos to Kauri, but to embed videos hosted elsewhere, click the video button in the editor toolbar, paste the video into the popup box and an HTML embed tag is created for you.
 
-<!-- INSERT image -->
+![Adding videos with the Kauri editor](https://api.kauri.io:443/ipfs/QmdpzQD41fDv2NMDgVxqea9JMSkXvetv98DUyuH3C4n1Vk)
 
 ### Preview tab
 
@@ -77,7 +77,7 @@ One of the core principles of Kauri is keeping content up-to-date and usable, an
 
 To update an article, first, open it. On the top toolbar of the article is an _Edit Article_ button. This button returns you to the editor, where you can make changes.
 
-<!-- INSERT IMAGE -->
+![Updating an existing article](https://api.kauri.io:443/ipfs/QmVQ813g24q67FKJdRsAK5FVTkrzyugYHvFPaYHYeG2ixd)
 
 If it's content you own, or content in a community you are an admin in, then you publish the changes as soon as you click _Publish Article_.
 
