@@ -1,18 +1,15 @@
+# Building a profile hover with 3box
 
-
-
-By design public addresses in Ethereum are represented by a 40 character hexadecimal hash which is very unappealing for users. This problem can be solved using profile hovers which instead of displaying a user's Ethereum address, we can display a basic social identity, think of it like using [ENS domains](https://kauri.io/ens:-beginner's-guide/e7f098b57fd24afe9b70506517dd5a63/a) but more sociable.
+By design public addresses in Ethereum are represented by a 40 character hexadecimal hash which is unappealing for users. This problem can be solved using profile hovers which instead of displaying a user's Ethereum address, we can display a basic social identity, think of it like using [ENS domains](https://kauri.io/ens:-beginner's-guide/e7f098b57fd24afe9b70506517dd5a63/a) but more sociable.
 Here  is what a profile hover looks like:
 
 ![Profile hover](https://i.imgur.com/nSgxd9a.png)
 
 In this tutorial, we expand on what 3Box offers and how to use the profile hovers it offers in React and HTML/CSS apps.
 
-
 ## Introducing the 3Box SDK and APIs
 
-
-3Box helps front-end web developers to keep user data on an open storage network instead of a centralized database server, browser localStorage, or the blockchain. With 3Box, developers are able to quickly build more secure, lightweight, and powerful applications.
+3Box helps front-end web developers to keep user data on an open storage network instead of a centralized database server, browser localStorage, or the blockchain. With 3Box, developers are able to build more secure, lightweight, and powerful applications.
 
 All the data is publicly available but only private data can be decrypted by the user giving explicit permission.
 
@@ -32,7 +29,7 @@ There are different APIs available and these are the most important ones:
 
 Integrating profile hovers into an application not only is a good way to associate hex addresses to 3Box profiles but it also increases social verification of other users in the network.
 
-If you have a decentralized application and you want to replace user's hex addresses with human-readable names, images, descriptions and other social metadata in their application's UI then you're in the right place! 
+If you have a decentralized application and you want to replace user's hex addresses with human-readable names, images, descriptions, and other social metadata in their application's UI then you're in the right place! 
 The `profile-hover` component consists of two elements: `tile` and `hover`, they both have different functionalities.
 
 The `tile` element appears when we need to display an Ethereum address. It has a default style associated with it but you can also decide not to use it.
@@ -45,7 +42,7 @@ The `hover` element appears once the `tile` element is hovered and it pulls the 
 
 As outlined in the previous section the profile-hover uses the profiles API to get the data but if the user didn't sign up with 3Box it shows the shortened address and a blocky identicon like this:
 
-![No_account](https://github.com/Solexplorer/Content/blob/master/3Box/images/no_account.png)
+![No account](https://github.com/Solexplorer/Content/blob/master/3Box/images/no_account.png)
 
 ## Using profile hovers in a React app
 
@@ -57,6 +54,7 @@ profile hovers.
 
 ```shell
 npx create-react-app profile-demo
+```
 
 Afterward, install the `profile-hover` component.
 
@@ -69,6 +67,7 @@ Open `App.js` and import the package:
 
 ```javascript
 import ProfileHover from 'profile-hover';
+```
 
 At this point, we can use the imported component to our liking. There are various
 ways with which we can customize how to display it.
@@ -112,7 +111,7 @@ const App = ({}) => {
   )
 }
 
-export default App; 
+export default App;
 ```
 
 Let me explain the example above, `ProfileHover` is the React component used to
@@ -120,7 +119,7 @@ define various profiles, there are multiple properties associated with it for ex
 we can use a custom theme for the `Tile` instead of using the default one by using
 the `noTheme` property or we can also specify the location of the hover.
 
-Last but not least thing, let's also modify `App.css` so we can visualize the
+Last but not least, let's also modify `App.css` so we can visualize the
 profiles in a smooth way adding the following lines:
 
 ```css
@@ -134,22 +133,23 @@ Now we can run the React app.
 
 ```shell
 npm start
+```
 
 ![App](https://github.com/Solexplorer/Content/blob/master/3Box/images/app.png)
 
-
 ## Using the HTML element
 
-
-Create a new HTML file named `index.html` and add the script at the end of the HTML file.
+Create a new HTML file named `index.html` and add the script before the closing `HTML` tag.
 
 ```html
 <script type="text/javascript" src="https://unpkg.com/profile-hover"></script>
+```
 
 To display an address, we need to add the following tag in the `body` section.
 
 ```html
 <threebox-address data-address='0x442dccee68425828c106a3662014b4f131e3bd9b'></threebox-address>
+```
 
 There are few other ways to customize our profile hover, we can add `data-display='full'`
 to show the entire address instead of the shortened one.
@@ -162,12 +162,7 @@ This is an example of how we can use profile hovers in a HTML App.
 <html>
   <head>
     <title>Profile demo</title>
-    <style>
-      .ethAddress {
-        padding: 20px 0px 0px 40px;
-        height: 80px;
-      }
-    </style>
+    <link href="./App.css" rel="stylesheet">
   </head>
   <body>
     <div class='ethAddress'>
@@ -184,10 +179,10 @@ This is an example of how we can use profile hovers in a HTML App.
 
 ## Customize the profile hover
 
-Imagine if you like the hover but you want to modify how they are visualized,
+Imagine you like the hover but you want to change how they are shown,
 this is possible. Let's take a look at the important properties.
 
-The `address` property is required in order to display the profile hover since every 3Box
+The `address` property displays the profile hover since every 3Box
 profile is associated with an address.
 
 The `showName` property makes it possible to show the user's name from their 3Box profile,
