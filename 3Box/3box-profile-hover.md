@@ -173,7 +173,7 @@ This is an example of how we can use profile hovers in a HTML App.
       </threebox-address>
     </div>
   </body>
-    <script type="text/javascript" src="../dist/widget.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/profile-hover@1.1.1/dist/widget.js"></script>
   </html>
 ```
 
