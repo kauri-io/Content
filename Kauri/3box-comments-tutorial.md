@@ -43,6 +43,14 @@ Next, we install the 3Box Comments Plugin and the [3Box.js SDK](https://github.c
 npm install 3box 3box-comments-react --save
 ```
 
+#### Bug Fix: `multicodec`
+
+3Box makes use of the `ipfs` Node.js package, which itself imports a library called `multicodec`. Due to a breaking change in the current version of `multicodec`, it's necessary at the moment to downgrade the library to version `0.5.6`. Install this library in your terminal via:
+
+```sh
+npm install multicodec@0.5.6 --save
+```
+
 ### Installing an Ethereum Wallet
 
 Finally, make sure you've got an Ethereum wallet (like [MetaMask](https://metamask.io/)) installed in your browser. You need this in order to get an instance of [`ethereum`](https://metamask.github.io/metamask-docs/API_Reference/Ethereum_Provider) injected into your webpage. You can also easily use a tool like [Web3](https://github.com/ethereum/web3.js) to create an `ethereum` instance, but we'll use a browser wallet to keep things focused.
@@ -146,6 +154,7 @@ Add these new functions:
 ...
 
 class App extends React.Component {
+  // Constructor from above.
   ...
 
   componentDidMount() {
@@ -178,6 +187,7 @@ class App extends React.Component {
   }
 
   ...
+  // Render function from above.
 }
 
 ...
