@@ -66,7 +66,7 @@ The transaction composition is nearly identical to the deployment transaction:
 
 The difference is the data/input is the function and necessary arguments to initiate an instance of the smart contract that will generate a meaningful response.
 
-The response is contained by examining the block transaction, again, using the transaction ID hash.  A bytecode response in the logsBloom portion of the block data is the machine code response to be constructed and interpreted.  
+The response is contained by examining the block transaction, again, using the transaction ID hash.  A bytecode response in the `logsBloom` portion of the block data is the machine code response to be constructed and interpreted.  
 
 # Network State Execution of the EVM
 
