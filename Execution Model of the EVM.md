@@ -1,8 +1,4 @@
-title: Execution Model of the Ethereum Virtual Machine
-
-description: This is an overview of the state change(s) that occur in the Ethereum Virtual Machine as a smart contract is executed.
-
-## Execution Model of the Ethereum Virtual Machine (EVM)
+# Execution Model of the Ethereum Virtual Machine (EVM)
 
 This is a high level overview of the execution model of the Ethereum Virtual Machine (EVM).  It outlines the state(s) of the machine that change between the execution steps of an executing smart contract in the EVM.  This consists of the configurations that are held and rewritten before and after each execution step which collectively could be referred to the "state" of the EVM.
 
@@ -42,11 +38,11 @@ We see that a transaction hash is generated (green hash at the bottom.)  Using t
 
 Here we see:
 
-* In the transaction, the to is left empty (‘0x0’ is shown).
+* In the transaction, the `to` is left empty (‘0x0’ is shown).
 
 * In the input, we only place the bytecode. It is because our SimpleStorage contract does not have a constructor that requires arguments. If arguments are needed in constructor, they are encoded according to the type and appended after the bytecode. We will see how the encoding is done when we call `set()` function in the next part.
 
-* The Contract Address is found in Transaction Receipt. We will use it in the next part.
+* The Contract Address is found in the Transaction Receipt. We will use it in the next part.
 
 * The default Gas Limit (gas) is 90,000 gas. If you do not specify the gas, you will encounter “out of gas” as it takes more than 90,000 gas for processing this transaction. Therefore we specify 200,000 gas for this transaction.
 
@@ -72,9 +68,9 @@ The response is contained by examining the block transaction, again, using the t
 
 The EVM is based on blockchain technology.  With each new set of transactions processed, a new block is added to the top of the existing data structure detailing the new state of the EVM and other protocol oriented state data existing outside the EVM.
 
-The newly generated block, a unique identifier, and the encapsulated and encrypted data represent the state execution of the network aspect of the EVM. 
+The newly generated block, a unique identifier, and the encapsulated and encrypted data represent the state execution of the network aspect of the EVM.
 
-# Resources
+## Resources
 
 * [KEVM:  A Complete Semantics of the Ethereum Virtual Machine](https://www.ideals.illinois.edu/bitstream/handle/2142/97207/hildenbrandt-saxena-zhu-rodrigues-guth-daian-rosu-2017-tr_0818.pdf?sequence=3&isAllowed=y)
 
