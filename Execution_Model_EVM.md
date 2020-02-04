@@ -2,7 +2,7 @@ title: Execution Model of the Ethereum Virtual Machine
 
 description: This is an overview of the state change(s) that occur in the Ethereum Virtual Machine as a smart contract is executed.
 
-# Execution Model of the Ethereum Virtual Machine (EVM)
+## Execution Model of the Ethereum Virtual Machine (EVM)
 
 This is a high level overview of the execution model of the Ethereum Virtual Machine (EVM).  It outlines the state(s) of the machine that change between the execution steps of an executing smart contract in the EVM.  This consists of the configurations that are held and rewritten before and after each execution step which collectively could be referred to the "state" of the EVM.
 
