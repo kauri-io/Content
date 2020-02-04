@@ -18,7 +18,7 @@ The execution model of the EVM includes the machine state and the network state.
 
 * Execute a function within a deployed contract on the Ethereum Network
 
-# Execution Event: Smart Contract Deployment
+## Execution Event: Smart Contract Deployment
 
 When a smart contract has been written and compiled, it is then ready for deployment on the Ethereum blockchain.  This is done by the holder of an externally owned account (i.e. wallet or API) submitting a transaction containing specific information.  The result creates a contract account which will be ready to accept function inputs as well as generate computed and meaningful outputs.
 
