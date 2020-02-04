@@ -52,7 +52,7 @@ Here we see:
 
 * It turns out the transaction processing only takes 112,213 gas. The remain is returned to transaction sender.
 
-# Execution Event:  Execute Smart Contract Function on a Deployed Contract
+## Execution Event:  Execute Smart Contract Function on a Deployed Contract
 
 The second execution event in the EVM is the call to a smart contract already deployed to do some analysis or "work" to some data that is passed into the smart contract by the EOA.
 
