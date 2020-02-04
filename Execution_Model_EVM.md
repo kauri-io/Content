@@ -44,7 +44,7 @@ Here we see:
 
 * In the transaction, the to is left empty (‘0x0’ is shown).
 
-* In the input, we only place the bytecode. It is because our SimpleStorage contract does not have a constructor that requires arguments. If arguments are needed in constructor, they are encoded according to the type and appended after the bytecode. We will see how the encoding is done when we call set() function in the next part.
+* In the input, we only place the bytecode. It is because our SimpleStorage contract does not have a constructor that requires arguments. If arguments are needed in constructor, they are encoded according to the type and appended after the bytecode. We will see how the encoding is done when we call `set()` function in the next part.
 
 * The Contract Address is found in Transaction Receipt. We will use it in the next part.
 
