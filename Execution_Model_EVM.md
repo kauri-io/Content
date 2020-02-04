@@ -36,7 +36,7 @@ A sent transaction looks like this:
 
 ![Send transaction for deploy new smart contract](https://i.imgur.com/Xa7r3h0.png)
 
-We see that a transaction hash is generated (green hash at the bottom.)  Using this information the transaction can be fully examined using eth.getTransaction() and eth.getTransactionReceipt().
+We see that a transaction hash is generated (green hash at the bottom.)  Using this information the transaction can be fully examined using `eth.getTransaction()` and `eth.getTransactionReceipt()`.
 
 ![Deployed smart contract transaction receipt](https://i.imgur.com/ZF9raB7.png)
 
