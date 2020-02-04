@@ -10,7 +10,7 @@ Machine state can be thought of as a snap shot of all data held in the EVM at a 
 
 ![Flow of transactions causing a state change](https://miro.medium.com/max/1282/1*jZ-VRXBJtOnePofB0z2Q8A.png)
 
-# EVM Execution State (Overview)
+## EVM Execution State (Overview)
 
 The execution model of the EVM includes the machine state and the network state. This overview omits the external account (wallet) and associated state as it exists outside of the EVM.  With that, two transaction types exist in the EVM that cause a state change in the execution model:
 
