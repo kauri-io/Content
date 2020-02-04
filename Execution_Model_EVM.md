@@ -60,7 +60,7 @@ The EVM has access to many different functions to be able to process data.  Thes
 
 ![EOA executes smart contract](https://i.imgur.com/SX4kNB9.png)
 
-The transaction composure is nearly identical to the deployment transaction:
+The transaction composition is nearly identical to the deployment transaction:
 
 ![Execute Smart Contract transaction model](https://i.imgur.com/11IipKe.png)
 
