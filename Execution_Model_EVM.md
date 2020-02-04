@@ -64,7 +64,7 @@ The transaction composition is nearly identical to the deployment transaction:
 
 ![Execute Smart Contract transaction model](https://i.imgur.com/11IipKe.png)
 
-The difference is the Data/input is the function and necessary arguments to initiate an instance of the smart contract that will generate a meaningful response.
+The difference is the data/input is the function and necessary arguments to initiate an instance of the smart contract that will generate a meaningful response.
 
 The response is contained by examining the block transaction, again, using the transaction ID hash.  A bytecode response in the logsBloom portion of the block data is the machine code response to be constructed and interpreted.  
 
