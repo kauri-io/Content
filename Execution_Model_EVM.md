@@ -68,7 +68,7 @@ The difference is the data/input is the function and necessary arguments to init
 
 The response is contained by examining the block transaction, again, using the transaction ID hash.  A bytecode response in the `logsBloom` portion of the block data is the machine code response to be constructed and interpreted.  
 
-# Network State Execution of the EVM
+## Network State Execution of the EVM
 
 The EVM is based on blockchain technology.  With each new set of transactions processed, a new block is added to the top of the existing data structure detailing the new state of the EVM and other protocol oriented state data existing outside the EVM.
 
