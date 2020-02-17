@@ -76,7 +76,7 @@ Solidity, when compiled, is turned into bytecode.  This long chain of hexadecima
 
 ## Vyper
 
-Vyper is another popular choice in high-level programming languages readily available to developers.  Vyper is a language that is based on Python, therefore, easier for experienced developers to use.  Another advantage to being derived from Python is the lower amount of development time and the inclusion of better features and more security.  The additional security does come at a cost.  There are logic functionalities that are prohibited in Vyper, due to the exploitation experienced in Solidity.  
+Vyper is essentially the "only other" choice in high-level programming language library of smart contracts.  Vyper is a language that is based on Python, therefore, easier for experienced developers to use.  Another advantage to being derived from Python is the lower amount of development time and the inclusion of better features and more security.  The additional security does come at a cost.  There are logic functionalities that are prohibited in Vyper, due to the exploitation experienced in Solidity.  
 
 A control loop cannot iterate infinitely, as this was the method for exhausting GAS in transactions.  Infinite looping will throw a compiler exception.  Messages cannot be accessed inside of private functions, and so on.  This leads to the full Vyper documentation stack, including [Compiler Exceptions](https://vyper.readthedocs.io/en/latest/compiler-exceptions.html).
 
@@ -87,13 +87,13 @@ Smart contract implementation creates a unique combination of security concerns.
 * They are designed to store cryptocurrency, which when stolen can be transferred irreversibly, can be
 difficult to trace, and can be laundered effectively.
 
-• The quantity of the money stored in these contracts tends to be high, with contracts often storing in
+* The quantity of the money stored in these contracts tends to be high, with contracts often storing in
 excess of 100M US, a strong attack incentive.
 
-• All contract code is stored publicly on the blockchain, allowing attackers to probe the
+* All contract code is stored publicly on the blockchain, allowing attackers to probe the
 system with full knowledge and test a range of attacks.
 
-• The Ethereum environment is adversarial, with all actors, from the miners involved in processing transactions, to nodes involved in relaying, are assumed to be potentially malicious. 
+* The Ethereum environment is adversarial, with all actors, from the miners involved in processing transactions, to nodes involved in relaying, are assumed to be potentially malicious. 
 
 These features that entice hackers, in combination with a lack of software quality tools, create an extreme security risk that must be at the forefront of all consideration when writing smart contracts.  KEVM is a smart contract analysis tool built out of the K framework designed to analyze the security and performance of smart contracts.  K Framework takes components of the machine code programming language and lays out a logical semantic structure.  The foundation of K is Reach-ability Logic, a logic for reasoning symbolically about potentially infinite transition systems.  Three tiers of logical evaluation exist for smart contracts:  
 
