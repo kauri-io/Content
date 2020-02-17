@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Bitcoin has always been the highest volume and value cryptocurrency in digital money. It runs on blockchain technology. Blockchain is a peer to peer, public, encrypted, trust-less ledger. Script is the name of the scripting language that constructs Bitcoin. Script is a mid to lower capability programming language. Public and private key transacting is the model for signing transactions. Besides transacting digital assets, there is no extra utility built into Bitcoin. 
+Bitcoin has always been the highest volume and value cryptocurrency in digital money, and it runs on blockchain technology. Blockchain is a peer to peer, public, encrypted, trust-less ledger. [Script ](https://en.bitcoin.it/wiki/Script) is the name of the scripting language that constructs Bitcoin. Script is a mid to lower capability programming language. Public and private key transacting is the model for signing transactions. Besides transacting digital assets, there is no extra utility built into Bitcoin. 
 
-Ethereum Blockchain technology offers limitless use case scenarios. A virtual computer deployed on the Ethereum Blockchain creates many possible use cases. Smart contracts are programs written in a high-level programming language. Think of JavaScript syntax with a name of Solidity or Vyper.  These languages build Smart contract code that compiles for use on the Ethereum Blockchain. This computing system revolutionizes privacy, security, and freedom otherwise unrealized in present-day governance.
+Ethereum Blockchain technology offers limitless use cases, thanks to its virtual machine. Smart contracts are programs written in a high-level programming language, including [Solidity ](https://solidity.readthedocs.io/) and [Vyper](https://vyper.readthedocs.io/en/latest/installing-vyper.html). These languages build Smart contract code that compiles for use on the Ethereum Blockchain. This computing system revolutionizes privacy, security, and freedom otherwise unrealized in present-day governance.
 
 ## Ethereum Virtual Machine Feature Overview
 
@@ -26,7 +26,7 @@ High-level is a vague description of a computing platform's capability. Precise 
 
 Simple transaction protocol initiates the deployment of very powerful applications on the EVM. The Ethereum protocol is trust-less; secured by peer-to-peer consensus and data encryption. It is very difficult, impossible, to access unauthorized information. The program code is verifiable and impossible to alter. Always available to every user as the same version and build. Pushing updates that users ignore can become a thing of the past.
 
-Prebuilt functions are built in the EVM.  Among other things these functions create data abstraction between the user and the actual blockchain implementation.  Direct features of the EVM are listed below that have an aggregate functionality of a self contained computer system.
+Prebuilt functions are built in the EVM.  Among other things these functions create data abstractions between the developer and the actual blockchain implementation.  Direct features of the EVM are listed below that have an aggregate functionality of a self contained computer system.
 
 * Simple transaction methods for new smart contract deployment
 * Smart contract interaction only by address
@@ -47,15 +47,15 @@ As stated before, the EVM is prebuilt with libraries of ready to use functions. 
 
 <a href="https://imgur.com/J3lKgEy"><img src="https://i.imgur.com/J3lKgEy.png" title="source: imgur.com" /></a>
 
-Opcodes are a large library of functions preprogrammed into the EVM. A list of all Opcodes available is accessible [here](https://www.ethervm.io/#opcodes). Fewer resources handle these functions because they are small, 4-bit hex identifiers. Every function found in JavaScript or Python exists also in the EVM. Opcodes include functions for data manipulation, I/O, storage, security, and logic. High-level smart contract language compiles into bytecode. This is data passed into the EVM in hex that calls opcode functions and handles user arguments. The image located at the top of the page is a matrix of two digit hex opcodes. 
+Opcodes are a large library of functions preprogrammed into the EVM. You can find a list of all Opcodes [in the documentation](https://www.ethervm.io/#opcodes). Fewer resources handle these functions because they are small, 4-bit hex identifiers. Every function found in JavaScript or Python exists also in the EVM. Opcodes include functions for data manipulation, I/O, storage, security, and logic. High-level smart contract language compiles into bytecode. This is data passed into the EVM in hex that calls opcode functions and handles user arguments. The image located at the top of the page is a matrix of two digit hex opcodes. 
 
 ### Transactions
 
-Smart Contracts are simple to deploy on the EVM blockchain. Every type of transaction uses the same format to execute the EVM. Two main smart contact transactions call the contract or deploy a new contract. Either of these transactions are capable of calling a large variety of functions. Functions called can be user defined. Data passes in and out of the EVM in either case. This data can pass back to the user or forward on to another contract.
+Smart Contracts are deployed on the EVM blockchain. Every type of transaction uses the same format to execute the EVM. Two main smart contact transactions call the contract or deploy a new contract. Either of these transactions are capable of calling a large variety of functions. Functions called can be user defined. Data passes in and out of the EVM in either case. This data can pass back to the user or forward on to another contract.
 
 <a href="https://imgur.com/bfKk7mY"><img src="https://i.imgur.com/bfKk7mY.png" title="source: imgur.com" /></a>
 
-The image above shows how a transaction flow can happen in the EVM. Data is passed out of the EVM in what is known as a 'block'. A block is the final result of the arguments, variables, functions, and transactions presented. The data has been manipulated and encrypted. A proof of work puzzle solved by network miners cryptographically proves data integrity. It also cryptographically ties the completed block to adjacent data blocks.
+The image above shows how a transaction flow happens in the EVM. Data is passed out of the EVM in what is known as a 'block'. A block is the final result of the arguments, variables, functions, and transactions presented. The data has been manipulated and encrypted. A proof of work puzzle solved by network miners cryptographically proves data integrity. It also cryptographically ties the completed block to adjacent data blocks.
 
 ## Miners - The actual computing power of the EVM
 
@@ -91,5 +91,4 @@ This series examines the EVM at a deeper level for blockchain educated readers, 
 * [Vyper](https://github.com/vyperlang/vyper)
 
 * [How to Learn Solidity:  The Ultimate Ethereum Coding Tutorial](https://blockgeeks.com/guides/solidity/)
-
 
