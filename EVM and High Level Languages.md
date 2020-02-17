@@ -1,3 +1,7 @@
+---
+<a href="https://ibb.co/rZbWywQ"><img src="https://i.ibb.co/tbZdCJH/computer-1833058-1280.png" alt="computer-1833058-1280" border="0"></a>
+---
+
 # The EVM and High-Level Smart Contract Programming Languages
 
 ## Introduction
