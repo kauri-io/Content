@@ -86,10 +86,13 @@ Smart contract implementation creates a unique combination of security concerns.
 
 * They are designed to store cryptocurrency, which when stolen can be transferred irreversibly, can be
 difficult to trace, and can be laundered effectively.
+
 • The quantity of the money stored in these contracts tends to be high, with contracts often storing in
 excess of 100M US, a strong attack incentive.
+
 • All contract code is stored publicly on the blockchain, allowing attackers to probe the
 system with full knowledge and test a range of attacks.
+
 • The Ethereum environment is adversarial, with all actors, from the miners involved in processing transactions, to nodes involved in relaying, are assumed to be potentially malicious. 
 
 These features that entice hackers, in combination with a lack of software quality tools, create an extreme security risk that must be at the forefront of all consideration when writing smart contracts.  KEVM is a smart contract analysis tool built out of the K framework designed to analyze the security and performance of smart contracts.  K Framework takes components of the machine code programming language and lays out a logical semantic structure.  The foundation of K is Reach-ability Logic, a logic for reasoning symbolically about potentially infinite transition systems.  Three tiers of logical evaluation exist for smart contracts:  
