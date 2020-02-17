@@ -2,13 +2,11 @@
 
 ## Introduction
 
-Bitcoin has always been the highest volume and value cryptocurrency in digital money, and it runs on blockchain technology. Blockchain is a peer to peer, public, encrypted, trust-less ledger. [Script ](https://en.bitcoin.it/wiki/Script) is the name of the scripting language that constructs Bitcoin. Script is a mid to lower capability programming language. Public and private key transacting is the model for signing transactions. Besides transacting digital assets, there is no extra utility built into Bitcoin. 
+The Ethereum platform offers the power of a peer to peer, secured, decentralized virtual computer that can execute smart contracts to perform a vast array of tasks.  A smart contract is the same as a program that runs on any standard PC instance.  The use cases for which smart contracts have been created range from very simple to extremely complex.  Underneath those cute crypto-kitties or that defi lending platform is a symphony of digital logic, instructions, data manipulation, and interaction between other smart contracts or users.  This article explores the different programming languages that are used to create smart contracts on the Ethereum Virtual Machine.  An analysis of the machine code mechanism in the EVM as it relates to higher level languages is explored.  The current limitations of these languages in terms of usability, functionality, and security is assessed.  Finally, the potential road map of expanding the functionality and user-friendliness of EVM programming languages will wrap up the four article series: A Deep Dive into the EVM.
 
-Ethereum Blockchain technology offers limitless use cases, thanks to its virtual machine. Smart contracts are programs written in a high-level programming language, including [Solidity ](https://solidity.readthedocs.io/) and [Vyper](https://vyper.readthedocs.io/en/latest/installing-vyper.html). These languages build Smart contract code that compiles for use on the Ethereum Blockchain. This computing system revolutionizes privacy, security, and freedom otherwise unrealized in present-day governance.
+## Ethereum Virtual Machine Logical Features
 
-## Ethereum Virtual Machine Feature Overview
-
-High-level is a vague description of a computing platform's capability. Precise performance metrics would go beyond the scope of this article. The Ethereum Blockchain is a powerful and isolated virtual computing environment. Computing features of the Ethereum Virtual Machine (EVM) include: 
+The Ethereum Virtual Machine is a powerful and isolated computing environment that keeps records eternally for all to see. Smart contracts are the "app", ".exe", "executable", ".dmg" equivalent in the Ethereum Virtual Machine (EVM).  Before introducing the languages themselves, it is important to look at the logical features that can be built or accessed in the EVM.  These complex digital characteristics elevate the computing power of the EVM to a "high-level":
 
 * Predefined function libraries 
 * Function constructors and destructors
@@ -24,62 +22,115 @@ High-level is a vague description of a computing platform's capability. Precise 
 * Sand boxing 
 * Two-way interaction with other smart contracts 
 
-Simple transaction protocol initiates the deployment of very powerful applications on the EVM. The Ethereum protocol is trust-less; secured by peer-to-peer consensus and data encryption. It is very difficult, impossible, to access unauthorized information. The program code is verifiable and impossible to alter. Always available to every user as the same version and build. Pushing updates that users ignore can become a thing of the past.
+There are, however, fundamental flaws in the implementation of these features.  The EVM execution model leaves some things out of the built in software architecture, leaving it up to the language implementer to create and include:
 
-Prebuilt functions are built in the EVM.  Among other things these functions create data abstractions between the developer and the actual blockchain implementation.  Direct features of the EVM are listed below that have an aggregate functionality of a self contained computer system.
+* True library support, instead of just blessed CALL targets at well-known addresses
+* Richer data types
+* Direct support and enforcement of interfaces/APIs
 
-* Simple transaction methods for new smart contract deployment
-* Smart contract interaction only by address
-* Arguments and data pass in from the user and pass out to a user or contract
-* A stack type data structure holds local variables
-* It reads function call arguments and return-addresses
-* Logic functions can change the order in which instructions execute
-* Addressable persistent storage acts as a virtual hard drive 
-* Non-persistent storage acts as system memory
+The demand put on smart contract developers to build these crucial high-level components into a contract versus a library creates a security risk.  Re-duplicated effort and additional modules expose the smart contract to the possibility of security vulnerabilities and bugs.
 
-A closer look at the EVM and dApp ecosystem show a complex orchestration of silently running programs and processes. Technology today offers many choices in a programming language presenting obstacles in compatibility. Cross-platform data abstraction requires a complex web of behind the scenes computing. 
+## Solidity
 
-## Discrete Parts that make the EVM
+Created in 2014, this language features human readable nomenclature for easier code writing.  An example smart contract in Solidity looks like this:
 
-As stated before, the EVM is prebuilt with libraries of ready to use functions. Smart contract languages such as Solidity and Vyper are simple, feature-rich languages. Embedded function libraries manipulate data in ways making the EVM quasi-Turing complete. Turing complete system is so named on the basis that it can use a lot of math proving it can solve any algorithm.
+pragma solidity >=0.5.0 <0.7.0;
 
-### EVM Opcodes and Bytecode
+contract Coin {
+    // The keyword "public" makes variables
+    // accessible from other contracts
+    address public minter;
+    mapping (address => uint) public balances;
 
-<a href="https://imgur.com/J3lKgEy"><img src="https://i.imgur.com/J3lKgEy.png" title="source: imgur.com" /></a>
+    // Events allow clients to react to specific
+    // contract changes you declare
+    event Sent(address from, address to, uint amount);
 
-Opcodes are a large library of functions preprogrammed into the EVM. You can find a list of all Opcodes [in the documentation](https://www.ethervm.io/#opcodes). Fewer resources handle these functions because they are small, 4-bit hex identifiers. Every function found in JavaScript or Python exists also in the EVM. Opcodes include functions for data manipulation, I/O, storage, security, and logic. High-level smart contract language compiles into bytecode. This is data passed into the EVM in hex that calls opcode functions and handles user arguments. The image located at the top of the page is a matrix of two digit hex opcodes. 
+    // Constructor code is only run when the contract
+    // is created
+    constructor() public {
+        minter = msg.sender;
+    }
 
-### Transactions
+    // Sends an amount of newly created coins to an address
+    // Can only be called by the contract creator
+    function mint(address receiver, uint amount) public {
+        require(msg.sender == minter);
+        require(amount < 1e60);
+        balances[receiver] += amount;
+    }
 
-Smart Contracts are deployed on the EVM blockchain. Every type of transaction uses the same format to execute the EVM. Two main smart contact transactions call the contract or deploy a new contract. Either of these transactions are capable of calling a large variety of functions. Functions called can be user defined. Data passes in and out of the EVM in either case. This data can pass back to the user or forward on to another contract.
+    // Sends an amount of existing coins
+    // from any caller to an address
+    function send(address receiver, uint amount) public {
+        require(amount <= balances[msg.sender], "Insufficient balance.");
+        balances[msg.sender] -= amount;
+        balances[receiver] += amount;
+        emit Sent(msg.sender, receiver, amount);
+    }
+}
 
-<a href="https://imgur.com/bfKk7mY"><img src="https://i.imgur.com/bfKk7mY.png" title="source: imgur.com" /></a>
+Solidity is an object oriented programming language.  There have been some serious flaws in Solidity that have lead to severe loss of asset and time.  The language allows recursion and looping such that a GAS payment to send a transaction can be depleted.  Solidity is blamed for the 2016 DAO hack costing millions of US Dollars.  Investigators stated that the EVM was running as intended when these exploits were utilized, but Solidity lacked the functionality to fully utilize the EVM security schema.
 
-The image above shows how a transaction flow happens in the EVM. Data is passed out of the EVM in what is known as a 'block'. A block is the final result of the arguments, variables, functions, and transactions presented. The data has been manipulated and encrypted. A proof of work puzzle solved by network miners cryptographically proves data integrity. It also cryptographically ties the completed block to adjacent data blocks.
+Solidity, when compiled, is turned into bytecode.  This long chain of hexadecimal digits becomes the machine code of the EVM.  The way it compiles from high-level language directly to machine code without any kind of application wrapper presents security risks and exposes the smart contract at the deepest possible level.  This removes the abstraction layer that exists between the language and the hardware.  In so doing, it exposes an attack vector for manipulating a smart contract in a nefarious way.
 
-## Miners - The actual computing power of the EVM
+## Vyper
 
-Key features of the Ethereum Blockchain include decentralization and peer to peer networking. A node can be run by any individual with hardware meeting minimum system requirements. Transactions are broadcast on to the network so that multiple nodes can see them at the same time. A fee is included for the miner that completes the proof of work and finishes a block. This spider web type of proliferation allows the nodes to compare the information they have received and agree that it matches. This comparison is performed among many nodes to create what is called consensus, or agreement that the values now held in block are the true values that represent the current state of the EVM.
+Vyper is another popular choice in high-level programming languages readily available to developers.  Vyper is a language that is based on Python, therefore, easier for experienced developers to use.  Another advantage to being derived from Python is the lower amount of development time and the inclusion of better features and more security.  The additional security does come at a cost.  There are logic functionalities that are prohibited in Vyper, due to the exploitation experienced in Solidity.  
 
-## Package Managers, Containers, and Data Abstraction
+A control loop cannot iterate infinitely, as this was the method for exhausting GAS in transactions.  Infinite looping will throw a compiler exception.  Messages cannot be accessed inside of private functions, and so on.  This leads to the full Vyper documentation stack, including [Compiler Exceptions](https://vyper.readthedocs.io/en/latest/compiler-exceptions.html).
 
-<a style="height: auto, width: auto"><img src="https://i.imgur.com/x9pHiHQ.png" title="source: imgur.com" /></a>
+## K Framework, KEVM, and Semantics
 
-The above image shows a visual relationship between the high-level languages that are used for dApp programming and the Ethereum Blockchain. Typical dApp implementations may contain multiple programming languages and protocols. The dApp is therefore often created using a container for development and deployment. A container creates an enclosed running environment that holds utilities, libraries, dependencies, and Path variables to ensure proper functionality of the modular dApp components. 
+Smart contract implementation creates a unique combination of security concerns.  Consider these factors about the decentralized nature of smart contracts:
 
-NPM, Yarn, Django, and React are all package managers that install and abstract the dependencies required in dApp deployment. These various modules handle everything from coding, test flow, and smart contract deployment. This list is not exhaustive of the features and development flows requiring multiple app dependencies installed. During development, the installed application modules are fine tuned by the developer. A package file is created as a manifest for the container application to automatically handle installation and configuration of the many installed dependencies and variables required for these foreign protocols to communicate correctly.
+* They are designed to store cryptocurrency, which when stolen can be transferred irreversibly, can be
+difficult to trace, and can be laundered effectively.
+• The quantity of the money stored in these contracts tends to be high, with contracts often storing in
+excess of 100M US, a strong attack incentive.
+• All contract code is stored publicly on the blockchain, allowing attackers to probe the
+system with full knowledge and test a range of attacks.
+• The Ethereum environment is adversarial, with all actors, from the miners involved in processing transactions, to nodes involved in relaying, are assumed to be potentially malicious. 
 
-In the image there are four modules on the client-side and two modules on the server side. The client-side implementation shows a dApp browser user interface, web3.js interface, HTML/CSS/JS, and the smart contract component (written in a programming language such as Solidity or Vyper). Each physical platform also denotes a layer of abstraction that is created by high-level language, package installation management, and app containers.
+These features that entice hackers, in combination with a lack of software quality tools, create an extreme security risk that must be at the forefront of all consideration when writing smart contracts.  KEVM is a smart contract analysis tool built out of the K framework designed to analyze the security and performance of smart contracts.  K Framework takes components of the machine code programming language and lays out a logical semantic structure.  The foundation of K is Reach-ability Logic, a logic for reasoning symbolically about potentially infinite transition systems.  Three tiers of logical evaluation exist for smart contracts:  
 
-A user can open a dApp on a dApp browser with zero need to specify how to run in that environment. This behind the scenes configuration is no small task. Package manifests can list installation dependency lists with 10, 20, 50, or more installed dependencies required. Package managers such as NPM or Yarn manage the installation specifically creating a run-time environment optimized to run the dApp
+* data.k - Data representations and their associated data structures used in the low-level EVM client code,
+and their definition in terms of K-native data structures.
 
-The final layer of abstraction happens between the client-side hardware and the Ethereum Virtual Machine. Package managers and containers also orchestrate plug-ins and dependency installation for interacting with the EVM.
+* evm.k - Formalization of the EVM semantics in K, including execution semantics of the various opcodes,
+world and network state, gas semantics, and various errors that can occur during execution.
+
+* ethereum.k - Extra execution environment / drivers that run EVM code, with a mode to parse the JSON
+test-files used to test reference EVM implementations.
+
+For further technical details, the academic research article on KEVM and EVM Semantics can be accessed in the resources section below: KEVM: A Complete Semantics of the Ethereum Virtual Machine.
+
+The challenge that KEVM tries to overcome is turning bytecode into usable language for developers in the structure of a programming language.  Bytecode is not intuitive in any way to making a vocabulary for building functions, data structures, and control mechanisms.  KEVM via the K Framework lays out a vernacular that is consistent, human readable, and intuitive for writing smart contracts.  Furthermore, this particular vernacular is how smart contract performance is analyzed.  This includes security and efficient use of resources.
+
+## IELE
+
+IELE is a smart contract programming language, developed in the wake of KEVM creation.  Building KEVM exposed many limitations of the current smart contract language schema.  IELE has various high-level features, such as
+function calls/returns, static jumps, arbitrary-precision integer arithmetic among others, that both
+make automatic formal verification more straight-forward and the language itself more secure.
+
+Five high-level properties are the core that created IELE: 
+
+* Security
+* Formal Verification
+* Human Readable
+* Determinism
+* GAS Model
+
+Moreover, IELE is cross-blockchain compatible.  It can be used in conjunction with a wide array of token, coin, and data.  For further information read IELE: An Intermediate-Level Blockchain Language Designed
+and Implemented Using Formal Semantics; listed in the reference section.
+
+IELE was officially introduced in scholarly journal articles mid-2018, it is relatively new.  Efforts in creating and implementing IELE as a mainstream blockchain smart contract language are not known at this time.
 
 ## Conclusion
 
-The Ethereum Virtual Machine is a blockchain that serves as a secure database.  It is also a self contained virtual computer that can execute high level program instructions.  The code is stored publicly as are the resulting state.  Programs can be trusted.  Work flow can be automated.  Information can be validated.  Finances and loans can be automated and reduce or eliminate the risk of lending.  The high-level functionalities of the EVM open the imagination to an infinite spectrum of use cases.  The bottleneck lies only in the imagination of the developer, or lack thereof.
+The Ethereum Virtual Machine is an extraordinary and practical creation that brings about solutions to a wide variety of use cases.  In so doing, a unique set of characteristics has laid out a rigorous set of obstacles for ensuring security, efficiency, and usability.  While a good portion of the learning curve in the language development of the EVM happened after a serious loss or incident occurred, progress is getting ahead of the cybercriminals.  Tools are being developed for smart contract QA and analysis.  Languages are being evaluated and scrutinize like never before.  New ways of closing security gaps and including data abstraction are being tested and implemented.
 
-This series examines the EVM at a deeper level for blockchain educated readers, but still only scratches the surface of how much information exists about the EVM.  Resources have been listed at the end of each part of this four part series to direct the reader to more in depth subject matter.
+The nature of the EVM and how it is built on a blockchain present a host of benefits and an equal amount of new security considerations that have not been native to software development until now.  It will be exciting to see where technology takes a creation like the EVM and builds upon the design flaws to create efficient, powerful, secure virtual computing environments.  
 
 
 ## Resources
@@ -92,3 +143,13 @@ This series examines the EVM at a deeper level for blockchain educated readers, 
 
 * [How to Learn Solidity:  The Ultimate Ethereum Coding Tutorial](https://blockgeeks.com/guides/solidity/)
 
+* [Solidity](https://en.wikipedia.org/wiki/Solidity)
+
+* [The EVM is Fundamentally Unsafe](https://hackernoon.com/the-evm-is-fundamentally-unsafe-d69f2e3b908b)
+
+* [Vyper Smart Contract Programming Language Documentation](https://vyper.readthedocs.io/en/latest/compiling-a-contract.html)
+
+* [KEVM: A Complete Semantics of the Ethereum Virtual Machine](https://www.ideals.illinois.edu/bitstream/handle/2142/97207/hildenbrandt-saxena-zhu-rodrigues-guth-daian-rosu-2017-tr_0818.pdf?sequence=3&isAllowed=y)
+
+* [IELE: An Intermediate-Level Blockchain Language Designed
+and Implemented Using Formal Semantics](https://www.ideals.illinois.edu/bitstream/handle/2142/100319/paper.pdf?sequence=2&isAllowed=y)
